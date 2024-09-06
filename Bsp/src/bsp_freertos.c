@@ -401,7 +401,7 @@ static void vTaskStart(void *pvParameters)
          
           gl_tMsg.long_key_mode_counter ++ ;
 
-          if(gl_tMsg.long_key_mode_counter > 60  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
+          if(gl_tMsg.long_key_mode_counter > 20  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
              gl_tMsg.long_key_mode_counter=0;   
                gl_tMsg.key_long_mode_flag =1;
                gpro_t.gTimer_mode_key_long = 0;
