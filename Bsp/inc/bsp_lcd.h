@@ -188,14 +188,12 @@ typedef struct _LCD_Ref{
 
 extern lcd_ref lcd_t; 
 
-//void DisplayPanel_TestHandler(void);
-
-//void DisplayPanel_Ref_Handler(void);
 
 void TIM1723_Write_Cmd(uint8_t cmd);
 void LCD_Display_Wind_Icon_Handler(void);
 void TM1723_Write_Display_Data(uint8_t addr,uint8_t dat);
 
+void lcd_donot_disp_screen(void);
 
 
 #endif 

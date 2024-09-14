@@ -52,7 +52,8 @@ void power_off_handler(void)
 {
     
     if(run_t.power_off_id_flag == 1){   
-        run_t.power_off_id_flag++;     
+        run_t.power_off_id_flag++;  
+        lcd_donot_disp_screen();
         Power_Off_Fun();
         SendData_PowerOnOff(0);
 
@@ -64,12 +65,8 @@ void power_off_handler(void)
         run_t.timer_time_hours =0;
         run_t.timer_time_minutes =0;
 
-
-    
         run_t.fan_warning=0;
         run_t.ptc_warning = 0;
-
-
 
         //run_t.gModel =1; //WT.EDIT 2022.09.01
         run_t.gPlasma=0;
@@ -85,23 +82,24 @@ void power_off_handler(void)
 
         run_t.fan_off_60s =0;
         run_t.gFan_RunContinue=1;
+      
 	}
     
 	lcd_power_off_donot_fan_Fun();
-    
-     Breath_Led();
+   
+    Breath_Led();
 	if(run_t.gFan_RunContinue == 1){
-           if(run_t.fan_off_60s < 61){
-		      LCD_BACK_LIGHT_ON();
-		      LCD_Display_Wind_Icon_Handler();
-           	}
-		   else {
-               
-               
-               run_t.gFan_RunContinue =0;
-			   Lcd_PowerOff_Fun();
+       if(run_t.fan_off_60s < 61){
+       
+	      LCD_BACK_LIGHT_ON();
+	      LCD_Display_Wind_Icon_Handler();
+       	}
+	   else {
+         
+           run_t.gFan_RunContinue =0;
+		   Lcd_PowerOff_Fun();
 
-		   }
+	   }
 	}
 }
 
@@ -189,37 +187,29 @@ void power_key_long_fun(void)
 void mode_key_short_fun(void)
 {
    if(run_t.ptc_warning ==0 && run_t.fan_warning ==0){
-		   if(run_t.display_set_timer_timing == beijing_time){
-		
-               //timer time + don't has ai item
-               run_t.display_set_timer_timing = timer_time;
-			   run_t.gModel=2;
-               if(wifi_link_net_state() == 1){
-                  SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
-                  osDelay(5);
-               }
-		 
-		
-               
-		   	}
-		    else if(run_t.display_set_timer_timing == timer_time){
-                //beijing time + ai item
-                run_t.display_set_timer_timing = beijing_time;
-             
-	           run_t.gModel=1;
-               if(wifi_link_net_state() ==1){
-			        SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
-                    osDelay(5);
-                }
-			
-				
+		if(run_t.display_set_timer_timing == beijing_time){
+	
+			//timer time + don't has ai item
+			run_t.display_set_timer_timing = timer_time;
+			run_t.gModel=2;
+			if(wifi_link_net_state() == 1){
+				SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
+				osDelay(5);
 			}
+		}
+		else if(run_t.display_set_timer_timing == timer_time){
+			//beijing time + ai item
+			run_t.display_set_timer_timing = beijing_time;
 			
+			run_t.gModel=1;
+			if(wifi_link_net_state() ==1){
+				SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
+				osDelay(5);
+			}
+		
+		}
 			
-          }		
-
-
-
+	}		
 }
 
 
@@ -228,11 +218,7 @@ void add_key_fun(void)
      static uint8_t power_on_fisrt_flag ;
    //  static uint8_t temp_bit_1_hours,temp_bit_2_hours,temp_bit_1_minute,temp_bit_2_minute;
     
-		
-	
-
-
-    switch(run_t.setup_timer_timing_item){
+	switch(run_t.setup_timer_timing_item){
 
 	case 0: //set temperature value add number
 

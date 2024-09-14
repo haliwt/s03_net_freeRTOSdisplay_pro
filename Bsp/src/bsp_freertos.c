@@ -77,17 +77,18 @@ uint8_t check_code;
 
 uint8_t bcc_check_code;
 
-
+ uint8_t dc_power_on_first ;
 
 
 
 
 /**********************************************************************************************************
-*	鍑�1锟�7 鏁�1锟�7 鍚�1锟�7: vTaskTaskUserIF
-*	鍔熻兘璇存槑: 鎺ュ彛娑堟伅澶勭悊銆�1锟�7
-*	褰�1锟�7    鍙�1锟�7: pvParameters 鏄湪鍒涘缓璇ヤ换鍔℃椂浼狅拷锟界殑褰㈠弬
-*	杩�1锟�7 鍥�1锟�7 鍊�1锟�7: 鏃�1锟�7
-*   浼�1锟�7 鍏�1锟�7 绾�1锟�7: 1  (鏁帮拷锟借秺灏忎紭鍏堢骇瓒婁綆锛岃繖涓窡uCOS鐩稿弽)
+*	
+*   Function Name:
+*	Funciton:
+*	Input Ref:
+*   Return Ref:
+*
 **********************************************************************************************************/
 void freeRTOS_Handler(void)
 {
@@ -103,13 +104,12 @@ void freeRTOS_Handler(void)
 
 }
 /**********************************************************************************************************
-*   FunctionName: static void vTaskRunPro(void *pvParameters)
-*	鍔熻兘璇存槑: 浣跨敤鍑芥暟xTaskNotifyWait鎺ユ敹浠诲姟vTaskTaskUserIF鍙戦€佺殑浜嬩欢鏍囧織浣嶈缃�
-*	褰�    鍙�: pvParameters 鏄湪鍒涘缓璇ヤ换鍔℃椂浼犻€掔殑褰㈠弬
-*	杩� 鍥� 鍊�: 鏃�
-*   浼� 鍏� 绾�: 1  
-
-*   浼�1锟�7 鍏�1锟�7 绾�1锟�7: 1  (鏁帮拷锟借秺灏忎紭鍏堢骇瓒婁綆锛岃繖涓窡uCOS鐩稿弽)
+*	
+*   Function Name:
+*	Funciton: (鏁帮拷锟借秺灏忎紭鍏堢骇瓒婁綆锛岃繖涓窡uCOS鐩稿弽) proritiy class is small and protity is low
+*	Input Ref:
+*   Return Ref:
+*
 **********************************************************************************************************/
 static void vTaskRunPro(void *pvParameters)
 {
@@ -117,9 +117,8 @@ static void vTaskRunPro(void *pvParameters)
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 璁剧疆鏈€澶х瓑寰呮椂闂翠负30ms */
 	uint32_t ulValue;
     
-    static volatile uint8_t power_on_off_flag,fan_on_off_flag ;
+    static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
    
-    static uint8_t key_add_flag,key_dec_flag,key_mode_flag,dc_power_on;
     static uint8_t app_power_on_flag,app_power_off_flag;
     while(1)
     {
@@ -169,15 +168,8 @@ static void vTaskRunPro(void *pvParameters)
             if((ulValue & POWER_KEY_BIT_0) != 0)
 			{
 
-                if(dc_power_on == 0){
-
-                    dc_power_on++;
-                    run_t.gPower_On = power_off;
-                 }
-                 else if( gl_tMsg.key_long_power_flag !=1 &&  gl_tMsg.key_long_power_flag !=2){
-                   power_on_off_flag = 1;
-             
-                 }
+                 gpro_t.key_power_flag = 1;
+                 gl_tMsg.key_long_power_flag=0;
                  gl_tMsg.long_key_power_counter=0;
               
             }
@@ -191,37 +183,25 @@ static void vTaskRunPro(void *pvParameters)
                     app_power_off_flag =1;
 
             }
-            else if((ulValue & MODE_KEY_1) != 0){
-                gl_tMsg.long_key_power_counter =0;
-            if(run_t.ptc_warning ==0 && run_t.fan_warning ==0){
-                if(run_t.gPower_On == power_on)
-                 key_mode_flag = 1;
-              
-               }
-
-            }
-            else if((ulValue & DEC_KEY_2) != 0){
-                gl_tMsg.long_key_mode_counter=0;
-                gl_tMsg.long_key_power_counter =0;
-                if(run_t.gPower_On == power_on)
-                  key_dec_flag = 1;
-              
-
-            }
-            else if((ulValue & ADD_KEY_3) != 0){
-                gl_tMsg.long_key_mode_counter=0;
-                gl_tMsg.long_key_power_counter =0;
-                if(run_t.gPower_On == power_on)
-                  key_add_flag = 1;
-              
            
-            }
            
     }
     else{
-        if(power_on_off_flag == 1 && gl_tMsg.key_long_power_flag !=1){
-             power_on_off_flag++;
-             gl_tMsg.key_long_power_flag=0;
+
+        if( gpro_t.key_power_flag == 1){
+
+            if(KEY_POWER_GetValue()  ==KEY_UP){
+                gpro_t.key_power_flag++;
+              
+
+             if(gl_tMsg.key_long_power_flag ==1){
+                  power_key_long_fun();
+                  SendData_Set_Command(0x05,0x01); // link wifi of command .
+                  gpro_t.gTimer_mode_key_long=0;
+
+
+             }
+             else{
              if(run_t.gPower_On == power_off){
 
                 run_t.gPower_On = power_on;
@@ -229,6 +209,7 @@ static void vTaskRunPro(void *pvParameters)
                
                 SendData_PowerOnOff(1);
                 power_key_short_fun();
+                gpro_t.gTimer_mode_key_long=0;
 
               }
               else{
@@ -236,6 +217,9 @@ static void vTaskRunPro(void *pvParameters)
                  run_t.gPower_On = power_off;
 
               }
+
+              }
+             }
 
             }
             else if(app_power_on_flag ==1){
@@ -251,15 +235,7 @@ static void vTaskRunPro(void *pvParameters)
 
                 run_t.gPower_On = power_off;
             }
-            else if(gl_tMsg.key_long_power_flag ==1){
-                   SendData_Buzzer();
-                   gl_tMsg.key_long_power_flag++;
-                   power_key_long_fun();
-                   SendData_Set_Command(0x05,0x01); // link wifi of command .
-                   gpro_t.gTimer_mode_key_long=0;
-
-            }
-            else if(gpro_t.key_mode_flag   == 1 && run_t.gPower_On == power_on){
+            else if(gpro_t.key_mode_flag == 1 && run_t.gPower_On == power_on){
 
                  if(KEY_MODE_GetValue() == KEY_UP){
                   
@@ -314,15 +290,19 @@ static void vTaskRunPro(void *pvParameters)
           
       if(run_t.gPower_On == power_on){
 
-            if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gl_tMsg.key_long_power_flag ==2)){
-              gpro_t.gTimer_mode_key_long =0;
+            if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gl_tMsg.key_long_power_flag ==1)){
+                gpro_t.gTimer_mode_key_long =0;
 
-                gl_tMsg.long_key_power_counter=0;
-                if(gl_tMsg.key_long_power_flag ==2){
+                  gl_tMsg.long_key_mode_counter =0;
+                 gl_tMsg.long_key_power_counter =0;
+                if(gl_tMsg.key_long_power_flag ==1){
 
-                    gl_tMsg.key_long_power_flag++;
+                    gl_tMsg.key_long_power_flag=0;
                 }
-                if(gl_tMsg.key_long_mode_flag==1)gl_tMsg.key_long_mode_flag=0;
+                if(gl_tMsg.key_long_mode_flag==1){
+                    gl_tMsg.key_long_mode_flag=0;
+
+                 }
 
             }
             
@@ -358,38 +338,40 @@ static void vTaskRunPro(void *pvParameters)
 **********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
-	while(1)
+
+   while(1)
     {
       
-    if(KEY_POWER_GetValue()  ==KEY_DOWN &&  gl_tMsg.long_key_power_counter < 2965500){
+    if(KEY_POWER_GetValue()  ==KEY_DOWN){
 
-        while(KEY_POWER_GetValue()   == KEY_DOWN && gl_tMsg.long_key_power_counter < 2965500){
-         
+       
+             gl_tMsg.long_key_mode_counter =0;
             gl_tMsg.long_key_power_counter++;
-            if(gl_tMsg.long_key_power_counter > 2950000){
-                gl_tMsg.long_key_power_counter = 2965900;
-            if(run_t.gPower_On == power_on){  //WT.DEDIT 2024.08.26
-                gl_tMsg.key_long_power_flag =1;
-            }
 
-            }
+         if(gl_tMsg.long_key_power_counter > 15 && run_t.gPower_On == power_on ){
+            gl_tMsg.long_key_power_counter =0;
+            gl_tMsg.key_long_power_flag =1;
+             gpro_t.gTimer_mode_key_long = 0;
+            
+             SendData_Buzzer();
          }
 
-        if(gl_tMsg.long_key_power_counter <  2950000 ){
-          xTaskNotify(xHandleTaskRunPro, /* 鐩爣浠诲姟 */
-                        POWER_KEY_BIT_0,            /* 璁剧疆鐩爣浠诲姟浜嬩欢鏍囧織浣峛it0  */
-                         eSetBits);          /* 灏嗙洰鏍囦换鍔＄殑浜嬩欢鏍囧織浣嶄笌BIT_0杩涜鎴栨搷浣滐紝  灏嗙粨鏋滆祴鍊肩粰浜嬩欢鏍囧織浣嶃€�*/
-         }
-             
+        if(dc_power_on_first==0){
+
+          dc_power_on_first++;
+
+        }
+        else
+            gpro_t.key_power_flag = 1;
 
      }
      else if(KEY_MODE_GetValue() ==KEY_DOWN){
 
-
+           gl_tMsg.long_key_power_counter=0;
          
           gl_tMsg.long_key_mode_counter ++ ;
 
-          if(gl_tMsg.long_key_mode_counter > 20  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
+          if(gl_tMsg.long_key_mode_counter > 15  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
              gl_tMsg.long_key_mode_counter=0;   
                gl_tMsg.key_long_mode_flag =1;
                gpro_t.gTimer_mode_key_long = 0;
@@ -401,42 +383,27 @@ static void vTaskStart(void *pvParameters)
           }
 
 
-          
-
-             gpro_t.key_mode_flag  =  1;
-
-
-          
-
-//          xTaskNotify(xHandleTaskRunPro, /* 鐩爣浠诲姟 */
-//                         MODE_KEY_1,            /* 璁剧疆鐩爣浠诲姟浜嬩欢鏍囧織浣峛it0  */
-//                         eSetBits);          /* 灏嗙洰鏍囦换鍔＄殑浜嬩欢鏍囧織浣嶄笌BIT_0杩涜鎴栨搷浣滐紝  灏嗙粨鏋滆祴鍊肩粰浜嬩欢鏍囧織浣嶃€�*/
-
+         gpro_t.key_mode_flag  =  1;
 
 
      }
      else if(KEY_DEC_GetValue() == KEY_DOWN){
 
-//           xTaskNotify(xHandleTaskRunPro, /* 鐩爣浠诲姟 */
-//                            DEC_KEY_2,            /* 璁剧疆鐩爣浠诲姟浜嬩欢鏍囧織浣峛it0  */
-//                            eSetBits);          /* 灏嗙洰鏍囦换鍔＄殑浜嬩欢鏍囧織浣嶄笌BIT_0杩涜鎴栨搷浣滐紝  灏嗙粨鏋滆祴鍊肩粰浜嬩欢鏍囧織浣嶃€�*/
-            
+
+            gl_tMsg.long_key_power_counter=0;
+         
+          gl_tMsg.long_key_mode_counter =0 ;
                gpro_t.key_dec_flag = 1;
      }
      else if(KEY_ADD_GetValue() ==KEY_DOWN){
 
-//          xTaskNotify(xHandleTaskRunPro, /* 鐩爣浠诲姟 */
-//                            ADD_KEY_3,            /* 璁剧疆鐩爣浠诲姟浜嬩欢鏍囧織浣峛it0  */
-//                            eSetBits);          /* 灏嗙洰鏍囦换鍔＄殑浜嬩欢鏍囧織浣嶄笌BIT_0杩涜鎴栨搷浣滐紝  灏嗙粨鏋滆祴鍊肩粰浜嬩欢鏍囧織浣嶃€�*/
-            
-             gpro_t.key_add_flag = 1;
+          gl_tMsg.long_key_power_counter=0;
+         
+          gl_tMsg.long_key_mode_counter =0 ;
+         gpro_t.key_add_flag = 1;
 
     }
-    
-
-    
-
-     vTaskDelay(100);
+    vTaskDelay(30);
      
     }
 

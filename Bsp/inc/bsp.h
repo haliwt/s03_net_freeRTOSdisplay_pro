@@ -51,6 +51,7 @@ typedef struct _process_state{
    uint8_t humidity_real_value;
    uint8_t  temp_real_value;
    uint8_t  app_power_on_flag;
+   uint8_t  key_power_flag;
 
 
    //

@@ -184,6 +184,21 @@ void TM1723_Write_Display_Data(uint8_t addr,uint8_t dat)
 
 }
 
+void lcd_donot_disp_screen(void)
+{
+    
+    TM1723_Write_Display_Data(0xC2,0x0);
+    TM1723_Write_Display_Data(0xC3,0x0);
+    TM1723_Write_Display_Data(0xC4,0x0);
+    TM1723_Write_Display_Data(0xC5,0x0);
+    TM1723_Write_Display_Data(0xC9,0x0);
+    TM1723_Write_Display_Data(0xCA,0x0);
+    TM1723_Write_Display_Data(0xCB,0x0);
+    TM1723_Write_Display_Data(0xCC,0x0);
+    TM1723_Write_Display_Data(0xCD,0x0);
+    TM1723_Write_Display_Data(0xCE,0x0);
+
+}
 
 /*************************************************************************************
 	*
