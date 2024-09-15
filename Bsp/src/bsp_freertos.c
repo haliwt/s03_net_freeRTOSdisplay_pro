@@ -119,7 +119,7 @@ static void vTaskRunPro(void *pvParameters)
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
    
-    static uint8_t app_power_on_flag,app_power_off_flag;
+    static uint8_t smart_phone_app_power_on_flag,app_power_off_flag;
     while(1)
     {
 		/*
@@ -175,7 +175,7 @@ static void vTaskRunPro(void *pvParameters)
             }
             else if((ulValue & POWER_ON_BIT_5) != 0){
 
-                    app_power_on_flag=1;
+                    smart_phone_app_power_on_flag=1;
 
             }
              else if((ulValue & POWER_OFF_BIT_4) != 0){
@@ -203,12 +203,11 @@ static void vTaskRunPro(void *pvParameters)
              }
              else{
              if(run_t.gPower_On == power_off){
-
                 run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0;
                
                 SendData_PowerOnOff(1);
-                power_key_short_fun();
+                power_on_key_short_fun();
                 gpro_t.gTimer_mode_key_long=0;
 
               }
@@ -222,12 +221,12 @@ static void vTaskRunPro(void *pvParameters)
              }
 
             }
-            else if(app_power_on_flag ==1){
-                app_power_on_flag++;
+            else if(smart_phone_app_power_on_flag ==1){
+                smart_phone_app_power_on_flag++;
                  run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0;
                 
-                power_key_short_fun();
+                power_on_key_short_fun();
 
             }
             else if(app_power_off_flag ==1){
@@ -240,18 +239,19 @@ static void vTaskRunPro(void *pvParameters)
                  if(KEY_MODE_GetValue() == KEY_UP){
                   
                       gpro_t.key_mode_flag++;
-                      if(gl_tMsg.key_long_mode_flag ==0){
+                     if(gl_tMsg.key_long_mode_flag==0){//
                            gl_tMsg.long_key_mode_counter=0;
-                            SendData_Buzzer();
-                            osDelay(5);
-                            gl_tMsg.long_key_mode_counter=0;
-                            mode_key_short_fun();
+                            //SendData_Buzzer();
+                            //osDelay(5);
+                    
+                            //mode_key_short_fun();
 
                       }
                       else{
+                       gpro_t.gTimer_mode_key_long=0;
 
                        mode_key_long_fun();
-                         gpro_t.gTimer_mode_key_long =0;
+                        
                 
 
                       }
@@ -286,12 +286,25 @@ static void vTaskRunPro(void *pvParameters)
                 }
             } 
         }
+
+      
           
           
       if(run_t.gPower_On == power_on){
 
+           if(gpro_t.key_mode_flag==2 && gl_tMsg.key_long_mode_flag ==0){
+             gpro_t.key_mode_flag++;
+             SendData_Buzzer();
+             HAL_Delay(10);
+             mode_key_short_fun();
+
+
+            }
+
+
+
             if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gl_tMsg.key_long_power_flag ==1)){
-                gpro_t.gTimer_mode_key_long =0;
+               
 
                   gl_tMsg.long_key_mode_counter =0;
                  gl_tMsg.long_key_power_counter =0;
@@ -305,6 +318,8 @@ static void vTaskRunPro(void *pvParameters)
                  }
 
             }
+
+         
             
             
        set_temperature_compare_value_fun();
@@ -361,8 +376,10 @@ static void vTaskStart(void *pvParameters)
           dc_power_on_first++;
 
         }
-        else
+        else{
             gpro_t.key_power_flag = 1;
+
+        }
 
      }
      else if(KEY_MODE_GetValue() ==KEY_DOWN){
@@ -373,14 +390,12 @@ static void vTaskStart(void *pvParameters)
 
           if(gl_tMsg.long_key_mode_counter > 15  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
              gl_tMsg.long_key_mode_counter=0;   
-               gl_tMsg.key_long_mode_flag =1;
+         
+             gl_tMsg.key_long_mode_flag =1;
                gpro_t.gTimer_mode_key_long = 0;
             
                 SendData_Buzzer();
-               
-
-
-          }
+           }
 
 
          gpro_t.key_mode_flag  =  1;
@@ -443,58 +458,6 @@ void AppTaskCreate (void)
                  &xHandleTaskStart );   /* 浠诲姟鍙ユ焺  */
 }
 
-
-
-/*
-*********************************************************************************************************
-*	鍑�1锟�7 鏁�1锟�7 鍚�1锟�7: AppObjCreate
-*	鍔熻兘璇存槑: 鍒涘缓浠诲姟閫氫俊鏈哄埗
-*	褰�1锟�7    鍙�1锟�7: 鏃�1锟�7
-*	杩�1锟�7 鍥�1锟�7 鍊�1锟�7: 鏃�1锟�7
-*********************************************************************************************************
-*/
-# if 0
-void AppObjCreate (void)
-{
-    #if 1
-
-//   /* 鍒涘缓10涓猽int8_t鍨嬫秷鎭槦鍒�1锟�7 */
-//	xQueue1 = xQueueCreate(4, sizeof(uint8_t));
-//    if( xQueue1 == 0 )
-//    {
-//        /* 娌℃湁鍒涘缓鎴愬姛锛岀敤鎴峰彲浠ュ湪杩欓噷鍔犲叆鍒涘缓澶辫触鐨勫鐞嗘満鍒�1锟�7 */
-//    }
-	
-	/* 鍒涘缓10涓瓨鍌ㄦ寚閽堝彉閲忕殑娑堟伅闃熷垪锛岀敱浜嶤M3/CM4鍐呮牳鏄�1锟�732浣嶆満锛屼竴涓寚閽堝彉閲忓崰鐢�1锟�74涓瓧鑺�1锟�7 */
-	xQueue2 = xQueueCreate(10, sizeof(struct Msg *));
-    if( xQueue2 == 0 )
-    {
-        /* 娌℃湁鍒涘缓鎴愬姛锛岀敤鎴峰彲浠ュ湪杩欓噷鍔犲叆鍒涘缓澶辫触鐨勫鐞嗘満鍒�1锟�7 */
-    }
-
-	
-
-	#endif 
-
-    #if 0
-
-	 /* 鍒涘缓闃熷垪闆�1锟�7 */
-    xQueueSet = xQueueCreateSet(QUEUESET_LENGTH);
-    /* 鍒涘缓闃熷垪*/
-    xQueue1 = xQueueCreate(QUEUE_LENGTH, QUEUE_ITEM_SIZE);
-    xQueue2 = xQueueCreate(QUEUE_LENGTH, QUEUE_ITEM_SIZE);
-	
-    /* 鍒涘缓浜岋拷锟戒俊鍙烽噺 */
-    xSemaphore = xSemaphoreCreateBinary();
-	
-    /* 灏嗛槦鍒楀拰浜岋拷锟戒俊鍙烽噺娣诲姞鍒伴槦鍒楅泦涓�1锟�7 */
-    xQueueAddToSet(xQueue1, xQueueSet);
-    xQueueAddToSet(xQueue2, xQueueSet);
-    xQueueAddToSet(xSemaphore, xQueueSet);
-    #endif 
-}
-
-#endif 
 /********************************************************************************
 	**
 	*Function Name:void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)

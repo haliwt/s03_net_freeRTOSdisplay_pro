@@ -73,8 +73,6 @@ void power_off_handler(void)
         run_t.gDry =0;
         run_t.gUltransonic =0;
 
-        run_t.gPower_On=0;
-
 
         run_t.timer_timing_define_flag = timing_not_definition;
 
@@ -82,6 +80,7 @@ void power_off_handler(void)
 
         run_t.fan_off_60s =0;
         run_t.gFan_RunContinue=1;
+        gpro_t.smart_phone_app_power_on_flag =0;
       
 	}
     
@@ -109,11 +108,11 @@ void power_off_handler(void)
  *
  * 
 *************************************************/
-void power_key_short_fun(void)
+void power_on_key_short_fun(void)
 {
   
    
-   if(gpro_t.app_power_on_flag == 0){
+   if(gpro_t.smart_phone_app_power_on_flag == 0){
 
     	run_t.gModel =1; //WT.EDIT 2022.09.01
     	run_t.gPlasma=1;
@@ -216,7 +215,6 @@ void mode_key_short_fun(void)
 void add_key_fun(void)
 {
      static uint8_t power_on_fisrt_flag ;
-   //  static uint8_t temp_bit_1_hours,temp_bit_2_hours,temp_bit_1_minute,temp_bit_2_minute;
     
 	switch(run_t.setup_timer_timing_item){
 
@@ -247,7 +245,8 @@ void add_key_fun(void)
 		lcd_t.number2_high = unit_temp;
 
         gpro_t.temp_key_set_value = 1;
-         gpro_t.gTimer_set_temp_times = 0;
+        gpro_t.gTimer_set_temp_times = 0;
+        gpro_t.smart_phone_turn_off_ptc_flag =0;
 			
 	
 	   break;
@@ -264,29 +263,7 @@ void add_key_fun(void)
 
 			}
 		
-        #if 0
-          
-			temp_bit_2_hours = run_t.timer_time_hours /10 ;
-			temp_bit_1_hours = run_t.timer_time_hours %10;
-           // HAL_Delay(20);
-			run_t.timer_time_minutes  =0;
-
-			temp_bit_2_minute =0;
-			temp_bit_1_minute =0;
-            
-			lcd_t.number5_low=temp_bit_2_hours;
-			lcd_t.number5_high =temp_bit_2_hours;
-
-			lcd_t.number6_low = temp_bit_1_hours;
-			lcd_t.number6_high = temp_bit_1_hours;
-
-			lcd_t.number7_low=temp_bit_2_minute;
-			lcd_t.number7_high =temp_bit_2_minute;
-
-			lcd_t.number8_low = temp_bit_1_minute;
-			lcd_t.number8_high = temp_bit_1_minute;
-      #endif 
-
+      
 		break;
 		}	
 	
@@ -297,11 +274,10 @@ void add_key_fun(void)
 void dec_key_fun(void)
 {
     static uint8_t power_on_fisrt_flag;
-   //   static uint8_t temp_bit_1_hours,temp_bit_2_hours,temp_bit_1_minute,temp_bit_2_minute;
+  
     if(run_t.gPower_On ==1){
 	   	if(run_t.ptc_warning ==0){
-	   //	SendData_Buzzer();
-      //  osDelay(5);
+	
 	     switch(run_t.setup_timer_timing_item){
 
 		   case 0: 
@@ -320,17 +296,16 @@ void dec_key_fun(void)
 
 	        decade_temp =  run_t.wifi_set_temperature / 10;
 			unit_temp =  run_t.wifi_set_temperature % 10; //
-         //    HAL_Delay(5);
+       
 			lcd_t.number1_low=decade_temp;
 			lcd_t.number1_high =decade_temp;
 
 			lcd_t.number2_low = unit_temp;
 			lcd_t.number2_high = unit_temp;
 			
-		
-            //run_t.setup_temperature_value =1;
              gpro_t.temp_key_set_value = 1;
              gpro_t.gTimer_set_temp_times = 0;
+              gpro_t.smart_phone_turn_off_ptc_flag =0;
 	
 		    break;
 
@@ -347,32 +322,7 @@ void dec_key_fun(void)
 					
 				}
                 
-          #if 0
-				    temp_bit_2_minute = run_t.timer_time_hours /10 ;
-					temp_bit_1_minute = run_t.timer_time_hours %10;
-               
-					temp_bit_2_hours = run_t.timer_time_hours /10 ;
-					temp_bit_1_hours = run_t.timer_time_hours  %10;
-                    //HAL_Delay(20);
-					run_t.timer_time_minutes  =0;
-
-					temp_bit_2_minute=0;
-					temp_bit_1_minute=0;
-                 
-
-					lcd_t.number5_low=temp_bit_2_hours;
-					lcd_t.number5_high =temp_bit_2_hours;
-
-					lcd_t.number6_low = temp_bit_1_hours;
-					lcd_t.number6_high = temp_bit_1_hours;
-
-					lcd_t.number7_low=temp_bit_2_minute;
-					lcd_t.number7_high =temp_bit_2_minute;
-
-					lcd_t.number8_low = temp_bit_1_minute;
-					lcd_t.number8_high = temp_bit_1_minute;
-                 
-             #endif 
+        
              break;
 
 	    	}

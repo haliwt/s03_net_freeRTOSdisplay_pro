@@ -118,7 +118,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
                  number_blink_times =0;
 				 run_t.setup_temperature_value =0;
                  gpro_t.set_temp_value_success = 1;
-                 gpro_t.gTimer_temp_copare_value =20; //at once 
+                 gpro_t.gTimer_temp_compare_value =20; //at once 
 			}
 
 		}

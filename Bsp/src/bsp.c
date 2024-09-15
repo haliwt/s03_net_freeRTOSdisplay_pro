@@ -239,21 +239,27 @@ void set_temperature_compare_value_fun(void)
     
          run_t.setup_temperature_value =1;
           gpro_t.temp_key_set_value =0;
-          gpro_t.gTimer_temp_copare_value =0;
+          gpro_t.gTimer_temp_compare_value =0;
 
     }
-    else if(gpro_t.set_temp_value_success == 1 && gpro_t.gTimer_temp_copare_value > 3 && gpro_t.temp_key_set_value ==0){
+    else if(gpro_t.set_temp_value_success == 1 && gpro_t.gTimer_temp_compare_value > 3 && gpro_t.temp_key_set_value ==0){
 
-       gpro_t.gTimer_temp_copare_value =0;
+       gpro_t.gTimer_temp_compare_value =0;
 
-      if(run_t.wifi_set_temperature > gpro_t.temp_real_value){
+      if(run_t.wifi_set_temperature > gpro_t.temp_real_value && gpro_t.smart_phone_turn_off_ptc_flag ==0){
 
             run_t.gDry = 1;
             SendData_Set_Command(0x22,0x01); //open ptc 
+            osDelay(10);
+            SendData_Temp_Data(run_t.wifi_set_temperature);
+            
       }
       else{
            run_t.gDry = 0;
-           SendData_Set_Command(0x22,0x00); //close ptc  
+           SendData_Set_Command(0x22,0x00); //close ptc 
+           osDelay(10);
+
+           SendData_Temp_Data(run_t.wifi_set_temperature);
 
 
       }
@@ -261,7 +267,7 @@ void set_temperature_compare_value_fun(void)
 
 
     }
-    else if(gpro_t.set_temp_value_success == 0 && gpro_t.gTimer_temp_copare_value > 5 && gpro_t.temp_key_set_value ==0){ 
+    else if(gpro_t.set_temp_value_success == 0 && gpro_t.gTimer_temp_compare_value > 5 && gpro_t.temp_key_set_value ==0){ 
         
         if(gpro_t.temp_real_value > 39){ // must be clouse ptc.
     

@@ -45,13 +45,14 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
     case 0x21: //smart phone power on or off
         if(pdata[3]==0x01){ //power on by smart phone APP
-            gpro_t.app_power_on_flag =1;
+            gpro_t.smart_phone_app_power_on_flag =1;
             run_t.wifi_link_net_success=1;
              
              App_PowerOn_Handler() ; 
         
          }
          else{  //power off by smart phone APP
+         
              App_PowerOff_Handler() ;     
          }
        
@@ -63,11 +64,13 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             run_t.gDry =1 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
             run_t.wifi_link_net_success=1;
+           gpro_t.smart_phone_turn_off_ptc_flag = 0;
         }
         else if(pdata[3] == 0x0){
 
             run_t.wifi_link_net_success=1;
             run_t.gDry =0;
+            gpro_t.smart_phone_turn_off_ptc_flag = 1;
 
         }
 
@@ -287,6 +290,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
      case 0x3A: // smart phone APP set temperature value 
         
         run_t.wifi_link_net_success=1;
+        gpro_t.smart_phone_turn_off_ptc_flag=0; //smart phone app from setup temperature value .
         run_t.wifi_set_temperature = pdata[5];
 
         decade_temp =  run_t.wifi_set_temperature / 10 ;
