@@ -13,8 +13,9 @@ typedef enum{
 
 typedef enum{
 
-    beijing_time,
+    works_time,
 	timer_time,
+	setup_timer,
 	ai_item,
 	ai_not_item
 

@@ -26,7 +26,8 @@ void mode_key_long_fun(void)
    if(run_t.ptc_warning ==0){
 
        run_t.gModel=2;
-       run_t.setup_timer_timing_item=1;//run_t.gModel =2;
+     //  run_t.setup_timer_timing_item=1;//run_t.gModel =2;
+       run_t.display_set_timer_or_works_mode = setup_timer;
       
        run_t.gTimer_key_timing=0;
 
@@ -40,16 +41,28 @@ void display_timer_and_beijing_time_handler(void)
 {
    
   // DISP_STATE  disp_state;
-   switch(run_t.setup_timer_timing_item){
+   switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
-    case WORKS_TIME:
-      disp_normal_timing_handler();
+    case works_time:
+      disp_normal_timing_handler(); 
+    //  beijing_time_fun();
+    
+     Setup_Timer_Times_Donot_Display();
 
     break;
 
-    case SET_TIMER_TIMING:
+    
+
+    case setup_timer:
 
       disp_set_timer_timing_value_fun();
+
+    break;
+
+    case timer_time:
+        
+        disp_timer_run_times();
+		Works_Counter_Time();
 
     break;
 
@@ -63,7 +76,9 @@ void display_timer_and_beijing_time_handler(void)
 
                    gpro_t.gTimer_fan_to_ptc_warning = 0;
                
-               run_t.setup_timer_timing_item = PTC_WARNING ;
+               //run_t.setup_timer_timing_item = PTC_WARNING ;
+
+                 run_t.display_set_timer_or_works_mode = PTC_WARNING;
 
             }
 
@@ -80,7 +95,8 @@ void display_timer_and_beijing_time_handler(void)
 
                    gpro_t.gTimer_fan_to_ptc_warning = 0;
                
-               run_t.setup_timer_timing_item = FAN_WARNING ;
+               //run_t.setup_timer_timing_item = FAN_WARNING ;
+               run_t.display_set_timer_or_works_mode =FAN_WARNING;
 
             }
 
@@ -103,21 +119,26 @@ void display_timer_and_beijing_time_handler(void)
 static void disp_normal_timing_handler(void)
 {
 
-        if(run_t.ptc_warning ==0){
-     	    TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);//display digital '4,5'
-	 	 }
-		else{
-			 TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High_E[0]));//display digital 'E'
+      if(run_t.gTimer_disp_timer_seconds >59){ //minute
+		
+		run_t.gTimer_disp_timer_seconds=0;
+        run_t.dispTime_minutes ++;
+       
+          
+		if(run_t.dispTime_minutes > 59){
+			run_t.dispTime_minutes=0;
+			run_t.dispTime_hours ++;
+		    
+		if(run_t.dispTime_hours >24){
+			run_t.dispTime_hours=0;
 
-		 }
-    
-           
-    
-  	 disp_fan_leaf_run_icon();
+		}
 
-	
-     //open display
-	 TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+		}
+
+
+	  } 
+    
 
 }
 
@@ -202,18 +223,19 @@ static void disp_set_timer_timing_value_fun(void)
 
        }
        else{ //4
-              run_t.setup_timer_timing_item=0;//run_t.gModel =2;
+              //run_t.setup_timer_timing_item=0;//run_t.gModel =2;
+            //  run_t.display_set_timer_or_works_mode = WORKS_TIME;
               run_t.timer_time_minutes = 0;
               run_t.gTimer_timing=0;
                if(run_t.timer_time_hours !=0){  
                       run_t.timer_timing_define_flag = timing_success;
-                      run_t.display_set_timer_timing = timer_time;
+                      run_t.display_set_timer_or_works_mode = timer_time;
                 }
                 else{
+                     run_t.timer_timing_define_flag = timing_not_definition ;
 
-                     run_t.display_set_timer_timing = beijing_time;
+                     run_t.display_set_timer_or_works_mode = works_time;
 
-                  
                 }
          
     

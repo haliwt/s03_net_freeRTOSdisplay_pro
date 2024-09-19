@@ -5,12 +5,11 @@
 
 typedef enum{
 
-   WORKS_TIME,
-   SET_TIMER_TIMING,
-   FAN_WARNING,
+ 
+   FAN_WARNING= 0x80,
    PTC_WARNING
 
-}DISP_STATE;
+}WARNING_STATE;
 
 
 typedef enum WIFI_STATE_T{
@@ -105,7 +104,7 @@ typedef struct __RUN{
 
    uint8_t wifi_led_fast_blink_flag ;
  
-   uint8_t  setup_timer_timing_item;
+
    //wifi
    uint8_t  wifi_set_oneself_temperature;
   
@@ -138,7 +137,7 @@ typedef struct __RUN{
    uint8_t gmt_time_hours;
    uint8_t  gmt_time_minutes;
    uint8_t  gmt_time_seconds;
-   uint8_t display_set_timer_timing;
+   uint8_t display_set_timer_or_works_mode;
 
    
  
@@ -197,6 +196,11 @@ uint8_t bcc_check(const unsigned char *data, int len) ;
 void Setup_Timer_Times_Donot_Display(void);
 
 //void display_timer_or_timing_time_fun(uint8_t tim);
+
+
+void disp_timer_run_times(void);
+
+void Works_Counter_Time(void);
 
 
 #endif 

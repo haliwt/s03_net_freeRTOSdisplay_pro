@@ -47,9 +47,9 @@ static TaskHandle_t xHandleTaskStart = NULL;
 
 
 
-///#define QUEUE_LENGTH            1                   /* 队列支持的消息个敄1�7 */
+///#define QUEUE_LENGTH            1                   /* 队列支持的消息个敄1�7 */
 ///#define QUEUE_ITEM_SIZE         sizeof(uint32_t)    /* 队列中每条消息的大小 */
-//#define SEMAPHORE_BINARY_LENGTH 1                   /* 二��信号量的有效长庄1�7 */
+//#define SEMAPHORE_BINARY_LENGTH 1                   /* 二��信号量的有效长庄1�7 */
 //#define QUEUESET_LENGTH         ((2 * QUEUE_LENGTH) + SEMAPHORE_BINARY_LENGTH)  /* 队列集支持的消息个数 */
 
 
@@ -98,7 +98,7 @@ void freeRTOS_Handler(void)
 	  /* 创建任务通信机制 */
 	 //  AppObjCreate();
 	  
-	  /* 启动调度，开始执行任劄1�71ￄ1�77 */
+	  /* 启动调度，开始执行任劄1�71ￄ1�77 */
 	   vTaskStartScheduler();
 
 
@@ -114,7 +114,7 @@ void freeRTOS_Handler(void)
 static void vTaskRunPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置朢�大等待时间为30ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置朢�大等待时间为30ms */
 	uint32_t ulValue;
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
@@ -123,31 +123,31 @@ static void vTaskRunPro(void *pvParameters)
     while(1)
     {
 		/*
-			第一个参敄1�7 ulBitsToClearOnEntry的作用（函数执行前）＄1�7
+			第一个参敄1�7 ulBitsToClearOnEntry的作用（函数执行前）＄1�7
 		          ulNotifiedValue &= ~ulBitsToClearOnEntry
-		          箢�单的说就是参数ulBitsToClearOnEntry那个位是1，那么notification value
-		          的那个位就会被清零��1�7
+		          箢�单的说就是参数ulBitsToClearOnEntry那个位是1，那么notification value
+		          的那个位就会被清零��1�7
 
-		          这里ulBitsToClearOnEntry = 0x00000000就是函数执行前保留所有位〄1�7
+		          这里ulBitsToClearOnEntry = 0x00000000就是函数执行前保留所有位〄1�7
 		
-		    第二个参敄1�7 ulBitsToClearOnExit的作用（函数逢�出前）：			
+		    第二个参敄1�7 ulBitsToClearOnExit的作用（函数逢�出前）：			
 				  ulNotifiedValue &= ~ulBitsToClearOnExit
-		          箢�单的说就是参数ulBitsToClearOnEntry那个位是1，那么notification value
-		          的那个位就会被清零��1�7
+		          箢�单的说就是参数ulBitsToClearOnEntry那个位是1，那么notification value
+		          的那个位就会被清零��1�7
 
-				  这里ulBitsToClearOnExi = 0xFFFFFFFF就是函数逢�出前清楚扢�有位〄1�7
+				  这里ulBitsToClearOnExi = 0xFFFFFFFF就是函数逢�出前清楚扢�有位〄1�7
 		
-		    注：ulNotifiedValue表示任务vTaskMsgPro的任务控制块里面的变量��1�7		
+		    注：ulNotifiedValue表示任务vTaskMsgPro的任务控制块里面的变量��1�7		
 		*/
 		
 		xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
-						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue丄1�7 */
-						          xMaxBlockTime);  /* 朢�大允许延迟时闄1�7 */
+						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue丄1�7 */
+						          xMaxBlockTime);  /* 朢�大允许延迟时闄1�7 */
 		
 		if( xResult == pdPASS )
 		{
-			/* 接收到消息，棢�测那个位被按丄1�7 */
+			/* 接收到消息，棢�测那个位被按丄1�7 */
 
 
 
@@ -320,17 +320,16 @@ static void vTaskRunPro(void *pvParameters)
             }
 
          
-            
-            
        set_temperature_compare_value_fun();
             
        disp_temp_humidity_wifi_icon_handler();
 
        display_timer_and_beijing_time_handler();
 
-       disp_time_colon_ion_handler();
+  
+       disp_fan_leaf_run_icon();
 
-       Timing_Handler();
+ 
 
        }
        else if(run_t.gPower_On == power_off){
@@ -345,11 +344,11 @@ static void vTaskRunPro(void *pvParameters)
    }
 }
 /**********************************************************************************************************
-*	凄1�71ￄ1�77 敄1�71ￄ1�77 各1�71ￄ1�77: vTaskStart
-*	功能说明: 消息处理，使用函数comGetChar获取串口命令，使用函数comSendBuf发��串口消恄1�71ￄ1�77
-*	彄1�71ￄ1�77    叄1�71ￄ1�77: pvParameters 是在创建该任务时传��的形参
-*	迄1�71ￄ1�77 囄1�71ￄ1�77 倄1�71ￄ1�77: 旄1�71ￄ1�77
-*   伄1�71ￄ1�77 兄1�71ￄ1�77 纄1�71ￄ1�77: 3  (数��越小优先级越低，这个跟uCOS相反)
+*	凄1�71ￄ1�77 敄1�71ￄ1�77 各1�71ￄ1�77: vTaskStart
+*	功能说明: 消息处理，使用函数comGetChar获取串口命令，使用函数comSendBuf发��串口消恄1�71ￄ1�77
+*	彄1�71ￄ1�77    叄1�71ￄ1�77: pvParameters 是在创建该任务时传��的形参
+*	迄1�71ￄ1�77 囄1�71ￄ1�77 倄1�71ￄ1�77: 旄1�71ￄ1�77
+*   伄1�71ￄ1�77 兄1�71ￄ1�77 纄1�71ￄ1�77: 3  (数��越小优先级越低，这个跟uCOS相反)
 **********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
@@ -403,10 +402,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_GetValue() == KEY_DOWN){
-
-
-            gl_tMsg.long_key_power_counter=0;
-         
+          gl_tMsg.long_key_power_counter=0;
           gl_tMsg.long_key_mode_counter =0 ;
                gpro_t.key_dec_flag = 1;
      }
@@ -424,37 +420,37 @@ static void vTaskStart(void *pvParameters)
 
 }
 /**********************************************************************************************************
-*	凄1�71ￄ1�77 敄1�71ￄ1�77 各1�71ￄ1�77: AppTaskCreate
+*	凄1�71ￄ1�77 敄1�71ￄ1�77 各1�71ￄ1�77: AppTaskCreate
 *	功能说明: 创建应用任务
-*	彄1�71ￄ1�77    参：旄1�71ￄ1�77
-*	迄1�71ￄ1�77 囄1�71ￄ1�77 倄1�71ￄ1�77: 旄1�71ￄ1�77
+*	彄1�71ￄ1�77    参：旄1�71ￄ1�77
+*	迄1�71ￄ1�77 囄1�71ￄ1�77 倄1�71ￄ1�77: 旄1�71ￄ1�77
 **********************************************************************************************************/
 void AppTaskCreate (void)
 {
 
 	xTaskCreate( vTaskRunPro,    		/* 任务函数  */
-                 "vTaskRunPro",  		/* 任务各1�71ￄ1�77    */
+                 "vTaskRunPro",  		/* 任务各1�71ￄ1�77    */
                  256,         		/* stack大小，单位word，也就是4字节 */
                  NULL,        		/* 任务参数  */
-                 1,           		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
+                 1,           		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskRunPro); /* 任务句柄  */
 
   
     #if 0
     xTaskCreate( vTaskDecoderPro,     		/* 任务函数  */
-                 "vTaskDecoderPro",   		/* 任务各1�71ￄ1�77    */
+                 "vTaskDecoderPro",   		/* 任务各1�71ￄ1�77    */
                  128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,               		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
+                 2,               		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskDecoderPro );  /* 任务句柄  */
    
 	#endif 
 	
 	xTaskCreate( vTaskStart,     		/* 任务函数  */
-                 "vTaskStart",   		/* 任务各1�71ￄ1�77    */
+                 "vTaskStart",   		/* 任务各1�71ￄ1�77    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,              		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
+                 2,              		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 

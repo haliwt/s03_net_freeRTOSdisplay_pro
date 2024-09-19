@@ -3,9 +3,9 @@
 RUN_T run_t;
 
 
-static void Setup_Timer_Times(void);
+//static void disp_timer_run_times(void);
 //void Setup_Timer_Times_Donot_Display(void);
-static void Works_Counter_Time(void);
+//static void Works_Counter_Time(void);
 
 uint8_t temp;
 
@@ -118,8 +118,9 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
         if(pdata[3] == 0x01){  //warning 
 
             run_t.ptc_warning = 1;
-            run_t.setup_timer_timing_item =  PTC_WARNING; //ptc warning 
-            run_t.display_set_timer_timing = 0xff;
+            //run_t.setup_timer_timing_item =  PTC_WARNING; //ptc warning 
+            run_t.display_set_timer_or_works_mode = PTC_WARNING;
+            run_t.display_set_timer_or_works_mode = 0xff;
             run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
 
@@ -140,8 +141,9 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
          if(pdata[3] == 0x01){  //warning 
 
             run_t.fan_warning = 1;
-            run_t.setup_timer_timing_item = FAN_WARNING ; //fan warning 
-            run_t.display_set_timer_timing = 0xff;
+           // run_t.setup_timer_timing_item = FAN_WARNING ; //fan warning 
+           run_t.display_set_timer_or_works_mode =FAN_WARNING;
+            run_t.display_set_timer_or_works_mode = 0xff;
             run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
 
@@ -273,12 +275,12 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         if(pdata[3]==2){
          //timer time + don't has ai item
-              run_t.display_set_timer_timing = timer_time;
+              run_t.display_set_timer_or_works_mode = timer_time;
     	      run_t.gModel=2;
          }
          else{
                   //beijing time + ai item
-              run_t.display_set_timer_timing = beijing_time;
+              run_t.display_set_timer_or_works_mode = works_time;
              
 	          run_t.gModel=1;
 
@@ -342,11 +344,12 @@ uint8_t bcc_check(const unsigned char *data, int len) {
 	*
 	*
 ************************************************************************/  
+#if 1
 void Timing_Handler(void)
 {
-     switch(run_t.display_set_timer_timing ){//run_t.setup_timer_timing_item
+     switch(run_t.display_set_timer_or_works_mode ){//run_t.setup_timer_timing_item
          
-     case beijing_time:
+     case works_time:
        beijing_time_fun();
 
 						 
@@ -354,7 +357,7 @@ void Timing_Handler(void)
     
     case timer_time:
 	
-		Setup_Timer_Times();
+		disp_timer_run_times();
 		Works_Counter_Time();
 	
      break;
@@ -365,15 +368,17 @@ void Timing_Handler(void)
     }
 }
 
+#endif 
+
 /*************************************************************************
 	*
-	*Functin Name:static void Setup_Timer_Times(void)
+	*Functin Name:static void disp_timer_run_times(void)
 	*Function : set up timer timing function
 	*
 	*
 	*
 *************************************************************************/
-void Setup_Timer_Times(void)
+void disp_timer_run_times(void)
 {
 
 
@@ -404,7 +409,7 @@ void Setup_Timer_Times(void)
      
                      run_t.timer_time_hours =0;
                      run_t.timer_time_minutes =0;
-				     run_t.display_set_timer_timing=beijing_time;
+				     run_t.display_set_timer_or_works_mode=works_time;
                      run_t.gModel=1;
                      if(wifi_link_net_state()==1){
 					      SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
@@ -421,17 +426,17 @@ void Setup_Timer_Times(void)
 	     
      
    
-			lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-			lcd_t.number5_high =(run_t.timer_time_hours) /10;
-
-			lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-			lcd_t.number6_high = (run_t.timer_time_hours ) %10;
-
-			lcd_t.number7_low = (run_t.timer_time_minutes )/10;
-			lcd_t.number7_high = (run_t.timer_time_minutes)/10;
-
-			lcd_t.number8_low = (run_t.timer_time_minutes)%10;
-			lcd_t.number8_high = (run_t.timer_time_minutes )%10;
+//			lcd_t.number5_low=(run_t.timer_time_hours ) /10;
+//			lcd_t.number5_high =(run_t.timer_time_hours) /10;
+//
+//			lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
+//			lcd_t.number6_high = (run_t.timer_time_hours ) %10;
+//
+//			lcd_t.number7_low = (run_t.timer_time_minutes )/10;
+//			lcd_t.number7_high = (run_t.timer_time_minutes)/10;
+//
+//			lcd_t.number8_low = (run_t.timer_time_minutes)%10;
+//			lcd_t.number8_high = (run_t.timer_time_minutes )%10;
 }
 /*************************************************************************
 	*
@@ -494,7 +499,7 @@ void Setup_Timer_Times_Donot_Display(void)
  *
  * 
  **************************************************************/
-static void Works_Counter_Time(void)
+void Works_Counter_Time(void)
 {
   if(run_t.timer_timing_define_flag == timing_success){
 	  if(run_t.gTimer_disp_timer_seconds >59){ //minute

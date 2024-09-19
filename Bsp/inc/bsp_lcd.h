@@ -50,6 +50,10 @@
 #define HUMI_Symbol              0x01      //addr  0xC9
  
 #define TWO_DOT_Symbol           0x01       //addr 0xCB
+
+
+#define HUM_T8                  0x01
+
  
 #define T10                      0x08      //addr 0xCF
 #define T11                      0x04      //addr 0xCF

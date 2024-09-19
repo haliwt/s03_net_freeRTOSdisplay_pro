@@ -76,7 +76,7 @@ void power_off_handler(void)
 
         run_t.timer_timing_define_flag = timing_not_definition;
 
-        run_t.disp_wind_speed_grade =30;	
+        run_t.disp_wind_speed_grade =100;	
 
         run_t.fan_off_60s =0;
         run_t.gFan_RunContinue=1;
@@ -126,14 +126,14 @@ void power_on_key_short_fun(void)
     run_t.disp_wind_speed_grade =100;
 	
 
-     run_t.setup_timer_timing_item=0;
+   run_t.display_set_timer_or_works_mode =works_time;
 
 	
      run_t.gTimer_timing=0;
 
 	 run_t.timer_time_hours =0;
 	 run_t.timer_time_minutes =0;
-	 run_t.setup_timer_timing_item=0;
+	 
 
 	 run_t.timer_timing_define_flag = timing_not_definition;
 
@@ -165,7 +165,7 @@ void power_on_key_short_fun(void)
    
 
     run_t.gModel =1; //AI mode
-    run_t.display_set_timer_timing=beijing_time ;
+    run_t.display_set_timer_or_works_mode=works_time ;
   
   
      Lcd_PowerOn_Fun();
@@ -186,19 +186,19 @@ void power_key_long_fun(void)
 void mode_key_short_fun(void)
 {
    if(run_t.ptc_warning ==0 && run_t.fan_warning ==0){
-		if(run_t.display_set_timer_timing == beijing_time){
+		if(run_t.display_set_timer_or_works_mode == works_time){
 	
 			//timer time + don't has ai item
-			run_t.display_set_timer_timing = timer_time;
+			run_t.display_set_timer_or_works_mode = timer_time;
 			run_t.gModel=2;
 			if(wifi_link_net_state() == 1){
 				SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
 				osDelay(5);
 			}
 		}
-		else if(run_t.display_set_timer_timing == timer_time){
+		else if(run_t.display_set_timer_or_works_mode == timer_time){
 			//beijing time + ai item
-			run_t.display_set_timer_timing = beijing_time;
+			run_t.display_set_timer_or_works_mode = works_time;
 			
 			run_t.gModel=1;
 			if(wifi_link_net_state() ==1){
@@ -216,7 +216,7 @@ void add_key_fun(void)
 {
      static uint8_t power_on_fisrt_flag ;
     
-	switch(run_t.setup_timer_timing_item){
+	switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
 	case 0: //set temperature value add number
 
@@ -278,7 +278,7 @@ void dec_key_fun(void)
     if(run_t.gPower_On ==1){
 	   	if(run_t.ptc_warning ==0){
 	
-	     switch(run_t.setup_timer_timing_item){
+	     switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
 		   case 0: 
 	
