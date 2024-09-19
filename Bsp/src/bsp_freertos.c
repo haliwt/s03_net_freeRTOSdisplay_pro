@@ -241,7 +241,8 @@ static void vTaskRunPro(void *pvParameters)
                       gpro_t.key_mode_flag++;
                      if(gl_tMsg.key_long_mode_flag==0){//
                            gl_tMsg.long_key_mode_counter=0;
-                            //SendData_Buzzer();
+                            SendData_Buzzer();
+                            HAL_Delay(10);
                             //osDelay(5);
                     
                             //mode_key_short_fun();
@@ -294,8 +295,8 @@ static void vTaskRunPro(void *pvParameters)
 
            if(gpro_t.key_mode_flag==2 && gl_tMsg.key_long_mode_flag ==0){
              gpro_t.key_mode_flag++;
-             SendData_Buzzer();
-             HAL_Delay(10);
+             //SendData_Buzzer();
+             
              mode_key_short_fun();
 
 

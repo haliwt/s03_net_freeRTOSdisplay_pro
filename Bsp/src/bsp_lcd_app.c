@@ -488,7 +488,12 @@ void disp_fan_leaf_run_icon(void)
 {
 
    static uint8_t colon_flag_toggle;
+   static uint8_t disp_flag_1,disp_1_default=0xff,disp_flag_2,disp_2_default=0xff;
    if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
+  
+        if(disp_1_default != disp_flag_1){
+            disp_1_default = disp_flag_1;
+            disp_flag_2++;
     
          works_timer_disp_numaber();
 
@@ -496,7 +501,7 @@ void disp_fan_leaf_run_icon(void)
 
         TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
         TM1723_Write_Display_Data(0xCA,T15+lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digital '5,6'
-        if(colon_flag_toggle ==0){
+        if(colon_flag_toggle < 2){
                     colon_flag_toggle ++;
         TM1723_Write_Display_Data(0xCB,0x01+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
         }
@@ -513,9 +518,15 @@ void disp_fan_leaf_run_icon(void)
 
         TM1723_Write_Display_Data(0xCF,((T11+T16)& 0x05));//
         TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+
+       }
     
     }
     else if(lcd_t.gTimer_fan_10ms <40){
+
+     if(disp_2_default != disp_flag_2){
+            disp_2_default = disp_flag_2;
+            disp_flag_1++;
 
       works_timer_disp_numaber();
 
@@ -540,6 +551,7 @@ void disp_fan_leaf_run_icon(void)
     TM1723_Write_Display_Data(0xCF,((T16+T12+T10)&0x0B));//
 
     TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+        }
     }
     else if(lcd_t.gTimer_fan_10ms > 79){
         lcd_t.gTimer_fan_10ms=0;
@@ -558,16 +570,16 @@ static void works_timer_disp_numaber(void)
       case works_time:
  
       lcd_t.number5_low=(run_t.dispTime_hours ) /10;
-     lcd_t.number5_high =(run_t.dispTime_hours) /10;
+     lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
 
 	 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
-	 lcd_t.number6_high = (run_t.dispTime_hours ) %10;
+	 lcd_t.number6_high =  lcd_t.number6_low ;//(run_t.dispTime_hours ) %10;
      
      lcd_t.number7_low = (run_t.dispTime_minutes )/10;
-	 lcd_t.number7_high = (run_t.dispTime_minutes )/10;
+	 lcd_t.number7_high = lcd_t.number7_low;//(run_t.dispTime_minutes )/10;
 
 	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
-	 lcd_t.number8_high = (run_t.dispTime_minutes )%10;
+	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
 
 
     
@@ -576,10 +588,10 @@ static void works_timer_disp_numaber(void)
     case setup_timer:
         
                lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-               lcd_t.number5_high =(run_t.timer_time_hours) /10;
+               lcd_t.number5_high =lcd_t.number5_low;//(run_t.timer_time_hours) /10;
     
                lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-               lcd_t.number6_high = (run_t.timer_time_hours ) %10;
+               lcd_t.number6_high =   lcd_t.number6_low;//(run_t.timer_time_hours ) %10;
     
                lcd_t.number7_low =0;
                lcd_t.number7_high = 0;
@@ -595,16 +607,16 @@ static void works_timer_disp_numaber(void)
  
 
            lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-			lcd_t.number5_high =(run_t.timer_time_hours) /10;
+			lcd_t.number5_high =lcd_t.number5_low;//(run_t.timer_time_hours) /10;
 
 			lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-			lcd_t.number6_high = (run_t.timer_time_hours ) %10;
+			lcd_t.number6_high = lcd_t.number6_low;//(run_t.timer_time_hours ) %10;
 
 			lcd_t.number7_low = (run_t.timer_time_minutes )/10;
-			lcd_t.number7_high = (run_t.timer_time_minutes)/10;
+			lcd_t.number7_high =lcd_t.number7_low ;//(run_t.timer_time_minutes)/10;
 
 			lcd_t.number8_low = (run_t.timer_time_minutes)%10;
-			lcd_t.number8_high = (run_t.timer_time_minutes )%10;
+			lcd_t.number8_high = lcd_t.number8_low ;//(run_t.timer_time_minutes )%10;
 
 
     break;
