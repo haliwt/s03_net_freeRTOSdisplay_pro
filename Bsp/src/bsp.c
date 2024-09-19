@@ -51,7 +51,6 @@ void display_timer_and_beijing_time_handler(void)
 
     break;
 
-    
 
     case setup_timer:
 

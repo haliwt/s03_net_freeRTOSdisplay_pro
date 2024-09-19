@@ -218,7 +218,9 @@ void add_key_fun(void)
     
 	switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
-	case works_time: //set temperature value add number
+    case works_time: //set temperature value add number
+    
+    case timer_time: 
 
 		
 		run_t.wifi_set_temperature ++;
@@ -280,7 +282,10 @@ void dec_key_fun(void)
 	
 	     switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
-		   case 0: 
+
+          case works_time:
+
+		  case timer_time: 
 	
 	   
 			run_t.wifi_set_temperature--;

@@ -269,7 +269,7 @@ static void vTaskRunPro(void *pvParameters)
                   gpro_t.key_add_flag ++;
                   
                    SendData_Buzzer();
-                   osDelay(5);
+                   HAL_Delay(10);
                 
                   add_key_fun();
                 }
@@ -281,7 +281,7 @@ static void vTaskRunPro(void *pvParameters)
                 if(KEY_DEC_GetValue()==KEY_UP){
                     gpro_t.key_dec_flag ++;
                    SendData_Buzzer();
-                   osDelay(5);
+                   HAL_Delay(10);
                 
                    dec_key_fun();
                 }
@@ -363,7 +363,7 @@ static void vTaskStart(void *pvParameters)
              gl_tMsg.long_key_mode_counter =0;
             gl_tMsg.long_key_power_counter++;
 
-         if(gl_tMsg.long_key_power_counter > 15 && run_t.gPower_On == power_on ){
+         if(gl_tMsg.long_key_power_counter > 30 && run_t.gPower_On == power_on ){
             gl_tMsg.long_key_power_counter =0;
             gl_tMsg.key_long_power_flag =1;
              gpro_t.gTimer_mode_key_long = 0;
@@ -388,7 +388,7 @@ static void vTaskStart(void *pvParameters)
          
           gl_tMsg.long_key_mode_counter ++ ;
 
-          if(gl_tMsg.long_key_mode_counter > 15  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
+          if(gl_tMsg.long_key_mode_counter > 30  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
              gl_tMsg.long_key_mode_counter=0;   
          
              gl_tMsg.key_long_mode_flag =1;
@@ -397,8 +397,8 @@ static void vTaskStart(void *pvParameters)
                 SendData_Buzzer();
            }
 
-
-         gpro_t.key_mode_flag  =  1;
+         if(gl_tMsg.long_key_mode_counter < 30 && run_t.gPower_On == power_on)
+            gpro_t.key_mode_flag  =  1;
 
 
      }

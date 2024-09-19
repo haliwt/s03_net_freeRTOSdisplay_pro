@@ -568,7 +568,7 @@ static void works_timer_disp_numaber(void)
      switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
       case works_time:
- 
+
       lcd_t.number5_low=(run_t.dispTime_hours ) /10;
      lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
 
@@ -581,7 +581,7 @@ static void works_timer_disp_numaber(void)
 	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
 	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
 
-
+      
     
     break;
 
@@ -621,9 +621,56 @@ static void works_timer_disp_numaber(void)
 
     break;
 
+    
+
      }
 
 }
 
 
+/**********************************************************************************************************
+*
+*	Function Name: void power_off_disp_fan_run_handler(void)
+*	Function:
+*	Input Ref: NO
+*	Return Ref: NO
+*
+**********************************************************************************************************/
+void power_off_disp_fan_run_handler(void)
+{
+    if(lcd_t.gTimer_fan_10ms <40){
+
+           TM1723_Write_Display_Data(0xC9,(lcdNumber4_Low[0X0A]+lcdNumber5_High[0X0A]) & 0xff);
+           TM1723_Write_Display_Data(0xCA,(lcdNumber5_Low[0x0A]+lcdNumber6_High[0x0A]) & 0xff);
+           TM1723_Write_Display_Data(0xCB,(lcdNumber6_Low[0x0A]+lcdNumber7_High[0x0A]) & 0xff);
+           TM1723_Write_Display_Data(0xCC,(T14+lcdNumber7_Low[0x0A]+lcdNumber8_High[0x0A]) & 0xff);
+          
+           TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[0x0A]+WIND_SPEED_FULL);//display "t,c"
+           TM1723_Write_Display_Data(0xCF,((T16+T12+T10)& 0x0B));//
+                    
+         }
+         else if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){ //close
+                
+         TM1723_Write_Display_Data(0xC9,(lcdNumber4_Low[0X0A]+lcdNumber5_High[0X0A]) & 0xff);
+
+         TM1723_Write_Display_Data(0xCA,(T15+lcdNumber5_Low[0x0A]+lcdNumber6_High[0x0A]) & 0xff);
+
+         TM1723_Write_Display_Data(0xCB,(lcdNumber6_Low[0x0A]+lcdNumber7_High[0x0A]) & 0xff);
+         TM1723_Write_Display_Data(0xCC,(lcdNumber7_Low[0x0A]+lcdNumber8_High[0x0A]) & 0xff);
+         TM1723_Write_Display_Data(0xCE,T13+lcdNumber8_Low[0x0A]+WIND_SPEED_FULL);//display "close"
+        
+         TM1723_Write_Display_Data(0xCF,((T11+T16) & 0x05));//
+                  
+    
+         }
+         else if(lcd_t.gTimer_fan_10ms > 79){
+                lcd_t.gTimer_fan_10ms=0;
+         }
+
+
+
+
+
+
+}
 

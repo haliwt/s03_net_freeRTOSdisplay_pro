@@ -15,6 +15,7 @@ void disp_time_colon_ion_handler(void);
 void disp_fan_leaf_run_icon(void);
 
 
+void power_off_disp_fan_run_handler(void);
 
 
 
