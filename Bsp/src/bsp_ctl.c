@@ -35,7 +35,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         }
         else if(pdata[3] == 0x0){ //close 
-
+            gpro_t.smart_phone_power_off=1;
             App_PowerOff_Handler() ; 
 
 

@@ -55,7 +55,10 @@ void power_off_handler(void)
         run_t.power_off_id_flag++;  
         lcd_donot_disp_screen();
         Power_Off_Fun();
-        SendData_PowerOnOff(0);
+        if(gpro_t.smart_phone_power_off == 0){
+             SendData_PowerOnOff(0);
+
+         }
 
         LED_MODEL_OFF();
         POWER_ON_LED();
@@ -120,7 +123,7 @@ void power_on_key_short_fun(void)
     	run_t.gUltransonic =1;
 
     }
-	
+	 gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
     run_t.setup_temperature_value=40;
     run_t.disp_wind_speed_grade =100;
