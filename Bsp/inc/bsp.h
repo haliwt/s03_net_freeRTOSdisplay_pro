@@ -43,6 +43,8 @@ typedef struct _process_state{
    uint8_t key_mode_flag;
    uint8_t key_add_flag;
    uint8_t key_dec_flag;
+   uint8_t smart_phone_power_on;
+   uint8_t smart_phone_power_off;
 
    uint8_t disp_rx_cmd_done_flag;
    uint8_t gTimer_mode_key_long;

@@ -28,7 +28,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
      break;
 
-     case 0x01: //表示开机指令
+     case 0x31: //smart phone app power on command 
 
         if(pdata[3] == 0x01){ //open
             App_PowerOn_Handler() ; 

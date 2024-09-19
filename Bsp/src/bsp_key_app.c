@@ -122,7 +122,7 @@ void power_on_key_short_fun(void)
     }
 	
 	gpro_t.set_temp_value_success =0;
-    run_t.setup_temperature_value=0; // //WT.EDIT 2023.01.31
+    run_t.setup_temperature_value=40;
     run_t.disp_wind_speed_grade =100;
 	
 

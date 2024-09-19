@@ -114,7 +114,7 @@ void freeRTOS_Handler(void)
 static void vTaskRunPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置朢�大等待时间为30ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置朢�大等待时间为30ms */
 	uint32_t ulValue;
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
@@ -168,7 +168,7 @@ static void vTaskRunPro(void *pvParameters)
             if((ulValue & POWER_KEY_BIT_0) != 0)
 			{
 
-                 gpro_t.key_power_flag = 1;
+                 gpro_t.smart_phone_power_on = 1;
                  gl_tMsg.key_long_power_flag=0;
                  gl_tMsg.long_key_power_counter=0;
               
@@ -181,6 +181,7 @@ static void vTaskRunPro(void *pvParameters)
              else if((ulValue & POWER_OFF_BIT_4) != 0){
 
                     app_power_off_flag =1;
+                 
 
             }
            
@@ -219,6 +220,12 @@ static void vTaskRunPro(void *pvParameters)
 
               }
              }
+
+            }
+            else if(gpro_t.smart_phone_power_on == 1){
+                gpro_t.smart_phone_power_on ++;
+                run_t.gPower_On = power_on;
+                power_on_key_short_fun();
 
             }
             else if(smart_phone_app_power_on_flag ==1){
@@ -415,7 +422,7 @@ static void vTaskStart(void *pvParameters)
          gpro_t.key_add_flag = 1;
 
     }
-    vTaskDelay(30);
+    vTaskDelay(40);
      
     }
 
