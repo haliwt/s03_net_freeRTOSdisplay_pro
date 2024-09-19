@@ -640,7 +640,7 @@ void power_off_disp_fan_run_handler(void)
 {
     if(lcd_t.gTimer_fan_10ms <40){
 
-           TM1723_Write_Display_Data(0xC9,(lcdNumber4_Low[0X0A]+lcdNumber5_High[0X0A]) & 0xff);
+    
            TM1723_Write_Display_Data(0xCA,(lcdNumber5_Low[0x0A]+lcdNumber6_High[0x0A]) & 0xff);
            TM1723_Write_Display_Data(0xCB,(lcdNumber6_Low[0x0A]+lcdNumber7_High[0x0A]) & 0xff);
            TM1723_Write_Display_Data(0xCC,(T14+lcdNumber7_Low[0x0A]+lcdNumber8_High[0x0A]) & 0xff);
@@ -651,7 +651,7 @@ void power_off_disp_fan_run_handler(void)
          }
          else if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){ //close
                 
-         TM1723_Write_Display_Data(0xC9,(lcdNumber4_Low[0X0A]+lcdNumber5_High[0X0A]) & 0xff);
+     
 
          TM1723_Write_Display_Data(0xCA,(T15+lcdNumber5_Low[0x0A]+lcdNumber6_High[0x0A]) & 0xff);
 
