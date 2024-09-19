@@ -64,7 +64,7 @@ void power_off_handler(void)
         POWER_ON_LED();
 
         run_t.wifi_led_fast_blink_flag=0;
-        run_t.setup_temperature_value=0;
+        run_t.smart_phone_set_temp_value_flag=0;
         run_t.timer_time_hours =0;
         run_t.timer_time_minutes =0;
 
@@ -125,8 +125,13 @@ void power_on_key_short_fun(void)
     }
 	 gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
-    run_t.setup_temperature_value=40;
+    run_t.smart_phone_set_temp_value_flag=0;
+    run_t.timer_time_hours =40;
+    
+    
     run_t.disp_wind_speed_grade =100;
+
+    
 	
 
    run_t.display_set_timer_or_works_mode =works_time;
@@ -196,7 +201,7 @@ void mode_key_short_fun(void)
 			run_t.gModel=2;
 			if(wifi_link_net_state() == 1){
 				SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
-				osDelay(5);
+				HAL_Delay(10);
 			}
 		}
 		else if(run_t.display_set_timer_or_works_mode == timer_time){
@@ -206,7 +211,7 @@ void mode_key_short_fun(void)
 			run_t.gModel=1;
 			if(wifi_link_net_state() ==1){
 				SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
-				osDelay(5);
+				HAL_Delay(10);
 			}
 		
 		}

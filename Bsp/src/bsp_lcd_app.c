@@ -33,7 +33,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 
    /***********************setup temperature value ********************************/
 	 //digital 1,2 ->display "temperature"  blink  
-	if(run_t.setup_temperature_value ==1){
+	if(run_t.smart_phone_set_temp_value_flag ==1){
 
         disp_set_timer_value =1;
 
@@ -117,9 +117,9 @@ void disp_temp_humidity_wifi_icon_handler(void)
 		else {
              run_t.gTimer_numbers_one_two_blink =0;
 			 number_blink_times++;
-		     if(number_blink_times > 3){
+		     if(number_blink_times > 2){
                  number_blink_times =0;
-				 run_t.setup_temperature_value =0;
+				 run_t.smart_phone_set_temp_value_flag =0;
                  gpro_t.set_temp_value_success = 1;
                  gpro_t.gTimer_temp_compare_value =20; //at once 
 			}
@@ -497,7 +497,7 @@ void disp_fan_leaf_run_icon(void)
     
          works_timer_disp_numaber();
 
-      //disp_time_colon_ion_handler();
+     
 
         TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
         TM1723_Write_Display_Data(0xCA,T15+lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digital '5,6'
@@ -517,7 +517,7 @@ void disp_fan_leaf_run_icon(void)
 
 
         TM1723_Write_Display_Data(0xCF,((T11+T16)& 0x05));//
-        TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+       // TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
 
        }
     
@@ -550,7 +550,7 @@ void disp_fan_leaf_run_icon(void)
     donot_disp_T13_icon_fan_speed_level();
     TM1723_Write_Display_Data(0xCF,((T16+T12+T10)&0x0B));//
 
-    TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+    //TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
         }
     }
     else if(lcd_t.gTimer_fan_10ms > 79){

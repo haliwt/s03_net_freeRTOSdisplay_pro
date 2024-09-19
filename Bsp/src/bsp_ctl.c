@@ -304,7 +304,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 		lcd_t.number2_low = unit_temp;
 		lcd_t.number2_high = unit_temp;
 
-        run_t.setup_temperature_value =1;
+        run_t.smart_phone_set_temp_value_flag =1;
 
         
       break;

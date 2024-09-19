@@ -59,9 +59,10 @@ void display_timer_and_beijing_time_handler(void)
     break;
 
     case timer_time:
-        
-        disp_timer_run_times();
-		Works_Counter_Time();
+
+       
+       disp_timer_run_times();
+       Works_Counter_Time();
 
     break;
 
@@ -258,7 +259,7 @@ void set_temperature_compare_value_fun(void)
 
     if(gpro_t.temp_key_set_value ==1 && gpro_t.gTimer_set_temp_times > 1){
     
-         run_t.setup_temperature_value =1;
+         run_t.smart_phone_set_temp_value_flag =1;
           gpro_t.temp_key_set_value =0;
           gpro_t.gTimer_temp_compare_value =0;
 
