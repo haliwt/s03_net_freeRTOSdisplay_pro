@@ -55,10 +55,10 @@ void power_off_handler(void)
         run_t.power_off_id_flag++;  
         lcd_donot_disp_screen();
         Power_Off_Fun();
-        if(gpro_t.smart_phone_power_off == 0){
-             SendData_PowerOnOff(0);
+       // if(gpro_t.smart_phone_power_off == 0){
+           ///  SendData_PowerOnOff(0);
 
-         }
+        /// }
 
         LED_MODEL_OFF();
         POWER_ON_LED();
