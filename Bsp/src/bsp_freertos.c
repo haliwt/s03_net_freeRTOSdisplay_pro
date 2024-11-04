@@ -119,7 +119,6 @@ static void vTaskRunPro(void *pvParameters)
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
     static uint8_t smart_phone_app_power_on_flag,app_power_off_flag;
-    static uint8_t test_ptc;
     while(1)
     {
 		/*
@@ -186,13 +185,7 @@ static void vTaskRunPro(void *pvParameters)
     }
     else{
 
-            if(test_ptc == 0){
-               test_ptc ++;
-               run_t.ptc_warning = 1;
-               run_t.display_set_timer_or_works_mode = PTC_WARNING;
-
-            }
-
+         
             if( gpro_t.key_power_flag == 1){
 
             if(KEY_POWER_GetValue()  ==KEY_UP){
