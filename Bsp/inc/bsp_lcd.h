@@ -54,6 +54,9 @@
 
 #define HUM_T8                  0x01
 
+#define TIME_COLON              0x01
+#define TIME_NO_COLON           0X0
+
  
 #define T10                      0x08      //addr 0xCF
 #define T11                      0x04      //addr 0xCF
@@ -61,8 +64,11 @@
 #define T16                      0x01     //addr 0xCF
  
 #define T13                      0x01      //addr 0xCE
+#define T13_NO
 #define T14                      0x01      //addr 0xCC
+#define T14_NO
 #define T15                      0x01      //addr 0xCA
+#define T15_NO
 #define WIND_T16                 0x01      //addr 0xCF
  
 #define T17_T18_T19				 0xE0  

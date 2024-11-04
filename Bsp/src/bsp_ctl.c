@@ -120,7 +120,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
             run_t.ptc_warning = 1;
             //run_t.setup_timer_timing_item =  PTC_WARNING; //ptc warning 
             run_t.display_set_timer_or_works_mode = PTC_WARNING;
-            run_t.display_set_timer_or_works_mode = 0xff;
+        
             run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
 
@@ -141,10 +141,10 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
          if(pdata[3] == 0x01){  //warning 
 
             run_t.fan_warning = 1;
-           // run_t.setup_timer_timing_item = FAN_WARNING ; //fan warning 
-           run_t.display_set_timer_or_works_mode =FAN_WARNING;
-            run_t.display_set_timer_or_works_mode = 0xff;
-            run_t.gDry =0;
+          
+           run_t.display_set_timer_or_works_mode =FAN_WARNING;  //run_t.display_set_timer_or_works_mode
+       
+           run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
 
         }

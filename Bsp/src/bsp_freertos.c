@@ -118,8 +118,8 @@ static void vTaskRunPro(void *pvParameters)
 	uint32_t ulValue;
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
-   
     static uint8_t smart_phone_app_power_on_flag,app_power_off_flag;
+    static uint8_t test_ptc;
     while(1)
     {
 		/*
@@ -149,22 +149,6 @@ static void vTaskRunPro(void *pvParameters)
 		{
 			/* 接收到消息，棢�测那个位被按丄1�7 */
 
-
-
-
-            if((ulValue & DECODER_BIT_9) != 0)
-			{
-        	 
-              
-                gpro_t.disp_rx_cmd_done_flag = 0;
-
-             check_code =  bcc_check(gl_tMsg.usData,ulid);
-
-             if(check_code == bcc_check_code ){
-           
-                receive_data_fromm_mainboard(gl_tMsg.usData);
-                }
-            }
             if((ulValue & POWER_KEY_BIT_0) != 0)
 			{
 
@@ -184,10 +168,30 @@ static void vTaskRunPro(void *pvParameters)
                  
 
             }
+            else if((ulValue & DECODER_BIT_9) != 0)
+			{
+        	 
+              
+               gpro_t.disp_rx_cmd_done_flag = 0;
+
+               check_code =  bcc_check(gl_tMsg.usData,ulid);
+
+               if(check_code == bcc_check_code ){
+           
+                 receive_data_fromm_mainboard(gl_tMsg.usData);
+                }
+            }
            
            
     }
     else{
+
+            if(test_ptc == 0){
+               test_ptc ++;
+               run_t.ptc_warning = 1;
+               run_t.display_set_timer_or_works_mode = PTC_WARNING;
+
+            }
 
             if( gpro_t.key_power_flag == 1){
 
