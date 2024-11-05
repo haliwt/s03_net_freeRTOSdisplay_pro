@@ -45,7 +45,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
     case 0x21: //smart phone power on or off
         if(pdata[3]==0x01){ //power on by smart phone APP
-            gpro_t.smart_phone_app_power_on_flag =1;
+            gpro_t.smart_phone_app_timer_power_on_flag =1;
             run_t.wifi_link_net_success=1;
              
              App_PowerOn_Handler() ; 

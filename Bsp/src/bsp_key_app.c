@@ -83,7 +83,7 @@ void power_off_handler(void)
 
         run_t.fan_off_60s =0;
         run_t.gFan_RunContinue=1;
-        gpro_t.smart_phone_app_power_on_flag =0;
+        gpro_t.smart_phone_app_timer_power_on_flag =0;
       
 	}
     
@@ -115,7 +115,7 @@ void power_on_key_short_fun(void)
 {
   
    
-   if(gpro_t.smart_phone_app_power_on_flag == 0){
+   if(gpro_t.smart_phone_app_timer_power_on_flag == 0){
 
     	run_t.gModel =1; //WT.EDIT 2022.09.01
     	run_t.gPlasma=1;
@@ -123,7 +123,7 @@ void power_on_key_short_fun(void)
     	run_t.gUltransonic =1;
 
     }
-	 gpro_t.smart_phone_power_off=0;
+	gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
     run_t.smart_phone_set_temp_value_flag=0;
     run_t.timer_time_hours =40;

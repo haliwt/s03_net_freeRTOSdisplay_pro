@@ -47,11 +47,27 @@ void display_timer_and_beijing_time_handler(void)
    switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
     case works_time:
-      if(run_t.power_on_disp_smg_number ==1){
+     if(run_t.power_on_disp_smg_number ==1){
        run_t.power_on_disp_smg_number++; 
-       power_on_init_disp_time_numbers();
-
+       if(run_t.dispTime_hours> 24){
+          run_t.dispTime_hours=0;
+          run_t.dispTime_minutes =0;
        }
+      lcd_t.number5_low=(run_t.dispTime_hours ) /10;
+     lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
+
+	 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
+	 lcd_t.number6_high =  lcd_t.number6_low ;//(run_t.dispTime_hours ) %10;
+     
+     lcd_t.number7_low = (run_t.dispTime_minutes )/10;
+	 lcd_t.number7_high = lcd_t.number7_low;//(run_t.dispTime_minutes )/10;
+
+	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
+	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
+      power_on_init_disp_time_numbers();
+       
+
+      }
       disp_normal_timing_handler(); 
     //  beijing_time_fun();
     
@@ -151,7 +167,6 @@ static void disp_normal_timing_handler(void)
 
 }
 static void power_on_init_disp_time_numbers(void)
-
 {
      
     TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);

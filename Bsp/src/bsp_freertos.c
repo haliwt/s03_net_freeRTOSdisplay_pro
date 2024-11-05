@@ -118,7 +118,7 @@ static void vTaskRunPro(void *pvParameters)
 	uint32_t ulValue;
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
-    static uint8_t smart_phone_app_power_on_flag,app_power_off_flag;
+    static uint8_t smart_phone_app_timer_power_on_flag,app_power_off_flag;
     while(1)
     {
 		/*
@@ -158,7 +158,7 @@ static void vTaskRunPro(void *pvParameters)
     }
     else if((ulValue & POWER_ON_BIT_5) != 0){
 
-        smart_phone_app_power_on_flag=1;
+        smart_phone_app_timer_power_on_flag=1;
 
     }
     else if((ulValue & POWER_OFF_BIT_4) != 0){
@@ -210,6 +210,7 @@ static void vTaskRunPro(void *pvParameters)
               }
               else{
                 gl_tMsg.long_key_power_counter=0; //WT.2024.11.05
+                gl_tMsg.key_long_power_flag=0;
                  SendData_PowerOnOff(0);
                  HAL_Delay(10);
                 
@@ -227,11 +228,11 @@ static void vTaskRunPro(void *pvParameters)
                 power_on_key_short_fun();
 
             }
-            else if(smart_phone_app_power_on_flag ==1){
-                smart_phone_app_power_on_flag++;
+            else if(smart_phone_app_timer_power_on_flag ==1){
+                smart_phone_app_timer_power_on_flag++;
                  run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0;
-                
+                run_t.power_on_disp_smg_number = 0;
                 power_on_key_short_fun();
 
             }
@@ -338,6 +339,7 @@ static void vTaskRunPro(void *pvParameters)
        else if(run_t.gPower_On == power_off){
           gl_tMsg.long_key_power_counter =0;
            gl_tMsg.key_long_power_flag =0;
+           run_t.power_on_disp_smg_number = 0;
 
           power_off_handler();
 

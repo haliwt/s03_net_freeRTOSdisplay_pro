@@ -53,7 +53,7 @@ typedef struct _process_state{
    uint8_t set_temp_value_success;
    uint8_t humidity_real_value;
    uint8_t  temp_real_value;
-   uint8_t  smart_phone_app_power_on_flag;
+   uint8_t  smart_phone_app_timer_power_on_flag;
    uint8_t  key_power_flag;
    uint8_t  smart_phone_turn_off_ptc_flag;
 
