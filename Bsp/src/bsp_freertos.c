@@ -142,7 +142,7 @@ static void vTaskRunPro(void *pvParameters)
 	xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
 						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue丄1�7 */
-						          xMaxBlockTime);  /* 朢�大允许延迟时闄1�7 */
+						          xMaxBlockTime);  /* block times,releas cpu power right */
 		
 	if( xResult == pdPASS )
 	{
@@ -185,8 +185,7 @@ static void vTaskRunPro(void *pvParameters)
     }
     else{
 
-         
-            if( gpro_t.key_power_flag == 1){
+        if( gpro_t.key_power_flag == 1){ //key power key
 
             if(KEY_POWER_GetValue()  ==KEY_UP){
                 gpro_t.key_power_flag++;
@@ -202,18 +201,18 @@ static void vTaskRunPro(void *pvParameters)
              else{
              if(run_t.gPower_On == power_off){
                 run_t.gPower_On = power_on;
-                gl_tMsg.long_key_power_counter =0;
-               
+                gl_tMsg.long_key_power_counter =0; 
+                run_t.power_on_disp_smg_number = 1;
                 SendData_PowerOnOff(1);
                 power_on_key_short_fun();
                 gpro_t.gTimer_mode_key_long=0;
 
               }
               else{
-              
+                gl_tMsg.long_key_power_counter=0; //WT.2024.11.05
                  SendData_PowerOnOff(0);
                  HAL_Delay(10);
-
+                
                   run_t.gPower_On = power_off;
 
               }

@@ -10,7 +10,7 @@ static void disp_fan_ptc_warning_time_colon_fun(void);
 
 static void works_timer_disp_numaber(void);
 
-static void fan_disp_speed_leaf(uint8_t dsip);
+//
 
 
 /*************************************************************************
@@ -374,7 +374,7 @@ void disp_fan_leaf_run_icon(void)
    
    if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
   
-        if(disp_1_default != disp_flag_1){
+        if(disp_1_default != disp_flag_1 ){
             disp_1_default = disp_flag_1;
             disp_flag_2++;
     
@@ -402,9 +402,10 @@ void disp_fan_leaf_run_icon(void)
     }
     else if(lcd_t.gTimer_fan_10ms <40){
 
-     if(disp_2_default != disp_flag_2){
+     if(disp_2_default != disp_flag_2 ){
             disp_2_default = disp_flag_2;
             disp_flag_1++;
+  
 
       works_timer_disp_numaber();
 
@@ -428,6 +429,7 @@ void disp_fan_leaf_run_icon(void)
     }
     else if(lcd_t.gTimer_fan_10ms > 79){
         lcd_t.gTimer_fan_10ms=0;
+        
     }
 
 
@@ -500,7 +502,7 @@ static void works_timer_disp_numaber(void)
 
 }
 
-static void fan_disp_speed_leaf(uint8_t disp)
+void fan_disp_speed_leaf(uint8_t disp)
 {
 
     if(disp==0){

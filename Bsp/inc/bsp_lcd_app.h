@@ -17,6 +17,7 @@ void disp_fan_leaf_run_icon(void);
 
 void power_off_disp_fan_run_handler(void);
 
+void fan_disp_speed_leaf(uint8_t dsip);
 
 
 #endif 

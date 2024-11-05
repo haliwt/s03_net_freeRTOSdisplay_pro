@@ -11,6 +11,9 @@ static void fan_default_warning_fun(void);
 
 static void ptc_high_temp_warning_fun(void);
 
+static void power_on_init_disp_time_numbers(void);
+
+
 
 void bsp_init(void)
 {
@@ -44,10 +47,16 @@ void display_timer_and_beijing_time_handler(void)
    switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
     case works_time:
+      if(run_t.power_on_disp_smg_number ==1){
+       run_t.power_on_disp_smg_number++; 
+       power_on_init_disp_time_numbers();
+
+       }
       disp_normal_timing_handler(); 
     //  beijing_time_fun();
     
      Setup_Timer_Times_Donot_Display();
+    
 
     break;
 
@@ -141,8 +150,19 @@ static void disp_normal_timing_handler(void)
     
 
 }
+static void power_on_init_disp_time_numbers(void)
 
+{
+     
+    TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
 
+    TM1723_Write_Display_Data(0xCA,lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digit
+    
+    TM1723_Write_Display_Data(0xCB,TIME_COLON+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
+    
+    fan_disp_speed_leaf(1);
+
+}
 
 /**************************************************************************************************
 *
