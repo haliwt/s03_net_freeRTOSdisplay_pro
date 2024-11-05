@@ -139,49 +139,49 @@ static void vTaskRunPro(void *pvParameters)
 		    注：ulNotifiedValue表示任务vTaskMsgPro的任务控制块里面的变量��1�7		
 		*/
 		
-		xResult = xTaskNotifyWait(0x00000000,      
+	xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
 						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue丄1�7 */
 						          xMaxBlockTime);  /* 朢�大允许延迟时闄1�7 */
 		
-		if( xResult == pdPASS )
-		{
-			/* 接收到消息，棢�测那个位被按丄1�7 */
+	if( xResult == pdPASS )
+	{
+		/* 接收到消息，棢�测那个位被按丄1�7 */
 
-            if((ulValue & POWER_KEY_BIT_0) != 0)
-			{
+    if((ulValue & POWER_KEY_BIT_0) != 0)
+    {
 
-                 gpro_t.smart_phone_power_on = 1;
-                 gl_tMsg.key_long_power_flag=0;
-                 gl_tMsg.long_key_power_counter=0;
-              
-            }
-            else if((ulValue & POWER_ON_BIT_5) != 0){
+        gpro_t.smart_phone_power_on = 1;
+        gl_tMsg.key_long_power_flag=0;
+        gl_tMsg.long_key_power_counter=0;
 
-                    smart_phone_app_power_on_flag=1;
+    }
+    else if((ulValue & POWER_ON_BIT_5) != 0){
 
-            }
-             else if((ulValue & POWER_OFF_BIT_4) != 0){
+        smart_phone_app_power_on_flag=1;
 
-                    app_power_off_flag =1;
-                 
+    }
+    else if((ulValue & POWER_OFF_BIT_4) != 0){
 
-            }
-            else if((ulValue & DECODER_BIT_9) != 0)
-			{
-        	 
-              
-               gpro_t.disp_rx_cmd_done_flag = 0;
+        app_power_off_flag =1;
 
-               check_code =  bcc_check(gl_tMsg.usData,ulid);
 
-               if(check_code == bcc_check_code ){
-           
-                 receive_data_fromm_mainboard(gl_tMsg.usData);
-                }
-            }
-           
-           
+    }
+    else if((ulValue & DECODER_BIT_9) != 0)
+    {
+
+
+        gpro_t.disp_rx_cmd_done_flag = 0;
+
+        check_code =  bcc_check(gl_tMsg.usData,ulid);
+
+        if(check_code == bcc_check_code ){
+
+        receive_data_fromm_mainboard(gl_tMsg.usData);
+        }
+    }
+
+
     }
     else{
 
@@ -287,18 +287,11 @@ static void vTaskRunPro(void *pvParameters)
                        gpro_t.gTimer_mode_key_long=0;
 
                        mode_key_long_fun();
-                        
-                
-
                       }
 
                  }
             }
-
-      
-          
-          
-      if(run_t.gPower_On == power_on){
+        if(run_t.gPower_On == power_on){
 
 
            if(gpro_t.key_mode_flag==2 && gl_tMsg.key_long_mode_flag ==0){
@@ -357,9 +350,9 @@ static void vTaskRunPro(void *pvParameters)
    }
 }
 /**********************************************************************************************************
-*	凄1�71ￄ1�77 敄1�71ￄ1�77 各1�71ￄ1�77: vTaskStart
+*	Function: vTaskStart
 *	功能说明: 消息处理，使用函数comGetChar获取串口命令，使用函数comSendBuf发��串口消恄1�71ￄ1�77
-*	彄1�71ￄ1�77    叄1�71ￄ1�77: pvParameters 是在创建该任务时传��的形参
+*	Input Ref: pvParameters 是在创建该任务时传��的形参
 *	迄1�71ￄ1�77 囄1�71ￄ1�77 倄1�71ￄ1�77: 旄1�71ￄ1�77
 *   伄1�71ￄ1�77 兄1�71ￄ1�77 纄1�71ￄ1�77: 3  (数��越小优先级越低，这个跟uCOS相反)
 **********************************************************************************************************/
