@@ -121,7 +121,7 @@ void power_on_key_short_fun(void)
     	run_t.gPlasma=1;
     	run_t.gDry =1;
     	run_t.gUltransonic =1;
-
+    
     }
 	gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
