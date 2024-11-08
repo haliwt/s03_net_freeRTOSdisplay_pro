@@ -4,7 +4,7 @@
 volatile static uint8_t transOngoingFlag; //interrupt Transmit flag bit , 1---stop,0--run
 uint8_t outputBuf[8];
 static uint8_t transferSize;
-static uint8_t state;
+//static uint8_t state;
 uint8_t inputBuf[MAX_BUFFER_SIZE];
 
 

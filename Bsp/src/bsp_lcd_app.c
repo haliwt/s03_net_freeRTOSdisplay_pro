@@ -6,7 +6,7 @@ static void disp_fan_speed_level(void);
 
 static void donot_disp_T13_icon_fan_speed_level(void);
 
-static void disp_fan_ptc_warning_time_colon_fun(void);
+//static void disp_fan_ptc_warning_time_colon_fun(void);
 
 static void works_timer_disp_numaber(void);
 
