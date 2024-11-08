@@ -324,52 +324,6 @@ uint8_t bcc_check(const unsigned char *data, int len) {
     return bcc;
 }
 
-
-/**********************************************************************
-*
-*Functin Name: void Receive_ManiBoard_Cmd(uint8_t cmd)
-*Function :  wifi recieve data
-*Input Ref:  receive wifi send order
-*Return Ref: NO
-*
-**********************************************************************/
-
-
-
-/************************************************************************
-	*
-	*Function Name: void Wifi_Key_Fun(void)
-	*
-	*
-	*
-	*
-************************************************************************/  
-#if 1
-void Timing_Handler(void)
-{
-     switch(run_t.display_set_timer_or_works_mode ){//run_t.setup_timer_timing_item
-         
-     case works_time:
-       beijing_time_fun();
-
-						 
-    break;
-    
-    case timer_time:
-	
-		disp_timer_run_times();
-		Works_Counter_Time();
-	
-     break;
-
-     default:
-     break;
-		
-    }
-}
-
-#endif 
-
 /*************************************************************************
 	*
 	*Functin Name:static void disp_timer_run_times(void)
@@ -381,7 +335,7 @@ void Timing_Handler(void)
 void disp_timer_run_times(void)
 {
 
-
+     if(run_t.timer_timing_define_flag == timing_success){
       if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
@@ -405,7 +359,7 @@ void disp_timer_run_times(void)
 	          
                 
                 }
-                 else{
+                else{
      
                      run_t.timer_time_hours =0;
                      run_t.timer_time_minutes =0;
@@ -421,22 +375,21 @@ void disp_timer_run_times(void)
                 }
               }
             
-		     }
+     }
+     }
+     else if(run_t.timer_timing_define_flag == timing_not_definition){ 
 
-	     
-     
-   
-//			lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-//			lcd_t.number5_high =(run_t.timer_time_hours) /10;
-//
-//			lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-//			lcd_t.number6_high = (run_t.timer_time_hours ) %10;
-//
-//			lcd_t.number7_low = (run_t.timer_time_minutes )/10;
-//			lcd_t.number7_high = (run_t.timer_time_minutes)/10;
-//
-//			lcd_t.number8_low = (run_t.timer_time_minutes)%10;
-//			lcd_t.number8_high = (run_t.timer_time_minutes )%10;
+          if(run_t.gTimer_again_switch_works > 3){
+             run_t.timer_time_hours =0;
+             run_t.timer_time_minutes =0;
+		     run_t.display_set_timer_or_works_mode=works_time;
+             run_t.gModel=1;
+             if(wifi_link_net_state()==1){
+			      SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
+
+              }
+         }
+    }
 }
 /*************************************************************************
 	*
@@ -501,7 +454,7 @@ void Setup_Timer_Times_Donot_Display(void)
  **************************************************************/
 void Works_Counter_Time(void)
 {
-  if(run_t.timer_timing_define_flag == timing_success){
+  //if(run_t.timer_timing_define_flag == timing_success){
 	  if(run_t.gTimer_disp_timer_seconds >59){ //minute
 		
 		run_t.gTimer_disp_timer_seconds=0;
@@ -521,7 +474,7 @@ void Works_Counter_Time(void)
 
 
 	  }
-  }
+ // }
 }
 
 

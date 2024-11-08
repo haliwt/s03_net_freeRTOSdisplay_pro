@@ -174,6 +174,7 @@ typedef struct __RUN{
     int8_t 	gTime_hours;
 
      uint8_t gTimer_ptc_fan_warning;
+     uint8_t gTimer_again_switch_works ;
 	
 	 uint16_t gTimer_ptc_fan_blink_warning;
      uint16_t gTimer_numbers_one_two_blink;
@@ -186,7 +187,7 @@ extern RUN_T run_t;
 
 
 
-void Timing_Handler(void);
+
 
 
 void receive_data_fromm_mainboard(uint8_t *pdata);

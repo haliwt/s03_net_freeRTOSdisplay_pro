@@ -50,6 +50,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		run_t.gTimer_ptc_fan_warning++;
         run_t.gTimer_timing++;
 	    run_t.gTimer_work_break_times++;
+        run_t.gTimer_again_switch_works ++ ;
 		 
 	}
 

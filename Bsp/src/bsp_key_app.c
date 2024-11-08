@@ -199,6 +199,7 @@ void mode_key_short_fun(void)
 			//timer time + don't has ai item
 			run_t.display_set_timer_or_works_mode = timer_time;
 			run_t.gModel=2;
+            run_t.gTimer_again_switch_works = 0;
 			if(wifi_link_net_state() == 1){
 				SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
 				HAL_Delay(10);
