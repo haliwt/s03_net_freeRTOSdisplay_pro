@@ -308,6 +308,20 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         
       break;
+
+     case 0xFE: // answer cmod 
+          //power on or power off 
+          if(pdata[3]==0x01){ //power on or power off cmd.
+              if(pdata[4]==1){ //power on
+
+                 gpro_t.answer_power_on_off = 1;
+
+              }
+              else if(pdata[4]==2) //power offf
+                 gpro_t.answer_power_on_off = 2;
+
+          }
+     break;
      
      }
 

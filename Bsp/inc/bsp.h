@@ -45,6 +45,8 @@ typedef struct _process_state{
    uint8_t key_dec_flag;
    uint8_t smart_phone_power_on;
    uint8_t smart_phone_power_off;
+   uint8_t send_power_on_off_cmd;
+   uint8_t answer_power_on_off;
   
 
    uint8_t disp_rx_cmd_done_flag;
@@ -62,6 +64,7 @@ typedef struct _process_state{
    uint8_t gTimer_set_temp_times;
    uint8_t gTimer_temp_compare_value;
    uint8_t gTimer_fan_to_ptc_warning;
+   uint8_t gTimer_again_send_power_on_off;
  
    
 
