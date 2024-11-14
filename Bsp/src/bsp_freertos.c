@@ -390,13 +390,18 @@ static void vTaskRunPro(void *pvParameters)
 **********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
-
+  static uint8_t power_on_key;
    while(1)
     {
       
     if(KEY_POWER_GetValue()  ==KEY_DOWN){
 
-       
+          if(power_on_key ==0){
+              power_on_key ++;
+              HAL_Delay(500);
+              
+          }
+          else{
            gl_tMsg.long_key_mode_counter =0;
             gl_tMsg.long_key_power_counter++;
 
@@ -417,8 +422,10 @@ static void vTaskStart(void *pvParameters)
             gpro_t.key_power_flag = 1;
 
         }
+        
      }
-     else if(KEY_MODE_GetValue() ==KEY_DOWN){
+    }
+    else if(KEY_MODE_GetValue() ==KEY_DOWN){
 
            gl_tMsg.long_key_power_counter=0;
          
@@ -453,7 +460,7 @@ static void vTaskStart(void *pvParameters)
          gpro_t.key_add_flag = 1;
 
     }
-    vTaskDelay(20);
+    vTaskDelay(10);
      
     }
 
