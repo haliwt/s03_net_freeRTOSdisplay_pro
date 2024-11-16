@@ -55,7 +55,7 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = LED_INFO_MODE_Pin|LED_INFO_POWER_Pin|TM1723_STB_Pin|TM1723_SCLK_Pin
                           |TM1723_DIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;//NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -64,13 +64,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = KEY_ADD_Pin|KEY_POWER_Pin|KEY_MODE_Pin|KEY_DEC_Pin
                           |VK36N4D_INT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;//NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BACK_LIGHT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;//NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BACK_LIGHT_GPIO_Port, &GPIO_InitStruct);
 
