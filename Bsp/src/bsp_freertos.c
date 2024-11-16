@@ -398,8 +398,7 @@ static void vTaskStart(void *pvParameters)
 
           if(power_on_key ==0){
               power_on_key ++;
-              HAL_Delay(500);
-              
+             
           }
           else{
            gl_tMsg.long_key_mode_counter =0;
