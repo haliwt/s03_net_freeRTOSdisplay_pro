@@ -105,12 +105,14 @@ void power_off_handler(void)
 	}
 }
 
-/************************************************
+/**************************************************************************
  * 
  *Function Name:
- *
+ *Function:
+ *Input Ref:
+ *Return Ref:
  * 
-*************************************************/
+*****************************************************************************/
 void power_on_key_short_fun(void)
 {
   
@@ -179,7 +181,14 @@ void power_on_key_short_fun(void)
      Lcd_PowerOn_Fun();
     
 }
-
+/**************************************************************************
+ * 
+ *Function Name:
+ *Function:
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
 void power_key_long_fun(void)
 {
     
@@ -190,7 +199,14 @@ void power_key_long_fun(void)
     run_t.wifi_led_fast_blink_flag=1;
   
 }
-
+/**************************************************************************
+ * 
+ *Function Name:
+ *Function:
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
 void mode_key_short_fun(void)
 {
    if(run_t.ptc_warning ==0 && run_t.fan_warning ==0){
@@ -220,7 +236,14 @@ void mode_key_short_fun(void)
 	}		
 }
 
-
+/**************************************************************************
+ * 
+ *Function Name:
+ *Function:
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
 void add_key_fun(void)
 {
      static uint8_t power_on_fisrt_flag ;
@@ -229,7 +252,7 @@ void add_key_fun(void)
 
     case works_time: //set temperature value add number
     
-    case timer_time: 
+    case timer_time: //set  
 
 		
 		run_t.wifi_set_temperature ++;
@@ -280,8 +303,15 @@ void add_key_fun(void)
 	
 }
 
-
-
+/**************************************************************************
+ * 
+ *Function Name:void dec_key_fun(void)
+ *Function: 1. direct key is adjust temperature value  
+ *          2 .combination is set timer value
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
 void dec_key_fun(void)
 {
     static uint8_t power_on_fisrt_flag;

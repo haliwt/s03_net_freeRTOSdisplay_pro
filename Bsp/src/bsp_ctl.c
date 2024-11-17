@@ -513,7 +513,7 @@ void Works_Counter_Time(void)
 
 		}
 
-
+         gpro_t.worksTimeBeChange_flag=1;
 	  }
  // }
 }

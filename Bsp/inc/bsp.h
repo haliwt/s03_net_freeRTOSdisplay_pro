@@ -47,6 +47,7 @@ typedef struct _process_state{
    uint8_t smart_phone_power_off;
    uint8_t send_power_on_off_cmd;
    uint8_t answer_power_on_off;
+   uint8_t worksTimeBeChange_flag;
   
 
    uint8_t disp_rx_cmd_done_flag;

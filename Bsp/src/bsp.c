@@ -170,12 +170,20 @@ static void disp_normal_timing_handler(void)
 		}
 
 		}
-
+         gpro_t.worksTimeBeChange_flag=1;
 
 	  } 
     
 
 }
+/******************************************************************************
+	*
+	*Function Name:static void power_on_init_disp_time_numbers(void)
+	*Function: display of icon , "1" -> ON ,"0"-> OFF
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
 static void power_on_init_disp_time_numbers(void)
 {
      
@@ -294,8 +302,9 @@ static void disp_set_timer_timing_value_fun(void)
 /**************************************************************************************************
 *
 *Function Name:void set_temperature_compare_value_fun(void)
-*
-*
+*Function:
+*Input Ref:
+*Return Ref:
 *
 *****************************************************************************************************/
 void set_temperature_compare_value_fun(void)
@@ -359,7 +368,7 @@ void set_temperature_compare_value_fun(void)
 }
 /**************************************************************************************************
 *
-*Function Name:void set_temperature_compare_value_fun(void)
+*Function Name:static void fan_default_warning_fun(void)
 *Function : fan of warning ,fan of leaf stop
 *
 *
