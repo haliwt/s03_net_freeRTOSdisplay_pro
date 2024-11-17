@@ -96,7 +96,7 @@ void Single_SendAi_Usart_RunCmd(void(*sendaiHandler)(uint8_t seddat));
 
 
 
-void Power_Off_Fun(void);
+
 
 void power_off_handler(void);
 

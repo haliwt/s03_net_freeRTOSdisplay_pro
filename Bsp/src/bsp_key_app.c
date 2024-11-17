@@ -344,33 +344,6 @@ void dec_key_fun(void)
 
     }
 }
-/************************************************************************
-	*
-	*Function Name: static void Power_Off_Fun(void)
-	*
-	*
-	*
-	*
-************************************************************************/
- void Power_Off_Fun(void)
-{
-	
-        //run_t.gModel =1; //WT.EDIT 2022.09.01
-		run_t.gPlasma=0;
-		run_t.gDry =0;
-		run_t.gUltransonic =0;
-
-		run_t.gPower_On=0;
-		
-		run_t.wifi_led_fast_blink_flag=0;
-		run_t.timer_timing_define_flag = timing_not_definition;
-		
-		run_t.disp_wind_speed_grade =30;	
-		
-		run_t.fan_off_60s =0;
-		
-
-} 
 
 /*********************************************************************************
  * 

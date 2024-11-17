@@ -39,7 +39,14 @@ void mode_key_long_fun(void)
    }
 
 }
-
+/**************************************************************************************
+*
+*Function Name:void display_timer_and_beijing_time_handler(void)
+*Function: all display times with content 
+*Input Ref:
+*Return Ref:
+*
+**************************************************************************************/
 void display_timer_and_beijing_time_handler(void)
 {
    
