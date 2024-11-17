@@ -375,9 +375,12 @@ void disp_fan_leaf_run_icon(void)
    if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
   
         if(disp_1_default != disp_flag_1  || gpro_t.worksTimeBeChange_flag == 1){
-            disp_1_default = disp_flag_1;
+            if(disp_1_default != disp_flag_1){
+               disp_1_default = disp_flag_1;
+            }
+            else if(gpro_t.worksTimeBeChange_flag == 1)gpro_t.worksTimeBeChange_flag=2;
+
             disp_flag_2++;
-             gpro_t.worksTimeBeChange_flag=2;
     
          works_timer_disp_numaber();
 
@@ -404,9 +407,12 @@ void disp_fan_leaf_run_icon(void)
     else if(lcd_t.gTimer_fan_10ms <40){
 
      if(disp_2_default != disp_flag_2 || gpro_t.worksTimeBeChange_flag==1){
-            disp_2_default = disp_flag_2;
+
+            if(disp_2_default != disp_flag_2 ){
+                disp_2_default = disp_flag_2;
+            }
+            else if(gpro_t.worksTimeBeChange_flag == 1)gpro_t.worksTimeBeChange_flag=2;
             disp_flag_1++;
-            gpro_t.worksTimeBeChange_flag=2;
 
       works_timer_disp_numaber();
 
@@ -430,7 +436,7 @@ void disp_fan_leaf_run_icon(void)
     }
     else if(lcd_t.gTimer_fan_10ms > 79){
         lcd_t.gTimer_fan_10ms=0;
-        
+        gpro_t.worksTimeBeChange_flag=1; //WT.EDIT 2024.11.17
     }
 
 
