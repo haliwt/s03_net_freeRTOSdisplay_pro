@@ -54,6 +54,13 @@ void display_timer_and_beijing_time_handler(void)
    switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
     case works_time:
+
+     if(lcd_t.display_beijing_time_flag == 0 && gpro_t.power_on_every_times == 1 ){
+
+              gpro_t.power_on_every_times++;
+              run_t.gTimer_disp_timer_seconds=0;
+
+     }
         
      if(run_t.power_on_disp_smg_number ==1){
        run_t.power_on_disp_smg_number++; 

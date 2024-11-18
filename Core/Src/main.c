@@ -96,7 +96,7 @@ int main(void)
   bsp_init();
   HAL_TIM_Base_Start_IT(&htim17);
   UART_Start_Receive_IT(&huart1,inputBuf,1);
-   freeRTOS_Handler();
+  freeRTOS_Handler();
 
   /* USER CODE END 2 */
 
