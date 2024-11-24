@@ -211,12 +211,14 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         if(pdata[4] == 0x03){ //数据
 
+            if(pdata[5] < 24){ //WT.EDIT 2024.11.23
+
             lcd_t.display_beijing_time_flag= 1;
 
             run_t.dispTime_hours  =  pdata[5];
             run_t.dispTime_minutes = pdata[6];
             run_t.gTimer_disp_time_sencods =  pdata[7];
-     
+           }
 
 
         }
@@ -457,6 +459,10 @@ void Setup_Timer_Times_Donot_Display(void)
 	           if(run_t.timer_timing_define_flag == timing_success){
 			    run_t.timer_time_hours=0;
 				run_t.timer_time_minutes=0;
+
+                gpro_t.gTimer_again_send_power_on_off =0;//wt.edit 2024.11.17
+                gpro_t.send_power_on_off_cmd = 2; //power off of flag that need send power off cmd to mainboard ,must return signal
+			    SendData_PowerOnOff(0); //send power off cmd to mainboard.WT.EDIT 2024.11.17
 			
 				Power_Off_Fun();
 

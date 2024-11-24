@@ -277,39 +277,6 @@ static void Display_Kill_Dry_Ster_Icon(void)
 
 
 }
-
-/******************************************************************************
-	*
-	*Function Name:static void disp_fan_warning_time_colon_fun(void)
-	*Function: 
-	*Input Ref:
-	*Return Ref:
-	*
-******************************************************************************/
-#if 0
-static void disp_fan_ptc_warning_time_colon_fun(void)
-{
-     if(lcd_t.gTimer_colon_ms < 6){
-     	
-		 	
-	
-		   TM1723_Write_Display_Data(0xCB,0x01+lcdNumber6_Low_r[0]+lcdNumber7_High[0]);//display "r : 0"
-	  
-				 
-	 }
-	 else if(lcd_t.gTimer_colon_ms > 5 && lcd_t.gTimer_colon_ms < 11){
-     	 
-				TM1723_Write_Display_Data(0xCB,lcdNumber6_Low_r[0]+lcdNumber7_High[0]);//
-			
-				
-				
-        }
-		else  lcd_t.gTimer_colon_ms = 0;
-
-
-
-}
-#endif 
 /******************************************************************************
 	*
 	*Function Name:static void Display_Kill_Dry_Ster_Icon(void)
@@ -371,7 +338,7 @@ void disp_fan_leaf_run_icon(void)
   if(run_t.fan_warning ==0 &&  run_t.ptc_warning== 0)
   {
 
-   
+   if(run_t.display_set_timer_or_works_mode != setup_timer){
    if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
   
         if(disp_1_default != disp_flag_1  || gpro_t.worksTimeBeChange_flag == 1){
@@ -382,11 +349,8 @@ void disp_fan_leaf_run_icon(void)
 
             disp_flag_2++;
     
-         works_timer_disp_numaber();
-
-     
-
-        TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
+        works_timer_disp_numaber();
+		TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
         TM1723_Write_Display_Data(0xCA,T15+lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digital '5,6'
         if(colon_flag_toggle < 2){
                     colon_flag_toggle ++;
@@ -442,44 +406,57 @@ void disp_fan_leaf_run_icon(void)
 
     }
 
+    }
+
 }
 
 
 static void works_timer_disp_numaber(void)
 {
+
+    
+
+
+
      switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
       case works_time:
+        
 
-      lcd_t.number5_low=(run_t.dispTime_hours ) /10;
-     lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
+   
 
-	 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
-	 lcd_t.number6_high =  lcd_t.number6_low ;//(run_t.dispTime_hours ) %10;
+       
+
+         lcd_t.number5_low=(run_t.dispTime_hours ) /10;
+         lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
+
+    	 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
+    	 lcd_t.number6_high =  lcd_t.number6_low ;//(run_t.dispTime_hours ) %10;
+         
+         lcd_t.number7_low = (run_t.dispTime_minutes )/10;
+    	 lcd_t.number7_high = lcd_t.number7_low;//(run_t.dispTime_minutes )/10;
+
+    	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
+    	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
+
      
-     lcd_t.number7_low = (run_t.dispTime_minutes )/10;
-	 lcd_t.number7_high = lcd_t.number7_low;//(run_t.dispTime_minutes )/10;
-
-	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
-	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
-
       
     
     break;
 
     case setup_timer:
         
-               lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-               lcd_t.number5_high =lcd_t.number5_low;//(run_t.timer_time_hours) /10;
-    
-               lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-               lcd_t.number6_high =   lcd_t.number6_low;//(run_t.timer_time_hours ) %10;
-    
-               lcd_t.number7_low =0;
-               lcd_t.number7_high = 0;
-    
-               lcd_t.number8_low = 0;
-               lcd_t.number8_high = 0;
+//               lcd_t.number5_low=(run_t.timer_time_hours ) /10;
+//               lcd_t.number5_high =lcd_t.number5_low;//(run_t.timer_time_hours) /10;
+//    
+//               lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
+//               lcd_t.number6_high =   lcd_t.number6_low;//(run_t.timer_time_hours ) %10;
+//    
+//               lcd_t.number7_low =0;
+//               lcd_t.number7_high = 0;
+//    
+//               lcd_t.number8_low = 0;
+//               lcd_t.number8_high = 0;
 
 
     break;

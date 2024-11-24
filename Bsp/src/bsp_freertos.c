@@ -307,11 +307,7 @@ static void vTaskRunPro(void *pvParameters)
 
 
                       }
-//                      else{
-//                       gpro_t.gTimer_mode_key_long=0;
-//
-//                       mode_key_long_fun();
-//                      }
+
 
                  }
         }
