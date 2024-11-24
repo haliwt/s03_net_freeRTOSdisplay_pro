@@ -355,7 +355,12 @@ void disp_timer_run_times(void)
       if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
-		 run_t.timer_time_minutes --;
+		#if TEST_UNIT
+		  run_t.timer_time_minutes = run_t.timer_time_minutes -30;
+        #else 
+          run_t.timer_time_minutes --;
+
+        #endif 
 	    if(run_t.timer_time_minutes < 0){
 		     run_t.timer_time_hours -- ;
 			 run_t.timer_time_minutes =59;
@@ -449,7 +454,12 @@ void Setup_Timer_Times_Donot_Display(void)
    if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
-		 run_t.timer_time_minutes --;
+        #if TEST_UNIT
+		  run_t.timer_time_minutes = run_t.timer_time_minutes -30;
+        #else 
+          run_t.timer_time_minutes --;
+
+        #endif 
 	    if(run_t.timer_time_minutes < 0){
 		     run_t.timer_time_hours -- ;
 			 run_t.timer_time_minutes =59;
