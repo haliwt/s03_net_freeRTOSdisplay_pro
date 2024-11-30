@@ -379,9 +379,7 @@ void disp_timer_run_times(void)
 			    run_t.gFan_RunContinue=1;
 				run_t.fan_off_60s = 0;
 	           
-	          
-                
-                }
+	          }
                 else{
      
                      run_t.timer_time_hours =0;
@@ -398,7 +396,7 @@ void disp_timer_run_times(void)
                 }
               }
             
-     }
+          }
      }
      else if(run_t.timer_timing_define_flag == timing_not_definition){ 
 
