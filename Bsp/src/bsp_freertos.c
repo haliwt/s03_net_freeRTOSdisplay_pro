@@ -193,6 +193,7 @@ static void vTaskRunPro(void *pvParameters)
 
              if(gl_tMsg.key_long_power_flag ==1){
                   power_key_long_fun();
+                  
                   SendData_Set_Command(0x05,0x01); // link wifi of command .
                   gpro_t.gTimer_mode_key_long=0;
 

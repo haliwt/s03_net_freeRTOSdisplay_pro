@@ -63,12 +63,12 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
      if(pdata[3] == 0x01){
 
             run_t.gDry =1 ;//&& run_t.gPlasma ==1  && run_t.gUltransonic==1
-            run_t.wifi_link_net_success=1;
+           // run_t.wifi_link_net_success=1;
            gpro_t.smart_phone_turn_off_ptc_flag = 0;
         }
         else if(pdata[3] == 0x0){
 
-            run_t.wifi_link_net_success=1;
+         //   run_t.wifi_link_net_success=1;
             run_t.gDry =0;
             gpro_t.smart_phone_turn_off_ptc_flag = 1;
 
@@ -79,13 +79,13 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
      case 0x03: //PLASMA 打开关闭指令
 
         if(pdata[3] == 0x01){
-            run_t.wifi_link_net_success=1;
+            //run_t.wifi_link_net_success=1;
         run_t.gPlasma =1;
 
 
         }
         else if(pdata[3] == 0x0){
-           run_t.wifi_link_net_success=1;
+          // run_t.wifi_link_net_success=1;
          run_t.gPlasma =0;
 
         }
@@ -97,12 +97,12 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
       case 0x04: //ultrasonic  打开关闭指令
 
         if(pdata[3] == 0x01){  //open 
-            run_t.wifi_link_net_success=1;
+           // run_t.wifi_link_net_success=1;
             run_t.gUltransonic=1;
 
         }
         else if(pdata[3] == 0x0){ //close 
-          run_t.wifi_link_net_success=1;
+          //run_t.wifi_link_net_success=1;
           run_t.gUltransonic=0;
 
         }
