@@ -479,7 +479,7 @@ static void vTaskStart(void *pvParameters)
          gpro_t.key_add_flag = 1;
 
     }
-    vTaskDelay(20); //vTaskDelay(10);//WT.EDIT 2024011.30
+    vTaskDelay(10);
      
     }
 

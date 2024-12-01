@@ -123,18 +123,17 @@ void power_on_key_short_fun(void)
     	run_t.gPlasma=1;
     	run_t.gDry =1;
     	run_t.gUltransonic =1;
-        
     
     }
 	gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
     run_t.smart_phone_set_temp_value_flag=0;
     run_t.timer_time_hours =40;
-    gpro_t.gTimer_temp_again_times=0;
+    
     
     run_t.disp_wind_speed_grade =100;
 
-    run_t.wifi_set_temperature=40; //WT.EDIT 2024.11.30
+    
 	
 
    run_t.display_set_timer_or_works_mode =works_time;

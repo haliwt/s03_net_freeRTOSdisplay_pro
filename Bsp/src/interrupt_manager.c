@@ -42,7 +42,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
          gpro_t.gTimer_temp_compare_value++ ;
          gpro_t.gTimer_fan_to_ptc_warning++ ;
          gpro_t.gTimer_again_send_power_on_off ++;
-         gpro_t.gTimer_temp_again_times++;
          //
 		run_t.fan_off_60s++;
         run_t.gTimer_wifi_connect_counter++;
@@ -53,7 +52,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         run_t.gTimer_timing++;
 	    run_t.gTimer_work_break_times++;
         run_t.gTimer_again_switch_works ++ ;
-        
 		 
 	}
 

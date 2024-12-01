@@ -80,6 +80,7 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
 
