@@ -210,7 +210,7 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.power_on_every_times=1;
                 gpro_t.gTimer_again_send_power_on_off =0;
                 gpro_t.gTimer_mode_key_long=0;
-                run_t.gTimer_disp_timer_seconds=0;
+                disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
 
               }
               else{
@@ -379,7 +379,7 @@ static void vTaskRunPro(void *pvParameters)
           gl_tMsg.long_key_power_counter =0;
            gl_tMsg.key_long_power_flag =0;
            run_t.power_on_disp_smg_number = 0;
-           run_t.gTimer_disp_timer_seconds=0;
+           disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
            if(gpro_t.send_power_on_off_cmd == 2){
                  if(gpro_t.answer_power_on_off == 2){
                     gpro_t.answer_power_on_off =0;

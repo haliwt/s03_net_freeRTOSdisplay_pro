@@ -8,6 +8,7 @@ RUN_T run_t;
 //static void Works_Counter_Time(void);
 
 uint8_t temp;
+uint8_t timer_timing_define_flag;
 
 
 /******************************************************************************
@@ -119,7 +120,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             run_t.ptc_warning = 1;
             //run_t.setup_timer_timing_item =  PTC_WARNING; //ptc warning 
-            run_t.display_set_timer_or_works_mode = PTC_WARNING;
+            display_set_timer_or_works_mode = PTC_WARNING;
         
             run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
@@ -142,7 +143,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             run_t.fan_warning = 1;
           
-           run_t.display_set_timer_or_works_mode =FAN_WARNING;  //run_t.display_set_timer_or_works_mode
+           display_set_timer_or_works_mode =FAN_WARNING;  //display_set_timer_or_works_mode
        
            run_t.gDry =0;
             SendData_Set_Command(0x22,0x0); //close ptc ,but don't buzzer sound .
@@ -215,8 +216,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             lcd_t.display_beijing_time_flag= 1;
 
-            run_t.dispTime_hours  =  pdata[5];
-            run_t.dispTime_minutes = pdata[6];
+            dispTime_hours  =  pdata[5];
+            dispTime_minutes = pdata[6];
             run_t.gTimer_disp_time_sencods =  pdata[7];
            }
 
@@ -277,12 +278,12 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         if(pdata[3]==2){
          //timer time + don't has ai item
-              run_t.display_set_timer_or_works_mode = timer_time;
+              display_set_timer_or_works_mode = timer_time;
     	      run_t.gModel=2;
          }
          else{
                   //beijing time + ai item
-              run_t.display_set_timer_or_works_mode = works_time;
+              display_set_timer_or_works_mode = works_time;
              
 	          run_t.gModel=1;
 
@@ -295,10 +296,10 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
         
         run_t.wifi_link_net_success=1;
         gpro_t.smart_phone_turn_off_ptc_flag=0; //smart phone app from setup temperature value .
-        run_t.wifi_set_temperature = pdata[5];
+        recoder_temp_value = pdata[5];
 
-        decade_temp =  run_t.wifi_set_temperature / 10 ;
-		unit_temp =  run_t.wifi_set_temperature % 10; //
+        decade_temp =  recoder_temp_value / 10 ;
+		unit_temp =  recoder_temp_value % 10; //
         
 		lcd_t.number1_low=decade_temp;
 		lcd_t.number1_high =decade_temp;
@@ -351,7 +352,7 @@ uint8_t bcc_check(const unsigned char *data, int len) {
 void disp_timer_run_times(void)
 {
 
-     if(run_t.timer_timing_define_flag == timing_success){
+     if(timer_timing_define_flag == timing_success){
       if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
@@ -367,7 +368,7 @@ void disp_timer_run_times(void)
            
 			if(run_t.timer_time_hours < 0 ){
 
-	           if(run_t.timer_timing_define_flag == timing_success){
+	           if(timer_timing_define_flag == timing_success){
 			    run_t.timer_time_hours=0;
 				run_t.timer_time_minutes=0;
                 gpro_t.gTimer_again_send_power_on_off =0;//wt.edit 2024.11.17
@@ -386,7 +387,7 @@ void disp_timer_run_times(void)
      
                      run_t.timer_time_hours =0;
                      run_t.timer_time_minutes =0;
-				     run_t.display_set_timer_or_works_mode=works_time;
+				     display_set_timer_or_works_mode=works_time;
                      run_t.gModel=1;
                      if(wifi_link_net_state()==1){
 					      SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
@@ -400,12 +401,12 @@ void disp_timer_run_times(void)
             
      }
      }
-     else if(run_t.timer_timing_define_flag == timing_not_definition){ 
+     else if(timer_timing_define_flag == timing_not_definition){ 
 
           if(run_t.gTimer_again_switch_works > 3){
              run_t.timer_time_hours =0;
              run_t.timer_time_minutes =0;
-		     run_t.display_set_timer_or_works_mode=works_time;
+		     display_set_timer_or_works_mode=works_time;
              run_t.gModel=1;
              if(wifi_link_net_state()==1){
 			      SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
@@ -433,7 +434,7 @@ void disp_timer_run_times(void)
 		run_t.gPower_On=power_off;
 		
 		run_t.wifi_led_fast_blink_flag=0;
-		run_t.timer_timing_define_flag = timing_not_definition;
+		timer_timing_define_flag = timing_not_definition;
 		
 		run_t.disp_wind_speed_grade =30;	
 		
@@ -450,7 +451,7 @@ void disp_timer_run_times(void)
 void Setup_Timer_Times_Donot_Display(void)
 {
 
-   if(run_t.timer_timing_define_flag == timing_success){
+   if(timer_timing_define_flag == timing_success){
    if(run_t.gTimer_timing > 59){ //
         
         run_t.gTimer_timing =0;
@@ -466,7 +467,7 @@ void Setup_Timer_Times_Donot_Display(void)
            
 			if(run_t.timer_time_hours < 0 ){
 
-	           if(run_t.timer_timing_define_flag == timing_success){
+	           if(timer_timing_define_flag == timing_success){
 			    run_t.timer_time_hours=0;
 				run_t.timer_time_minutes=0;
 
@@ -511,19 +512,19 @@ void Setup_Timer_Times_Donot_Display(void)
  **************************************************************/
 void Works_Counter_Time(void)
 {
-  //if(run_t.timer_timing_define_flag == timing_success){
-	  if(run_t.gTimer_disp_timer_seconds >59){ //minute
+  //if(timer_timing_define_flag == timing_success){
+	  if(disp_time_seconds > 59){//if(run_t.gTimer_disp_timer_seconds >59){ //minute
 		
-		run_t.gTimer_disp_timer_seconds=0;
-        run_t.dispTime_minutes ++;
+		disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
+        dispTime_minutes ++;
        
           
-		if(run_t.dispTime_minutes > 59){
-			run_t.dispTime_minutes=0;
-			run_t.dispTime_hours ++;
+		if(dispTime_minutes > 59){
+			dispTime_minutes=0;
+			dispTime_hours ++;
 		    
-		if(run_t.dispTime_hours >24){
-			run_t.dispTime_hours=0;
+		if(dispTime_hours >24){
+			dispTime_hours=0;
 
 		}
 

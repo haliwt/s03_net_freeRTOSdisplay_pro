@@ -38,8 +38,8 @@ void disp_temp_humidity_wifi_icon_handler(void)
 
         disp_set_timer_value =1;
 
-        decade_temp = run_t.wifi_set_temperature / 10 ;
-		unit_temp =  run_t.wifi_set_temperature % 10; //
+        decade_temp = recoder_temp_value / 10 ;
+		unit_temp =  recoder_temp_value % 10; //
         
 		lcd_t.number1_low=decade_temp;
 		lcd_t.number1_high =decade_temp;
@@ -338,7 +338,7 @@ void disp_fan_leaf_run_icon(void)
   if(run_t.fan_warning ==0 &&  run_t.ptc_warning== 0)
   {
 
-   if(run_t.display_set_timer_or_works_mode != setup_timer){
+   if(display_set_timer_or_works_mode != setup_timer){
    if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
   
         if(disp_1_default != disp_flag_1  || gpro_t.worksTimeBeChange_flag == 1){
@@ -418,7 +418,7 @@ static void works_timer_disp_numaber(void)
 
 
 
-     switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
+     switch(display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
       case works_time:
         
@@ -427,17 +427,17 @@ static void works_timer_disp_numaber(void)
 
        
 
-         lcd_t.number5_low=(run_t.dispTime_hours ) /10;
-         lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
+         lcd_t.number5_low=(dispTime_hours ) /10;
+         lcd_t.number5_high =lcd_t.number5_low;//(dispTime_hours) /10;
 
-    	 lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
-    	 lcd_t.number6_high =  lcd_t.number6_low ;//(run_t.dispTime_hours ) %10;
+    	 lcd_t.number6_low = (dispTime_hours ) %10;;
+    	 lcd_t.number6_high =  lcd_t.number6_low ;//(dispTime_hours ) %10;
          
-         lcd_t.number7_low = (run_t.dispTime_minutes )/10;
-    	 lcd_t.number7_high = lcd_t.number7_low;//(run_t.dispTime_minutes )/10;
+         lcd_t.number7_low = (dispTime_minutes )/10;
+    	 lcd_t.number7_high = lcd_t.number7_low;//(dispTime_minutes )/10;
 
-    	 lcd_t.number8_low = (run_t.dispTime_minutes )%10;
-    	 lcd_t.number8_high = lcd_t.number8_low ;//(run_t.dispTime_minutes )%10;
+    	 lcd_t.number8_low = (dispTime_minutes )%10;
+    	 lcd_t.number8_high = lcd_t.number8_low ;//(dispTime_minutes )%10;
 
      
       

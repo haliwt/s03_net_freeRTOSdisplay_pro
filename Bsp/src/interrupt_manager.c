@@ -1,5 +1,6 @@
 #include "bsp.h"
 
+uint8_t disp_time_seconds;
 
 /*******************************************************************************
 	*
@@ -47,7 +48,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         run_t.gTimer_wifi_connect_counter++;
 		run_t.gTimer_disp_time_sencods++;
 		run_t.gTimer_key_timing++;
-		run_t.gTimer_disp_timer_seconds ++;
+		//run_t.gTimer_disp_timer_seconds ++;
+        disp_time_seconds++;
 		run_t.gTimer_ptc_fan_warning++;
         run_t.gTimer_timing++;
 	    run_t.gTimer_work_break_times++;

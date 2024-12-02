@@ -13,6 +13,7 @@
 #include "bsp_wifi.h"
 #include "bsp_lcd_app.h"
 #include "bsp_freertos.h"
+#include "interrupt_manager.h"
 
 
 #include "gpio.h"
@@ -75,6 +76,12 @@ typedef struct _process_state{
 
 extern process_state gpro_t;
 
+extern uint8_t recoder_temp_value;
+
+extern uint8_t display_set_timer_or_works_mode;
+
+
+extern uint8_t dispTime_minutes,dispTime_hours;
 
 void bsp_init(void);
 
