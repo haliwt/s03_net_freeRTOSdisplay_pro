@@ -46,10 +46,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
          //
 		run_t.fan_off_60s++;
         run_t.gTimer_wifi_connect_counter++;
-		run_t.gTimer_disp_time_sencods++;
+		disp_time_seconds++;
 		run_t.gTimer_key_timing++;
 		//run_t.gTimer_disp_timer_seconds ++;
-        disp_time_seconds++;
+     
 		run_t.gTimer_ptc_fan_warning++;
         run_t.gTimer_timing++;
 	    run_t.gTimer_work_break_times++;

@@ -218,7 +218,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             dispTime_hours  =  pdata[5];
             dispTime_minutes = pdata[6];
-            run_t.gTimer_disp_time_sencods =  pdata[7];
+            disp_time_seconds =  pdata[7];
+            
            }
 
 

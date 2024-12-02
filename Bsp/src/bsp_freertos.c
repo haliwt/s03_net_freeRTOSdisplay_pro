@@ -210,6 +210,7 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.power_on_every_times=1;
                 gpro_t.gTimer_again_send_power_on_off =0;
                 gpro_t.gTimer_mode_key_long=0;
+                gpro_t.power_on_times_flag =1;
                 disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
 
               }
@@ -219,6 +220,7 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.send_power_on_off_cmd = 2;
                  SendData_PowerOnOff(0);
                 gpro_t.gTimer_again_send_power_on_off =0;
+                 gpro_t.power_on_times_flag =0;
                  run_t.gPower_On = power_off;
 
               }
