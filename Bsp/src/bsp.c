@@ -169,54 +169,39 @@ static void disp_normal_timing_handler(void)
 {
 
   
-  static uint8_t check_hours,check_minutes ;
+ 
   
   if(disp_time_seconds > 59){//if(run_t.gTimer_disp_timer_seconds >59){ //minute
 		
 		disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
-		if(gpro_t.power_on_times_flag == 1 &&  lcd_t.display_beijing_time_flag==0){
-            gpro_t.power_on_times_flag ++ ;
-            check_hours=dispTime_minutes;
-            check_minutes  = dispTime_minutes;
-
-        }
+	
         
         dispTime_minutes ++;
-        check_minutes ++ ;
+   
 
-        if(dispTime_minutes !=check_minutes &&  lcd_t.display_beijing_time_flag==0){
-
-             dispTime_minutes !=check_minutes;
-
-        }
-       
-          
-		if(dispTime_minutes > 59){
+  
+        if(dispTime_minutes > 59){
 			dispTime_minutes=0;
-            check_hours ++ ;
+          
 			dispTime_hours ++;
 
-            if(dispTime_hours != check_hours &&  lcd_t.display_beijing_time_flag==0){
-                  dispTime_hours  = check_hours;
-
-
-            }
+        }
         
 		    
-		if(dispTime_hours >24 && check_hours > 24 &&  lcd_t.display_beijing_time_flag==0){
+		if(dispTime_hours >24){
 			dispTime_hours=0;
-             check_hours =0;
+            
 
 		}
+        gpro_t.worksTimeBeChange_flag=1;
 
-		}
+     }
      
-         gpro_t.worksTimeBeChange_flag=1;
-
-	  } 
+         
+} 
     
 
-}
+
 /******************************************************************************
 	*
 	*Function Name:static void power_on_init_disp_time_numbers(void)
