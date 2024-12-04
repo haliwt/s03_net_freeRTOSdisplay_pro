@@ -214,11 +214,15 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
             if(pdata[5] < 24 && pdata[6] < 61 && pdata[7] < 61){ //WT.EDIT 2024.11.23
 
+            if(run_t.wifi_link_net_success ==1){
+
             lcd_t.display_beijing_time_flag= 1;
 
             dispTime_hours  =  pdata[5];
             dispTime_minutes = pdata[6];
             disp_time_seconds =  pdata[7];
+
+             }
             
            }
 
