@@ -482,7 +482,7 @@ static void vTaskStart(void *pvParameters)
          gpro_t.key_add_flag = 1;
 
     }
-    vTaskDelay(10);
+    vTaskDelay(20);
      
     }
 

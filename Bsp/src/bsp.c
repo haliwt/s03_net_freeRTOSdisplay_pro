@@ -370,26 +370,27 @@ void set_temperature_compare_value_fun(void)
 
 
     }
-    else if(gpro_t.set_temp_value_success == 0 && gpro_t.gTimer_temp_compare_value > 5 && gpro_t.temp_key_set_value ==0){ 
-        
-        if(gpro_t.temp_real_value > 39){ // must be clouse ptc.
-    
-               first_on_ptc = 1;
-               run_t.gDry = 0;
-               SendData_Set_Command(0x22,0x00); //close ptc 
-          }
-          else if(first_on_ptc == 1){
-               
-                 
-               if(gpro_t.temp_real_value < 38){
-                       run_t.gDry = 1;
-                       SendData_Set_Command(0x22,0x01); //open ptc  
-                }
-                   
-
-          }
-              
-    }
+//    else if(gpro_t.set_temp_value_success == 0 && gpro_t.gTimer_temp_compare_value > 60000 && gpro_t.temp_key_set_value ==0){ 
+//        gpro_t.gTimer_temp_compare_value=0;
+//        
+//        if(gpro_t.temp_real_value > 39){ // must be clouse ptc.
+//    
+//               first_on_ptc = 1;
+//               run_t.gDry = 0;
+//               SendData_Set_Command(0x22,0x00); //close ptc 
+//          }
+//          else if(first_on_ptc == 1){
+//               
+//                 
+//               if(gpro_t.temp_real_value < 38){
+//                       run_t.gDry = 1;
+//                       SendData_Set_Command(0x22,0x01); //open ptc  
+//                }
+//                   
+//
+//          }
+//              
+//    }
 
 }
 /**************************************************************************************************

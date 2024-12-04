@@ -212,7 +212,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         if(pdata[4] == 0x03){ //数据
 
-            if(pdata[5] < 24){ //WT.EDIT 2024.11.23
+            if(pdata[5] < 24 && pdata[6] < 61 && pdata[7] < 61){ //WT.EDIT 2024.11.23
 
             lcd_t.display_beijing_time_flag= 1;
 
@@ -318,7 +318,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
         if(pdata[4] == 0x03){ //数据
       
-             if(pdata[5] < 24){ //WT.EDIT 2024.11.23
+             if(pdata[5] < 26 && pdata[6] < 61 && pdata[7] < 61){ //WT.EDIT 2024.11.23
       
                  lcd_t.display_beijing_time_flag= 0;
       
@@ -326,8 +326,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
                  dispTime_minutes = pdata[6];
                  disp_time_seconds =  pdata[7];
                  
-        }
-
+            }
+         }
       break;
 
      case 0xFE: // answer cmod 
@@ -346,8 +346,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
      
      }
 
- }
 }
+
 
 
 // BCC校验函数
