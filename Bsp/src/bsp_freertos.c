@@ -79,7 +79,7 @@ uint8_t bcc_check_code;
 
 uint8_t dc_power_on_first,long_key_power_counter;
 
-
+uint8_t powerOnOff_CheckFlag;
 
 
 /**********************************************************************************************************
@@ -186,10 +186,11 @@ static void vTaskRunPro(void *pvParameters)
     }
     else{
 
-        if( gpro_t.key_power_flag == 1){ //key power key
+        if( gpro_t.key_power_flag == 1 && powerOnOff_CheckFlag==1){ //key power key
 
             if(KEY_POWER_GetValue()  ==KEY_UP){
                 gpro_t.key_power_flag++;
+                powerOnOff_CheckFlag++;
               
 
              if(gl_tMsg.key_long_power_flag ==1){
@@ -454,6 +455,7 @@ static void vTaskStart(void *pvParameters)
         }
         else{
             gpro_t.key_power_flag = 1;
+            powerOnOff_CheckFlag=1;
 
         }
         
