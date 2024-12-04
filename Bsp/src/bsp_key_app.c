@@ -128,6 +128,7 @@ void power_on_key_short_fun(void)
     }
 	gpro_t.smart_phone_power_off=0;
 	gpro_t.set_temp_value_success =0;
+    check_settempValue_success=0;
     run_t.smart_phone_set_temp_value_flag=0;
     run_t.timer_time_hours =40;
     recoder_temp_value=40;

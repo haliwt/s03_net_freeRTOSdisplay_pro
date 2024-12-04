@@ -8,6 +8,9 @@ uint8_t display_set_timer_or_works_mode;
 
 uint8_t dispTime_minutes,dispTime_hours;
 
+uint8_t  ptc_times;
+
+uint8_t check_settempValue_success;
 
 
 static void  disp_set_timer_timing_value_fun(void);
@@ -343,11 +346,16 @@ void set_temperature_compare_value_fun(void)
          run_t.smart_phone_set_temp_value_flag =1;
           gpro_t.temp_key_set_value =0;
           gpro_t.gTimer_temp_compare_value =0;
+          ptc_times = 0;
 
     }
-    else if(gpro_t.set_temp_value_success == 1 && gpro_t.gTimer_temp_compare_value > 3 && gpro_t.temp_key_set_value ==0){
+    else if((gpro_t.set_temp_value_success == 1 && check_settempValue_success==1) && gpro_t.gTimer_temp_compare_value > 1 && gpro_t.temp_key_set_value ==0){
 
        gpro_t.gTimer_temp_compare_value =0;
+
+      if(ptc_times < 10){
+
+          ptc_times++;
 
       if(recoder_temp_value > gpro_t.temp_real_value && gpro_t.smart_phone_turn_off_ptc_flag ==0){
 
@@ -366,7 +374,7 @@ void set_temperature_compare_value_fun(void)
 
 
       }
-
+     }
 
 
     }

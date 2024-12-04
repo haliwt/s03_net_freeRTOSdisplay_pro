@@ -122,6 +122,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
                  number_blink_times =0;
 				 run_t.smart_phone_set_temp_value_flag =0;
                  gpro_t.set_temp_value_success = 1;
+                 check_settempValue_success=1;
                  gpro_t.gTimer_temp_compare_value =20; //at once 
 			}
 

@@ -81,6 +81,8 @@ extern uint8_t recoder_temp_value;
 
 extern uint8_t display_set_timer_or_works_mode;
 
+extern uint8_t check_settempValue_success;
+
 
 extern uint8_t dispTime_minutes,dispTime_hours;
 
