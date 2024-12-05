@@ -90,10 +90,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM14_Init();
   MX_TIM17_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   bsp_init();
+  HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start_IT(&htim17);
   UART_Start_Receive_IT(&huart1,inputBuf,1);
   freeRTOS_Handler();
