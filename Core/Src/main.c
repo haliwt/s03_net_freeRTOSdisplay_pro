@@ -7,7 +7,7 @@
   * @attention
   *
   * S04W03 display board for mass version :1.0  DATA:2024.11.16
-  * 
+  *         for mass version : 1.83  DATA.2024.12.06
   *
   * 
   * 

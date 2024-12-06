@@ -171,40 +171,23 @@ void display_timer_and_beijing_time_handler(void)
 static void disp_normal_timing_handler(void)
 {
 
-  
- 
-  
   if(disp_time_seconds > 59){//if(run_t.gTimer_disp_timer_seconds >59){ //minute
 		
 		disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
-	
-        
-        dispTime_minutes ++;
-   
-
-  
+	    dispTime_minutes ++;
         if(dispTime_minutes > 59){
 			dispTime_minutes=0;
           
 			dispTime_hours ++;
 
         }
-        
-		    
-		if(dispTime_hours >24){
+        if(dispTime_hours >24){
 			dispTime_hours=0;
-            
-
-		}
+        }
         gpro_t.worksTimeBeChange_flag=1;
 
      }
-     
-         
-} 
-    
-
-
+ } 
 /******************************************************************************
 	*
 	*Function Name:static void power_on_init_disp_time_numbers(void)
