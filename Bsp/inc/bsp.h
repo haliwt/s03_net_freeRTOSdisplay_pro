@@ -41,7 +41,7 @@ typedef struct _process_state{
 
 
    uint8_t power_on_every_times;
-   uint8_t key_mode_flag;
+   uint8_t key_mode_pressed_flag ;
    uint8_t key_add_flag;
    uint8_t key_dec_flag;
    uint8_t smart_phone_power_on;
