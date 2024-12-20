@@ -2,7 +2,7 @@
 #define __BSP_CTL_H_
 #include "main.h"
 
-#define  TEST_UNIT    0
+#define  TEST_UNIT     1
 
 
 
@@ -56,7 +56,7 @@ typedef struct __RUN{
    
    uint8_t gTemperature;
  
- //  uint8_t gTimer_disp_timer_seconds;
+   uint8_t gTimer_disp_timer_seconds;
    
   uint8_t gTimer_setup_zero;
 
@@ -188,7 +188,6 @@ typedef struct __RUN{
 
 extern RUN_T run_t;
 
-extern uint8_t timer_timing_define_flag;
 
 
 void Power_Off_Fun(void);

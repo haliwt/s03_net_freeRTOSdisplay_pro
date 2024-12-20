@@ -37,9 +37,6 @@ extern TIM_HandleTypeDef htim17;
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-extern TIM_HandleTypeDef htim14;
-
-void MX_TIM14_Init(void);
 
 void MX_TIM17_Init(void);
 

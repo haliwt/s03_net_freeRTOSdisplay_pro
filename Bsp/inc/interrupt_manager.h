@@ -3,7 +3,6 @@
 #include  "main.h"
 
 
-extern uint8_t disp_time_seconds;
 
 
 

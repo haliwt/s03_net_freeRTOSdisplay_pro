@@ -77,11 +77,9 @@ uint8_t check_code;
 
 uint8_t bcc_check_code;
 
-uint8_t dc_power_on_first,long_key_power_counter;
+ uint8_t dc_power_on_first ;
 
-uint8_t powerOnOff_CheckFlag;
-uint8_t long_key_mode_counter  ;
-uint8_t key_dec_flag,key_add_flag;
+
 
 
 /**********************************************************************************************************
@@ -156,7 +154,6 @@ static void vTaskRunPro(void *pvParameters)
         gpro_t.smart_phone_power_on = 1;
         gl_tMsg.key_long_power_flag=0;
         gl_tMsg.long_key_power_counter=0;
-        long_key_power_counter=0;
 
     }
     else if((ulValue & POWER_ON_BIT_5) != 0){
@@ -181,11 +178,6 @@ static void vTaskRunPro(void *pvParameters)
         if(check_code == bcc_check_code ){
 
         receive_data_fromm_mainboard(gl_tMsg.usData);
-        gl_tMsg.usData[0]= 0;   //WT.EDIT 2024.12.05
-        gl_tMsg.usData[1]=0;
-        gl_tMsg.usData[2]= 0;
-        gl_tMsg.usData[3]=0;
-        
         }
     }
 
@@ -193,16 +185,14 @@ static void vTaskRunPro(void *pvParameters)
     }
     else{
 
-        if( gpro_t.key_power_flag == 1 && powerOnOff_CheckFlag==1){ //key power key
+        if( gpro_t.key_power_flag == 1){ //key power key
 
             if(KEY_POWER_GetValue()  ==KEY_UP){
                 gpro_t.key_power_flag++;
-                powerOnOff_CheckFlag++;
               
 
              if(gl_tMsg.key_long_power_flag ==1){
                   power_key_long_fun();
-                  
                   SendData_Set_Command(0x05,0x01); // link wifi of command .
                   gpro_t.gTimer_mode_key_long=0;
 
@@ -212,7 +202,6 @@ static void vTaskRunPro(void *pvParameters)
              if(run_t.gPower_On == power_off){
                 run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0; 
-                long_key_power_counter=0;
                 run_t.power_on_disp_smg_number = 1;
                 gpro_t.send_power_on_off_cmd = 1;
                 SendData_PowerOnOff(1);
@@ -220,18 +209,15 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.power_on_every_times=1;
                 gpro_t.gTimer_again_send_power_on_off =0;
                 gpro_t.gTimer_mode_key_long=0;
-             
-                disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
+                run_t.gTimer_disp_timer_seconds=0;
 
               }
               else{
                 gl_tMsg.long_key_power_counter=0; //WT.2024.11.05
-                long_key_power_counter=0;
                 gl_tMsg.key_long_power_flag=0;
                  gpro_t.send_power_on_off_cmd = 2;
                  SendData_PowerOnOff(0);
                 gpro_t.gTimer_again_send_power_on_off =0;
-              
                  run_t.gPower_On = power_off;
 
               }
@@ -250,7 +236,6 @@ static void vTaskRunPro(void *pvParameters)
                 smart_phone_app_timer_power_on_flag++;
                  run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0;
-                long_key_power_counter=0;
                 run_t.power_on_disp_smg_number = 0;
                 gpro_t.gTimer_again_send_power_on_off =0;
                 power_on_key_short_fun();
@@ -262,47 +247,44 @@ static void vTaskRunPro(void *pvParameters)
                
                 run_t.gPower_On = power_off;
             }
-            else if((gpro_t.key_add_flag ==1 && key_add_flag==1)  && run_t.gPower_On == power_on){
+            else if((gpro_t.key_add_flag ==1 || gpro_t.key_dec_flag ==1)&&run_t.gPower_On == power_on){
                 
-                if(KEY_ADD_GetValue() == KEY_UP){
-                  gpro_t.key_add_flag ++;
-                  key_add_flag++;
-                  gl_tMsg.long_key_mode_counter =0;
-                  long_key_mode_counter=0;
-                 
-                   SendData_Buzzer();
+
+              if(gpro_t.key_add_flag == 1){
 
                  
+               if(KEY_ADD_GetValue() == KEY_UP){
+                  gpro_t.key_add_flag ++;
+                  gl_tMsg.long_key_mode_counter =0;
+                  
+                   SendData_Buzzer();
                    //HAL_Delay(10);
                 
                   add_key_fun();
                 }
               
 
-              
               }
-              else if((gpro_t.key_dec_flag == 1 && key_dec_flag==1) &&    run_t.gPower_On == power_on ){
+              else if(gpro_t.key_dec_flag == 1){
                
                 if(KEY_DEC_GetValue()==KEY_UP){
                     gpro_t.key_dec_flag ++;
-                    key_dec_flag++;
                     gl_tMsg.long_key_mode_counter =0;
-                     long_key_mode_counter =0;
-                 
-                      SendData_Buzzer();
-                      dec_key_fun();
+                   SendData_Buzzer();
+                  // HAL_Delay(10);
+                
+                   dec_key_fun();
                 }
             } 
-        
+        }
 
 
-        if((gpro_t.key_mode_pressed_flag  == 1) && run_t.gPower_On == power_on){
+        if(gpro_t.key_mode_flag == 1 && run_t.gPower_On == power_on){
 
 
                if(gl_tMsg.key_long_mode_flag ==1){
 
-                    gpro_t.key_mode_pressed_flag  ++;
-                
+                    gpro_t.key_mode_flag ++;
                     gpro_t.gTimer_mode_key_long=0;
 
                      mode_key_long_fun();
@@ -310,16 +292,23 @@ static void vTaskRunPro(void *pvParameters)
 
                }
                else if(KEY_MODE_GetValue() == KEY_UP){
-                      gpro_t.key_mode_pressed_flag ++;
+                      gpro_t.key_mode_flag++;
+                     
+                     if(gl_tMsg.key_long_mode_flag==2){//
+                        gl_tMsg.key_long_mode_flag=0;
+                         gl_tMsg.long_key_mode_counter=0;
+                           // SendData_Buzzer();
+                            //HAL_Delay(10);
+         
 
-                      if(gl_tMsg.key_long_mode_flag ==0){
-                        SendData_Buzzer();
-                         mode_key_short_fun();
-                        gl_tMsg.long_key_mode_counter=0;
-                        long_key_mode_counter=0;
+                      }
+                      else{
+                         gpro_t.key_mode_flag=2;
 
-                     }
-                    
+
+                      }
+
+
                  }
         }
 
@@ -328,11 +317,26 @@ static void vTaskRunPro(void *pvParameters)
         if(run_t.gPower_On == power_on){
 
 
+           if(gpro_t.key_mode_flag==2 && gl_tMsg.key_long_mode_flag ==0){
+
+               gpro_t.key_mode_flag++;
+               SendData_Buzzer();
+
+           }
+           else if(gpro_t.key_mode_flag==3 && gl_tMsg.key_long_mode_flag ==0){
+             gpro_t.key_mode_flag++;
+            
+             
+             mode_key_short_fun();
+             gl_tMsg.long_key_mode_counter=0;
+           
+
+
+            }
+
              if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gl_tMsg.key_long_power_flag ==1)){
                  gl_tMsg.long_key_mode_counter =0;
-                 long_key_mode_counter=0;
                  gl_tMsg.long_key_power_counter =0;
-                 long_key_power_counter=0;
          
                 if(gl_tMsg.key_long_power_flag ==1){
 
@@ -340,7 +344,7 @@ static void vTaskRunPro(void *pvParameters)
                      
                 }
                 if(gl_tMsg.key_long_mode_flag==1){
-                    gl_tMsg.key_long_mode_flag=0;
+                    gl_tMsg.key_long_mode_flag++;
 
                  }
 
@@ -372,10 +376,9 @@ static void vTaskRunPro(void *pvParameters)
        }
        else if(run_t.gPower_On == power_off){
           gl_tMsg.long_key_power_counter =0;
-          long_key_power_counter=0;
            gl_tMsg.key_long_power_flag =0;
            run_t.power_on_disp_smg_number = 0;
-           disp_time_seconds=0;//run_t.gTimer_disp_timer_seconds=0;
+           run_t.gTimer_disp_timer_seconds=0;
            if(gpro_t.send_power_on_off_cmd == 2){
                  if(gpro_t.answer_power_on_off == 2){
                     gpro_t.answer_power_on_off =0;
@@ -419,13 +422,10 @@ static void vTaskStart(void *pvParameters)
           }
           else{
            gl_tMsg.long_key_mode_counter =0;
-           long_key_mode_counter=0;
             gl_tMsg.long_key_power_counter++;
-          long_key_power_counter++;
 
-         if((gl_tMsg.long_key_power_counter > 60   &&  long_key_power_counter > 60) && run_t.gPower_On == power_on ){
+         if(gl_tMsg.long_key_power_counter > 60 && run_t.gPower_On == power_on ){
             gl_tMsg.long_key_power_counter =0;
-            long_key_power_counter=0;
             gl_tMsg.key_long_power_flag =1;
              gpro_t.gTimer_mode_key_long = 0;
             
@@ -439,7 +439,6 @@ static void vTaskStart(void *pvParameters)
         }
         else{
             gpro_t.key_power_flag = 1;
-            powerOnOff_CheckFlag=1;
 
         }
         
@@ -448,26 +447,20 @@ static void vTaskStart(void *pvParameters)
     else if(KEY_MODE_GetValue() ==KEY_DOWN){
 
            gl_tMsg.long_key_power_counter=0;
-           long_key_power_counter=0;
          
           gl_tMsg.long_key_mode_counter ++ ;
-          long_key_mode_counter++;
-          
 
-          if((gl_tMsg.long_key_mode_counter > 60 &&  long_key_mode_counter > 60)  && run_t.gPower_On == power_on 
-                  &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
-             gl_tMsg.long_key_mode_counter=0; 
-             long_key_mode_counter=0;
+          if(gl_tMsg.long_key_mode_counter > 60  && run_t.gPower_On == power_on &&  run_t.ptc_warning ==0 && run_t.fan_warning ==0){
+             gl_tMsg.long_key_mode_counter=0;   
          
              gl_tMsg.key_long_mode_flag =1;
-             gpro_t.gTimer_mode_key_long = 0;
+               gpro_t.gTimer_mode_key_long = 0;
             
                 SendData_Buzzer();
            }
 
          if(run_t.gPower_On == power_on){
-            gpro_t.key_mode_pressed_flag   =  1;
-        
+            gpro_t.key_mode_flag  =  1;
 
           }
 
@@ -475,24 +468,18 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_DEC_GetValue() == KEY_DOWN){
           gl_tMsg.long_key_power_counter=0;
-          long_key_power_counter=0;
           gl_tMsg.long_key_mode_counter =0 ;
-          long_key_mode_counter=0;
-           gpro_t.key_dec_flag = 1;
-                   key_dec_flag =1;
+               gpro_t.key_dec_flag = 1;
      }
      else if(KEY_ADD_GetValue() ==KEY_DOWN){
 
           gl_tMsg.long_key_power_counter=0;
-          long_key_power_counter=0;
          
           gl_tMsg.long_key_mode_counter =0 ;
-          long_key_mode_counter=0;
          gpro_t.key_add_flag = 1;
-                key_add_flag = 1;
 
     }
-    vTaskDelay(20);
+    vTaskDelay(10);
      
     }
 

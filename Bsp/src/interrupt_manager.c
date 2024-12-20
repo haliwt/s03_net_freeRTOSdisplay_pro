@@ -1,6 +1,5 @@
 #include "bsp.h"
 
-uint8_t disp_time_seconds;
 
 /*******************************************************************************
 	*
@@ -12,24 +11,9 @@ uint8_t disp_time_seconds;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   static uint16_t tm0;
-  static uint8_t tm1,tm2,tm14;
-
-
-  if(htim->Instance==TIM14){
-
-      tm14++;
-      if(tm14> 99){ //10ms *100 =1000ms = 1s
-         tm14 = 0;
-         disp_time_seconds++;
-         run_t.gTimer_timing++;
-         gpro_t.gTimer_mode_key_long++;
-
-
-
-      }
+  static uint8_t tm1,tm2;
     
-  }  
-  else if(htim->Instance==TIM17){
+   if(htim->Instance==TIM17){
     
     tm0++;  //10ms
 	tm1++;
@@ -53,7 +37,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if(tm0>999){ //1000 *1ms = 1000ms = 1s
 		tm0=0;
 		
-		
+		 gpro_t.gTimer_mode_key_long++;
          gpro_t.gTimer_set_temp_times++;
          gpro_t.gTimer_temp_compare_value++ ;
          gpro_t.gTimer_fan_to_ptc_warning++ ;
@@ -61,12 +45,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
          //
 		run_t.fan_off_60s++;
         run_t.gTimer_wifi_connect_counter++;
-		
+		run_t.gTimer_disp_time_sencods++;
 		run_t.gTimer_key_timing++;
-		//run_t.gTimer_disp_timer_seconds ++;
-     
+		run_t.gTimer_disp_timer_seconds ++;
 		run_t.gTimer_ptc_fan_warning++;
-        
+        run_t.gTimer_timing++;
 	    run_t.gTimer_work_break_times++;
         run_t.gTimer_again_switch_works ++ ;
 		 

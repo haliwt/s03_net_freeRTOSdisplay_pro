@@ -13,7 +13,6 @@
 #include "bsp_wifi.h"
 #include "bsp_lcd_app.h"
 #include "bsp_freertos.h"
-#include "interrupt_manager.h"
 
 
 #include "gpio.h"
@@ -41,7 +40,7 @@ typedef struct _process_state{
 
 
    uint8_t power_on_every_times;
-   uint8_t key_mode_pressed_flag ;
+   uint8_t key_mode_flag;
    uint8_t key_add_flag;
    uint8_t key_dec_flag;
    uint8_t smart_phone_power_on;
@@ -49,7 +48,6 @@ typedef struct _process_state{
    uint8_t send_power_on_off_cmd;
    uint8_t answer_power_on_off;
    uint8_t worksTimeBeChange_flag;
- 
   
 
    uint8_t disp_rx_cmd_done_flag;
@@ -65,7 +63,7 @@ typedef struct _process_state{
 
    //
    uint8_t gTimer_set_temp_times;
-   uint16_t gTimer_temp_compare_value;
+   uint8_t gTimer_temp_compare_value;
    uint8_t gTimer_fan_to_ptc_warning;
    uint8_t gTimer_again_send_power_on_off;
  
@@ -77,14 +75,6 @@ typedef struct _process_state{
 
 extern process_state gpro_t;
 
-extern uint8_t recoder_temp_value;
-
-extern uint8_t display_set_timer_or_works_mode;
-
-extern uint8_t check_settempValue_success;
-
-
-extern uint8_t dispTime_minutes,dispTime_hours;
 
 void bsp_init(void);
 
