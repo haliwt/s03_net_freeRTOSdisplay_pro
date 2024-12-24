@@ -325,8 +325,6 @@ static void vTaskRunPro(void *pvParameters)
            }
            else if(gpro_t.key_mode_flag==3 && gl_tMsg.key_long_mode_flag ==0){
              gpro_t.key_mode_flag++;
-            
-             
              mode_key_short_fun();
              gl_tMsg.long_key_mode_counter=0;
            
@@ -350,7 +348,7 @@ static void vTaskRunPro(void *pvParameters)
 
             }
 
-             if(gpro_t.send_power_on_off_cmd == 1){
+            if(gpro_t.send_power_on_off_cmd == 1){
                 if(gpro_t.answer_power_on_off == 1){
                   gpro_t.answer_power_on_off =0;
                    gpro_t.send_power_on_off_cmd = 0;
