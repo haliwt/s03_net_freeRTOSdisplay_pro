@@ -190,7 +190,7 @@ extern RUN_T run_t;
 
 
 
-void Power_Off_Fun(void);
+
 
 
 

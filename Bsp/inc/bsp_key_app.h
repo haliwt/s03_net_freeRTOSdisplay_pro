@@ -98,7 +98,7 @@ void Single_SendAi_Usart_RunCmd(void(*sendaiHandler)(uint8_t seddat));
 
 
 
-void power_off_handler(void);
+
 
 
 void Process_Key_Handler(uint8_t keylabel);
@@ -108,7 +108,7 @@ void Beijing_Time_Init(void);
 
 
 
-void power_on_key_short_fun(void);
+
 
 
 void power_key_long_fun(void);

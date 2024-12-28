@@ -10,6 +10,8 @@
 #include "bsp_key_app.h"
 #include "bsp_key.h"
 #include "bsp_lcd.h"
+#include "bsp_poweroff.h"
+#include "bsp_poweron.h"
 #include "bsp_wifi.h"
 #include "bsp_lcd_app.h"
 #include "bsp_freertos.h"

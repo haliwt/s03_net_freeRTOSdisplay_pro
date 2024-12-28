@@ -31,7 +31,7 @@ static void AppTaskCreate (void);
 
 
 /* 创建任务通信机制 */
-//static void AppObjCreate(void);
+static void AppObjCreate(void);
 
 
 /***********************************************************************************************************
@@ -40,6 +40,14 @@ static void AppTaskCreate (void);
 static TaskHandle_t xHandleTaskRunPro = NULL;
 //static TaskHandle_t xHandleTaskDecoderPro= NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
+
+
+TimerHandle_t           Timer1Timer_Handler;/* 定时器1句柄 */
+TimerHandle_t           Timer2Timer_Handler;/* 定时器2句柄 */
+
+void Timer1Callback(TimerHandle_t xTimer);  /* 定时器1超时回调函数 */
+void Timer2Callback(TimerHandle_t xTimer);  /* 定时器2超时回调函数 */
+
 
 //static QueueHandle_t xQueue1 = NULL;
 //static QueueHandle_t xQueue2 = NULL;
@@ -96,7 +104,7 @@ void freeRTOS_Handler(void)
 	  AppTaskCreate();
 	  
 	  /* 创建任务通信机制 */
-	 //  AppObjCreate();
+	   AppObjCreate();
 	  
 	  /* 启动调度，开始执行任劄1�71ￄ1�77 */
 	   vTaskStartScheduler();
@@ -183,7 +191,7 @@ static void vTaskRunPro(void *pvParameters)
 
 
     }
-    else{
+    else{ //超时时间，运行一下程序
 
         if( gpro_t.key_power_flag == 1){ //key power key
 
@@ -505,6 +513,87 @@ void AppTaskCreate (void)
                  NULL,           		/* 任务参数  */
                  2,              		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
                  &xHandleTaskStart );   /* 任务句柄  */
+}
+/**********************************************************************************************************
+*
+*	函 数 名: AppObjCreate
+*	功能说明: 创建任务通信机制
+*	形    参: 无
+*	返 回 值: 无
+*
+**********************************************************************************************************/
+static void AppObjCreate (void)
+{
+
+   /* 
+	  1. 创建定时器，如果在RTOS调度开始前初始化定时器，那么系统启动后才会执行。
+	  2. 统一初始化两个定时器，他们使用共同的回调函数，在回调函数中通过定时器ID来区分
+	     是那个定时器的时间到。当然，使用不同的回调函数也是没问题的。
+	*/
+
+
+
+     /* 定时器1创建为周期定时器 */
+    Timer1Timer_Handler = xTimerCreate((const char*  )"Timer1",                 /* 定时器名 */
+                                      (TickType_t   )1000,                      /* 定时器超时时间 ，1000ms*/
+                                      (UBaseType_t  )pdTRUE,                    /* 周期定时器， */
+                                      (void*        )1,                         /* 定时器ID */
+                                      (TimerCallbackFunction_t)Timer1Callback); /* 定时器回调函数 */
+    /* 定时器2创建为单次定时器 */
+    Timer2Timer_Handler = xTimerCreate((const char*  )"Timer2",                 /* 定时器名 */
+                                     (TickType_t    )1000,                      /* 定时器超时时间,1000ms */
+                                     (UBaseType_t   )pdFALSE,                   /* 单次定时器 */
+                                     (void*         )2,                         /* 定时器ID */
+                                     (TimerCallbackFunction_t)Timer2Callback);  /* 定时器回调函数 */
+
+
+    if(Timer1Timer_Handler==NULL || Timer2Timer_Handler==NULL){
+
+        
+         /* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
+
+    }
+    else{
+
+      #if 0
+        /* 启动定时器，系统启动后才开始工作 */
+	   if(xTimerStart(Timer1Timer_Handler, 1000) != pdPASS)
+	   {
+			/* 定时器还没有进入激活状态 */
+	   }
+       
+       if(xTimerStart(Timer2Timer_Handler, 1000) != pdPASS)
+       {
+               /* 定时器还没有进入激活状态 */
+       }
+       #endif 
+
+    }
+}
+
+/*************************************************************************
+*
+ * @brief       Timer1超时回调函数
+ * @param       xTimer : 传入参数(未用到)
+ * @retval      无
+ *
+ ************************************************************************/
+void Timer1Callback(TimerHandle_t xTimer)
+{
+   
+  
+}
+
+/**************************************************************************
+ *
+ * @brief       Timer2超时回调函数
+ * @param       xTimer : 传入参数(未用到),非周期性定时器2,单次定时
+ * @retval      无
+ *
+ *************************************************************************/
+void Timer2Callback(TimerHandle_t xTimer)
+{
+  
 }
 
 /********************************************************************************
