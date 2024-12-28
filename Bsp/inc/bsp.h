@@ -12,6 +12,7 @@
 #include "bsp_lcd.h"
 #include "bsp_poweroff.h"
 #include "bsp_poweron.h"
+#include "bsp_sendack.h"
 #include "bsp_wifi.h"
 #include "bsp_lcd_app.h"
 #include "bsp_freertos.h"
@@ -47,8 +48,9 @@ typedef struct _process_state{
    uint8_t key_dec_flag;
    uint8_t smart_phone_power_on;
    uint8_t smart_phone_power_off;
-   uint8_t send_power_on_off_cmd;
-   uint8_t answer_power_on_off;
+   //send data need copy this is cmd
+   uint8_t send_ack_cmd;
+   uint8_t receive_copy_cmd;
    uint8_t worksTimeBeChange_flag;
   
 
@@ -61,6 +63,7 @@ typedef struct _process_state{
    uint8_t  smart_phone_app_timer_power_on_flag;
    uint8_t  key_power_flag;
    uint8_t  smart_phone_turn_off_ptc_flag;
+   uint8_t  power_off_breath_flag ;
 
 
    //

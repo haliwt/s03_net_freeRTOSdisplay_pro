@@ -75,6 +75,7 @@ void power_on_key_short_fun(void)
   
   
      Lcd_PowerOn_Fun();
+     freertos_stop_timer1_handler();
     
 }
 

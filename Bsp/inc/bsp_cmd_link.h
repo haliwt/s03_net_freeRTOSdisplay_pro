@@ -33,6 +33,9 @@ void SendData_PowerOnOff(uint8_t index);
 void SendData_Set_Command(uint8_t cmd,uint8_t hdata);
 void SendData_Temp_Data(uint8_t tdata);
 void SendData_Time_Data(uint8_t tdata);
+void SendWifiData_Answer_Cmd(uint8_t cmd ,uint8_t data);
+
+
 
 
 void SendData_Buzzer(void);

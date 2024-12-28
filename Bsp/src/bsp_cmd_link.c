@@ -131,6 +131,36 @@ void SendData_Time_Data(uint8_t tdata)
 }
 
 /********************************************************************************
+    **
+    *Function Name
+    *Function : commad order , data -command type
+    *Input Ref: commad order , data -command type
+    *Return Ref:NO
+    *
+*******************************************************************************/
+void SendWifiData_Answer_Cmd(uint8_t cmd ,uint8_t data)
+{
+        outputBuf[0]=0x5A; //display board head = 0xA5
+        outputBuf[1]=0x01; //display device Number:is 0x01
+        outputBuf[2]=0xFE; // answer cmd :
+        outputBuf[3]= cmd; // 0x0F : is data ,don't command order.
+        outputBuf[4]= data; // don't data ,onlay is command order,recieve data is 1byte .
+       
+        outputBuf[5] = 0xFE; //frame is end of byte.
+        outputBuf[6] = bcc_check(outputBuf,6);
+        
+        transferSize=7;
+        if(transferSize)
+        {
+            while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+            transOngoingFlag=1;
+            HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+        }
+	
+}
+
+
+/********************************************************************************
 **
 *Function Name:void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 *Function :UART callback function  for UART interrupt for transmit data

@@ -96,7 +96,7 @@ typedef struct __RUN{
  
 
    uint8_t single_data;
-   uint8_t fan_off_60s;
+   
 
    uint8_t wifi_link_net_success;
 
@@ -194,9 +194,9 @@ extern RUN_T run_t;
 
 
 
-void receive_data_fromm_mainboard(uint8_t *pdata);
 
-uint8_t bcc_check(const unsigned char *data, int len) ;
+
+
 
 
 void Setup_Timer_Times_Donot_Display(void);

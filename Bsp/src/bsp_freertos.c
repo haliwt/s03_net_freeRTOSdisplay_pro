@@ -201,7 +201,9 @@ static void vTaskRunPro(void *pvParameters)
 
              if(gl_tMsg.key_long_power_flag ==1){
                   power_key_long_fun();
-                  SendData_Set_Command(0x05,0x01); // link wifi of command .
+                 gpro_t.send_ack_cmd = ack_wifi_on;
+                 gpro_t.gTimer_again_send_power_on_off =0;
+                 SendData_Set_Command(0x05,0x01); // link wifi of command .
                   gpro_t.gTimer_mode_key_long=0;
 
 
@@ -211,11 +213,12 @@ static void vTaskRunPro(void *pvParameters)
                 run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0; 
                 run_t.power_on_disp_smg_number = 1;
-                gpro_t.send_power_on_off_cmd = 1;
+                gpro_t.send_ack_cmd = ack_power_on;
+                gpro_t.gTimer_again_send_power_on_off =0;
                 SendData_PowerOnOff(1);
                 power_on_key_short_fun();
                  gpro_t.power_on_every_times=1;
-                gpro_t.gTimer_again_send_power_on_off =0;
+                
                 gpro_t.gTimer_mode_key_long=0;
                 run_t.gTimer_disp_timer_seconds=0;
 
@@ -223,9 +226,10 @@ static void vTaskRunPro(void *pvParameters)
               else{
                 gl_tMsg.long_key_power_counter=0; //WT.2024.11.05
                 gl_tMsg.key_long_power_flag=0;
-                 gpro_t.send_power_on_off_cmd = 2;
+                 gpro_t.send_ack_cmd = ack_power_off;
+                 gpro_t.gTimer_again_send_power_on_off =0;
                  SendData_PowerOnOff(0);
-                gpro_t.gTimer_again_send_power_on_off =0;
+               
                  run_t.gPower_On = power_off;
 
               }
@@ -356,20 +360,8 @@ static void vTaskRunPro(void *pvParameters)
 
             }
 
-            if(gpro_t.send_power_on_off_cmd == 1){
-                if(gpro_t.answer_power_on_off == 1){
-                  gpro_t.answer_power_on_off =0;
-                   gpro_t.send_power_on_off_cmd = 0;
-                }
-                else if(gpro_t.answer_power_on_off == 0 && gpro_t.gTimer_again_send_power_on_off >1 ){
-                   gpro_t.gTimer_again_send_power_on_off =0;
-                    SendData_PowerOnOff(1);
-                }
-               
-
-            }
-
           
+        
        disp_temp_humidity_wifi_icon_handler();
 
        display_timer_and_beijing_time_handler();
@@ -385,22 +377,11 @@ static void vTaskRunPro(void *pvParameters)
            gl_tMsg.key_long_power_flag =0;
            run_t.power_on_disp_smg_number = 0;
            run_t.gTimer_disp_timer_seconds=0;
-           if(gpro_t.send_power_on_off_cmd == 2){
-                 if(gpro_t.answer_power_on_off == 2){
-                    gpro_t.answer_power_on_off =0;
-                     gpro_t.send_power_on_off_cmd=0;
-                 }
-                 else if(gpro_t.gTimer_again_send_power_on_off >1 ){
-                     gpro_t.gTimer_again_send_power_on_off =0;
-                     SendData_PowerOnOff(0);
-                 }
-
-
-
-           }
+         
           power_off_handler();
 
        }
+       send_cmd_ack_hanlder() ; 
       //USART1_Cmd_Error_Handler();
 
     }
@@ -541,7 +522,7 @@ static void AppObjCreate (void)
                                       (TimerCallbackFunction_t)Timer1Callback); /* 定时器回调函数 */
     /* 定时器2创建为单次定时器 */
     Timer2Timer_Handler = xTimerCreate((const char*  )"Timer2",                 /* 定时器名 */
-                                     (TickType_t    )1000,                      /* 定时器超时时间,1000ms */
+                                     (TickType_t    )60000,                      /* 定时器超时时间,60s */
                                      (UBaseType_t   )pdFALSE,                   /* 单次定时器 */
                                      (void*         )2,                         /* 定时器ID */
                                      (TimerCallbackFunction_t)Timer2Callback);  /* 定时器回调函数 */
@@ -580,9 +561,23 @@ static void AppObjCreate (void)
  ************************************************************************/
 void Timer1Callback(TimerHandle_t xTimer)
 {
-   
+   gpro_t.power_off_breath_flag ++ ;
   
 }
+void freertos_start_timer1_handler(void)
+{
+
+    xTimerStart(Timer1Timer_Handler, 1000);
+
+}
+
+void freertos_stop_timer1_handler(void)
+{
+
+   xTimerStop(Timer1Timer_Handler, 1000);
+}
+
+
 
 /**************************************************************************
  *
@@ -593,8 +588,17 @@ void Timer1Callback(TimerHandle_t xTimer)
  *************************************************************************/
 void Timer2Callback(TimerHandle_t xTimer)
 {
-  
+      run_t.gFan_RunContinue=2;
 }
+
+void freertos_start_timer2_handler(void)
+{
+
+   xTimerStart(Timer2Timer_Handler, portMAX_DELAY);
+   run_t.gFan_RunContinue=1;
+
+}
+
 
 /********************************************************************************
 	**

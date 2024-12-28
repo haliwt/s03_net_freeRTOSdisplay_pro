@@ -1,9 +1,25 @@
 #include "bsp.h"
 
+static void power_off_breath_Led(void);
+
+
+
 
 void power_off_handler(void)
 {
     
+   static uint8_t dc_power_off;
+
+   if(dc_power_off == 0){
+
+      dc_power_off++;
+
+      freertos_start_timer1_handler();
+      
+
+   }
+
+
     if(run_t.power_off_id_flag == 1){   
         run_t.power_off_id_flag++;  
         lcd_donot_disp_screen();
@@ -31,29 +47,30 @@ void power_off_handler(void)
 
         run_t.disp_wind_speed_grade =100;	
 
-        run_t.fan_off_60s =0;
-        run_t.gFan_RunContinue=1;
+       
+        
         gpro_t.smart_phone_app_timer_power_on_flag =0;
+        freertos_start_timer1_handler();
+        freertos_start_timer2_handler();
       
 	}
     
 	lcd_power_off_donot_fan_Fun();
    
-    Breath_Led();
+    power_off_breath_Led();
 	if(run_t.gFan_RunContinue == 1){
-       if(run_t.fan_off_60s < 61){
        
 	      LCD_BACK_LIGHT_ON();
 	      LCD_Display_Wind_Icon_Handler();
-       	}
-	   else {
+     }
+	 else if(run_t.gFan_RunContinue == 2){
          
            run_t.gFan_RunContinue =0;
 		   Lcd_PowerOff_Fun();
 
-	   }
 	}
 }
+
 
 
 /************************************************************************
@@ -79,8 +96,36 @@ void power_off_handler(void)
 		
 		run_t.disp_wind_speed_grade =30;	
 		
-		run_t.fan_off_60s =0;
+		
 } 
+
+/************************************************************************
+	*
+	*Function Name: static void Power_Off_Fun(void)
+	*
+	*
+	*
+	*
+************************************************************************/
+static void power_off_breath_Led(void)
+{
+
+    if(gpro_t.power_off_breath_flag ==1){
+
+           POWER_ON_LED() ;
+
+    }
+    else{
+         gpro_t.power_off_breath_flag =0;
+
+    
+         POWER_OFF_LED() ;
+
+
+    }
+
+
+}
 
 
 
