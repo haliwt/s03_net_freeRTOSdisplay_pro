@@ -79,5 +79,23 @@ void power_on_key_short_fun(void)
 }
 
 
+/**************************************************************************
+ * 
+ *Function Name:void power_key_long_fun(void)
+ *Function:
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
+void power_key_long_fun(void)
+{
+    
+    run_t.wifi_link_net_success =0;
+    run_t.gTimer_wifi_connect_counter=0;
+  
+    run_t.wifi_receive_led_fast_led_flag=0; //adjust if mainboard receive of connect wifi of signal
+    run_t.wifi_led_fast_blink_flag=1;
+  
+}
 
 
