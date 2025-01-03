@@ -270,9 +270,7 @@ static void vTaskRunPro(void *pvParameters)
                   gl_tMsg.long_key_mode_counter =0;
                   
                    SendData_Buzzer();
-                   //HAL_Delay(10);
-                
-                  add_key_fun();
+                   add_key_fun();
                 }
               
 

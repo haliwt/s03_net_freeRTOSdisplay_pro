@@ -47,7 +47,7 @@ typedef struct _process_state{
    uint8_t key_add_flag;
    uint8_t key_dec_flag;
    uint8_t smart_phone_power_on;
-   uint8_t smart_phone_power_off;
+  
    //send data need copy this is cmd
    uint8_t send_ack_cmd;
    uint8_t receive_copy_cmd;

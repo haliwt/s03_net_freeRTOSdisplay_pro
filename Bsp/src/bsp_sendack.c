@@ -19,15 +19,16 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
      break;
 
-     case 0x31: //smart phone app power on command,but don't timer app power on
+     case 0x31: //smart phone app timer that power on command,is normal power on and off
 
         if(pdata[3] == 0x01){ //open
+           run_t.wifi_link_net_success=1;
             SendWifiData_Answer_Cmd(0x31,0x01);
             App_PowerOn_Handler() ; 
 
         }
         else if(pdata[3] == 0x0){ //close 
-            gpro_t.smart_phone_power_off=1;
+            run_t.wifi_link_net_success=1;
             SendWifiData_Answer_Cmd(0x031,0x0);
             App_PowerOff_Handler() ; 
 
@@ -36,7 +37,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
      break;
 
-    case 0x21: //smart phone power on or off
+    case 0x21: //smart phone power on or off that App timer .
         if(pdata[3]==0x01){ //power on by smart phone APP
             gpro_t.smart_phone_app_timer_power_on_flag =1;
             run_t.wifi_link_net_success=1;
@@ -45,7 +46,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
         
          }
          else{  //power off by smart phone APP
-         
+             run_t.wifi_link_net_success=1;
              App_PowerOff_Handler() ;     
          }
        
