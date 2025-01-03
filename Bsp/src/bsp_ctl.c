@@ -30,6 +30,7 @@ void disp_timer_run_times(void)
 		  run_t.timer_time_minutes = run_t.timer_time_minutes -30;
         #else 
           run_t.timer_time_minutes --;
+        
 
         #endif 
 	    if(run_t.timer_time_minutes < 0){
