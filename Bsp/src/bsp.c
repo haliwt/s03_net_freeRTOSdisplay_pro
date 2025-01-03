@@ -294,6 +294,12 @@ static void disp_set_timer_timing_value_fun(void)
                       run_t.timer_timing_define_flag = timing_success;
                       run_t.display_set_timer_or_works_mode = timer_time;
                       run_t.gModel =2 ; //WT.EDIT 2024.11.08
+                      if(wifi_link_net_state()==1){
+                        gpro_t.receive_copy_cmd = ack_not_ai_mode; //WT.EDIT .2025.01.03
+                        gpro_t.gTimer_again_send_power_on_off =0;
+					      SendData_Set_Command(0x27,0x02); //MODE_AI,BUR NO_BUZZER);
+
+                      }
                 }
                 else{
                      run_t.timer_timing_define_flag = timing_not_definition ;

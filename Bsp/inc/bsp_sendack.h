@@ -15,6 +15,8 @@ typedef enum ack_sig{
   ack_plasma_off,
   ack_ultra_on,
   ack_ultra_off,
+  ack_ai_mode,
+  ack_not_ai_mode
   
 
 }ack_sit_e;
