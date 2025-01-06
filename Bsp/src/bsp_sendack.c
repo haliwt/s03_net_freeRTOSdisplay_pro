@@ -420,30 +420,30 @@ void send_cmd_ack_hanlder(void)
     break;
 
     case ack_ai_mode:
-        if(gpro_t.receive_copy_cmd == ack_ai_mode){
-            gpro_t.receive_copy_cmd =0;
-            gpro_t.send_ack_cmd = 0;
-
-        }
-        else if(gpro_t.receive_copy_cmd != 0 && gpro_t.gTimer_again_send_power_on_off >1){
-            gpro_t.gTimer_again_send_power_on_off =0;
-            SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
-
-        }
+//        if(gpro_t.receive_copy_cmd == ack_ai_mode){
+//            gpro_t.receive_copy_cmd =0;
+//            gpro_t.send_ack_cmd = 0;
+//
+//        }
+//        else if(gpro_t.receive_copy_cmd != 0 && gpro_t.gTimer_again_send_power_on_off >1){
+//            gpro_t.gTimer_again_send_power_on_off =0;
+//            SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
+//
+//        }
     break;
 
     case ack_not_ai_mode:
 
-       if(gpro_t.receive_copy_cmd == ack_not_ai_mode){
-            gpro_t.receive_copy_cmd =0;
-            gpro_t.send_ack_cmd = 0;
-
-        }
-        else if(gpro_t.receive_copy_cmd != 0 && gpro_t.gTimer_again_send_power_on_off >1){
-            gpro_t.gTimer_again_send_power_on_off =0;
-            SendData_Set_Command(0x27,0x02); //NOT_MODE_AI
-
-        }
+//       if(gpro_t.receive_copy_cmd == ack_not_ai_mode){
+//            gpro_t.receive_copy_cmd =0;
+//            gpro_t.send_ack_cmd = 0;
+//
+//        }
+//        else if(gpro_t.receive_copy_cmd != 0 && gpro_t.gTimer_again_send_power_on_off >1){
+//            gpro_t.gTimer_again_send_power_on_off =0;
+//            SendData_Set_Command(0x27,0x02); //NOT_MODE_AI
+//
+//        }
 
 
     break;

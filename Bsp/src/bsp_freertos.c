@@ -84,8 +84,9 @@ uint8_t  rx_end_counter,ulid,rx_data_counter,rx_end_flag;
 uint8_t check_code;
 
 uint8_t bcc_check_code;
+uint8_t dc_power_on_first ;
+uint8_t mode_sound;
 
- uint8_t dc_power_on_first ;
 
 
 
@@ -127,7 +128,7 @@ static void vTaskRunPro(void *pvParameters)
     
     static volatile uint8_t power_on_off_flag,fan_on_off_flag,dc_power_on ;
     static uint8_t smart_phone_app_timer_power_on_flag,app_power_off_flag;
-    static uint8_t mode_sound;
+  //  static uint8_t mode_sound;
     while(1)
     {
 		/*
@@ -257,9 +258,14 @@ static void vTaskRunPro(void *pvParameters)
                     else{
                         gl_tMsg.long_key_mode_counter=0;
                       
-                        mode_sound =1;//SendData_Buzzer();
-                        SendData_Buzzer(); //mode_key_short_fun();
-                        osDelay(10);
+                        //SendData_Buzzer();
+                        do{
+                         SendData_Buzzer(); //mode_key_short_fun();
+                         HAL_Delay(5);//osDelay(5);
+                         mode_sound =1;
+                        }
+                        while(0);
+                        
                    }
 
                  }
@@ -323,8 +329,14 @@ static void vTaskRunPro(void *pvParameters)
 
            if(mode_sound == 1){
                mode_sound++;
+            
+              mode_key_short_fun();//SendData_Buzzer();
 
-             mode_key_short_fun();//SendData_Buzzer();
+           }
+           else if(mode_sound==2){
+                 mode_sound ++ ;
+                  
+                 mode_key_ai_mode_handler();
 
            }
          

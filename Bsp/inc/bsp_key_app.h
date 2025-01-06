@@ -116,6 +116,7 @@ void Beijing_Time_Init(void);
 
 void mode_key_short_fun(void);
 
+void mode_key_ai_mode_handler(void);
 
 
 

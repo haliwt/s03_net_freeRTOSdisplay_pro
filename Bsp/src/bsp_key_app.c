@@ -69,26 +69,58 @@ void mode_key_short_fun(void)
 			run_t.display_set_timer_or_works_mode = timer_time;
 			run_t.gModel=2;
             run_t.gTimer_again_switch_works = 0;
-			if(wifi_link_net_state() == 1){
-				SendData_Set_Command(0x27,0x02); //MODE_NOT AI,BUR NO_BUZZER);
-				HAL_Delay(10);
-			}
+
 		}
 		else if(run_t.display_set_timer_or_works_mode == timer_time){
 			//beijing time + ai item
 			run_t.display_set_timer_or_works_mode = works_time;
 			
 			run_t.gModel=1;
-			if(wifi_link_net_state() ==1){
-				SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
-				HAL_Delay(10);
-			}
+
 		
 		}
 			
 	}		
 }
 
+
+void mode_key_ai_mode_handler(void)
+{
+    if(run_t.ptc_warning ==0 && run_t.fan_warning ==0){
+		if(run_t.display_set_timer_or_works_mode == works_time){
+	
+			//timer time + don't has ai item
+			//run_t.display_set_timer_or_works_mode = timer_time;
+			//run_t.gModel=2;
+            //run_t.gTimer_again_switch_works = 0;
+            run_t.gTimer_again_switch_works = 0;
+           
+			if(wifi_link_net_state() == 1){
+				SendData_Set_Command(0x27,0x01); //MODE_NOT AI,BUR NO_BUZZER);
+				//HAL_Delay(10);
+			}
+            
+		}
+		else if(run_t.display_set_timer_or_works_mode == timer_time){
+			//beijing time + ai item
+			//run_t.display_set_timer_or_works_mode = works_time;
+			
+			//run_t.gModel=1;
+			
+    			if(wifi_link_net_state() ==1){
+    				SendData_Set_Command(0x27,0x02); //MODE_AI,BUR NO_BUZZER);
+    				//HAL_Delay(10);
+    			}
+
+            }
+		
+		
+			
+	}		
+
+
+
+}
 /**************************************************************************
  * 
  *Function Name:
