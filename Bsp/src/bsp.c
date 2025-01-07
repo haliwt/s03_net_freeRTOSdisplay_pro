@@ -50,7 +50,8 @@ void mode_key_long_fun(void)
 void display_timer_and_beijing_time_handler(void)
 {
    
-  static uint8_t not_ai_mode_flag,no_ai_default=0xff;
+  static uint8_t not_ai_mode_flag,not_ai_default=0xff;
+  static uint8_t ai_mode_flag,ai_default = 0xff;
    switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
     case works_time:
@@ -89,7 +90,15 @@ void display_timer_and_beijing_time_handler(void)
     //  beijing_time_fun();
     
      Setup_Timer_Times_Donot_Display();
-     not_ai_mode_flag++;
+     if(wifi_link_net_state()==1 && (ai_default != ai_mode_flag)){ //WT.EDIT 2025.01.03
+             ai_default = ai_mode_flag;
+             not_ai_mode_flag++;
+             gpro_t.send_ack_cmd = ack_ai_mode;
+             gpro_t.gTimer_again_send_power_on_off =0;
+			 SendData_Set_Command(0x27,0x01); //MODE_AI,BUR NO_BUZZER);
+
+     }
+     
 
     break;
 
@@ -102,11 +111,12 @@ void display_timer_and_beijing_time_handler(void)
 
     case timer_time:
 
-       if(wifi_link_net_state()==1 && (no_ai_default != not_ai_mode_flag)){ //WT.EDIT 2025.01.03
-             no_ai_default = not_ai_mode_flag;
+       if(wifi_link_net_state()==1 && (not_ai_default != not_ai_mode_flag)){ //WT.EDIT 2025.01.03
+             not_ai_default = not_ai_mode_flag;
+             ai_mode_flag++;
              gpro_t.send_ack_cmd = ack_not_ai_mode;
              gpro_t.gTimer_again_send_power_on_off =0;
-			 SendData_Set_Command(0x27,0x02); //MODE_AI,BUR NO_BUZZER);
+			 SendData_Set_Command(0x27,0x02); //NOT_MODE_AI,BUR NO_BUZZER);
 
         }
        disp_timer_run_times();
