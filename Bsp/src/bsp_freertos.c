@@ -327,7 +327,10 @@ static void vTaskRunPro(void *pvParameters)
            if(mode_sound == 1){
                mode_sound++;
 
-              SendData_Buzzer(); //mode_key_short_fun();
+              SendData_Buzzer_Has_Ack();//SendData_Buzzer(); 
+              gpro_t.send_ack_cmd = ack_buzzer_sound;
+              gpro_t.gTimer_again_send_power_on_off=0;
+              
               osDelay(10);//20
             
               mode_key_short_fun();//SendData_Buzzer();

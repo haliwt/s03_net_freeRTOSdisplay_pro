@@ -152,7 +152,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
       break;
 
-      //接收的是数据
+
+     //接收的是数据
 
       case 0x1A: //温度数据
 
@@ -306,7 +307,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
         
       break;
 
-     case 0xFE: // copy send cmd acknowlege
+     case 0xFF: // copy send cmd acknowlege
           //power on or power off 
           if(pdata[3]==0x01){ //power on or power off cmd.
               if(pdata[4]==1){ //power on
@@ -328,6 +329,13 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 
 
           }
+          else if(pdata[3] == 0x16){  //buzzer answer command 
+
+                gpro_t.receive_copy_cmd = ack_buzzer_sound;
+
+           }
+
+         
      break;
      
      }
@@ -450,7 +458,16 @@ void send_cmd_ack_hanlder(void)
 
     case ack_buzzer_sound:
 
+        if(gpro_t.receive_copy_cmd == ack_buzzer_sound){
+            gpro_t.receive_copy_cmd =0;
+            gpro_t.send_ack_cmd = 0;
 
+        }
+        else if(gpro_t.receive_copy_cmd != 0 && gpro_t.gTimer_again_send_power_on_off >1){
+            gpro_t.gTimer_again_send_power_on_off =0;
+            SendData_Set_Command(0x06,0x01); //buzzer sound command .
+
+        }
 
     break;
 

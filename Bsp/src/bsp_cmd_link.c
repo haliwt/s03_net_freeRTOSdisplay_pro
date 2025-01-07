@@ -58,6 +58,29 @@ void SendData_Buzzer(void)
 	
 }
 
+void SendData_Buzzer_Has_Ack(void)
+{
+	
+    outputBuf[0]=0xA5; //display board head = 0xA5
+	outputBuf[1]= 0x01; //display device Number:is 0x01
+	outputBuf[2]=0x16; // command type = 0x06 ->buzzer sound open or not
+	outputBuf[3]=0x01; // command order -> 01 - buzzer sound done, 00- don't buzzer sound 
+	outputBuf[4]=0x00; // data is length: 00 ->don't data 
+	outputBuf[5]=0xFE; // frame of end code -> 0xFE.
+	
+	outputBuf[6] = bcc_check(outputBuf,6);
+	transferSize=7;
+	if(transferSize)
+	{
+		while(transOngoingFlag);
+		transOngoingFlag=1;
+		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+	}
+	
+}
+
+
+
 void SendData_Set_Command(uint8_t cmd,uint8_t data)
 {
     outputBuf[0]=0xA5; //display board head = 0xA5
@@ -142,7 +165,7 @@ void SendWifiData_Answer_Cmd(uint8_t cmd ,uint8_t data)
 {
         outputBuf[0]=0x5A; //display board head = 0xA5
         outputBuf[1]=0x01; //display device Number:is 0x01
-        outputBuf[2]=0xFE; // answer cmd :
+        outputBuf[2]=0xFF; // answer or copy command
         outputBuf[3]= cmd; // 0x0F : is data ,don't command order.
         outputBuf[4]= data; // don't data ,onlay is command order,recieve data is 1byte .
        
