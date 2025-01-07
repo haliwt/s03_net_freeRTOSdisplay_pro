@@ -240,8 +240,8 @@ static void vTaskRunPro(void *pvParameters)
               }
              }
 
-            }
-            else if(gpro_t.key_mode_flag == 1){
+        }
+        else if(gpro_t.key_mode_flag == 1){
                 
                   if(KEY_MODE_GetValue() == KEY_UP){
                       gpro_t.key_mode_flag++;
@@ -259,12 +259,9 @@ static void vTaskRunPro(void *pvParameters)
                         gl_tMsg.long_key_mode_counter=0;
                       
                         //SendData_Buzzer();
-                        do{
-                         SendData_Buzzer(); //mode_key_short_fun();
-                         HAL_Delay(5);//osDelay(5);
+                       
                          mode_sound =1;
-                        }
-                        while(0);
+                        
                         
                    }
 
@@ -329,6 +326,9 @@ static void vTaskRunPro(void *pvParameters)
 
            if(mode_sound == 1){
                mode_sound++;
+
+              SendData_Buzzer(); //mode_key_short_fun();
+              osDelay(10);//20
             
               mode_key_short_fun();//SendData_Buzzer();
 

@@ -448,6 +448,17 @@ void send_cmd_ack_hanlder(void)
 
     break;
 
+    case ack_buzzer_sound:
+
+
+
+    break;
+
+
+    
+
+    
+
 
     }
 
