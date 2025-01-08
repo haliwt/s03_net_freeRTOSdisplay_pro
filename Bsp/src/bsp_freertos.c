@@ -86,8 +86,7 @@ uint8_t check_code;
 uint8_t bcc_check_code;
 uint8_t dc_power_on_first ;
 uint8_t mode_sound;
-
-
+uint16_t test_n;
 
 
 
@@ -272,8 +271,8 @@ static void vTaskRunPro(void *pvParameters)
                 run_t.gPower_On = power_on;
                 power_on_key_short_fun();
 
-            }
-            else if(smart_phone_app_timer_power_on_flag ==1){
+        }
+        else if(smart_phone_app_timer_power_on_flag ==1){
                 smart_phone_app_timer_power_on_flag++;
                  run_t.gPower_On = power_on;
                 gl_tMsg.long_key_power_counter =0;
@@ -282,13 +281,13 @@ static void vTaskRunPro(void *pvParameters)
                 power_on_key_short_fun();
                  
 
-            }
-            else if(app_power_off_flag ==1){
+        }
+        else if(app_power_off_flag ==1){
                 app_power_off_flag++;
                
                 run_t.gPower_On = power_off;
-            }
-            else if((gpro_t.key_add_flag ==1 || gpro_t.key_dec_flag ==1)&&run_t.gPower_On == power_on){
+        }
+        else if((gpro_t.key_add_flag ==1 || gpro_t.key_dec_flag ==1)&&run_t.gPower_On == power_on){
                 
 
               if(gpro_t.key_add_flag == 1){
@@ -323,6 +322,8 @@ static void vTaskRunPro(void *pvParameters)
 
         
         if(run_t.gPower_On == power_on){
+
+           test_n++;
 
            if(mode_sound == 1){
                mode_sound++;

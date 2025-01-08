@@ -26,7 +26,7 @@ void (*beijing_time_fun)(void);
 
 
 
-static void Beijing_Time_Display(void);
+//static void Beijing_Time_Display(void);
 
 
 
@@ -42,7 +42,7 @@ static void Beijing_Time_Display(void);
 void Beijing_Time_Init(void)
 {
 
-	Beijing_Time_Display_Handler(Beijing_Time_Display);
+	//Beijing_Time_Display_Handler(Beijing_Time_Display);
 
 }
 
@@ -268,6 +268,7 @@ void dec_key_fun(void)
  * Return Ref:
  * 
 **********************************************************************************/
+#if 0
 static void Beijing_Time_Display(void)
 {
 	
@@ -305,7 +306,7 @@ static void Beijing_Time_Display(void)
 			}
 
 }
-
+#endif 
 void Beijing_Time_Display_Handler(void(*beijing_time_handler)(void))
 {
 	beijing_time_fun = beijing_time_handler;

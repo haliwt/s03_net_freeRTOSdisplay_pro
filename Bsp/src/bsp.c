@@ -87,7 +87,7 @@ void display_timer_and_beijing_time_handler(void)
 
       }
       disp_normal_timing_handler(); 
-    //  beijing_time_fun();
+    
     
      Setup_Timer_Times_Donot_Display();
      if(wifi_link_net_state()==1 && (ai_default != ai_mode_flag)){ //WT.EDIT 2025.01.03
@@ -177,9 +177,9 @@ void display_timer_and_beijing_time_handler(void)
 static void disp_normal_timing_handler(void)
 {
 
-   if(run_t.gTimer_disp_timer_seconds >59){ //minute
+   if(run_t.gTimer_disp_time_sencods >59){ //minute
 		
-		run_t.gTimer_disp_timer_seconds=0;
+		run_t.gTimer_disp_time_sencods=0;
         run_t.dispTime_minutes ++;
        
           
@@ -187,7 +187,7 @@ static void disp_normal_timing_handler(void)
 			run_t.dispTime_minutes=0;
 			run_t.dispTime_hours ++;
 		    
-		if(run_t.dispTime_hours >24){
+		if(run_t.dispTime_hours >23){
 			run_t.dispTime_hours=0;
 
 		}
