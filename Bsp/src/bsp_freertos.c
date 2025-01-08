@@ -221,7 +221,7 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.power_on_every_times=1;
                 
                 gpro_t.gTimer_mode_key_long=0;
-                run_t.gTimer_disp_timer_seconds=0;
+              //  run_t.gTimer_set_timer_time_seconds=0;
 
               }
               else{
@@ -377,7 +377,7 @@ static void vTaskRunPro(void *pvParameters)
           gl_tMsg.long_key_power_counter =0;
            gl_tMsg.key_long_power_flag =0;
            run_t.power_on_disp_smg_number = 0;
-           run_t.gTimer_disp_timer_seconds=0;
+           //run_t.gTimer_set_timer_time_seconds=0;
          
           power_off_handler();
 

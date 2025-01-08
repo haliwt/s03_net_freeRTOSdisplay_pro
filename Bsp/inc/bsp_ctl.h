@@ -56,7 +56,7 @@ typedef struct __RUN{
    
    uint8_t gTemperature;
  
-   uint8_t gTimer_disp_timer_seconds;
+ //  uint8_t gTimer_set_timer_time_seconds;
    
   uint8_t gTimer_setup_zero;
 
@@ -166,7 +166,7 @@ typedef struct __RUN{
 
     int8_t dispTime_hours;
 	int8_t dispTime_minutes;
-	int8_t gTimer_disp_time_sencods;
+	int8_t gTimer_disp_time_seconds;
 
 	int8_t  timer_time_hours;
    int8_t 	timer_time_minutes ;

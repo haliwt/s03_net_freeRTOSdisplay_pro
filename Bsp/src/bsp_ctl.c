@@ -162,9 +162,9 @@ void Setup_Timer_Times_Donot_Display(void)
 void Works_Counter_Time(void)
 {
   //if(run_t.timer_timing_define_flag == timing_success){
-	  if(run_t.gTimer_disp_timer_seconds >59){ //minute
+	  if(run_t.gTimer_disp_time_seconds >59){ //minute
 		
-		run_t.gTimer_disp_timer_seconds=0;
+		run_t.gTimer_disp_time_seconds=0;
         run_t.dispTime_minutes ++;
        
           

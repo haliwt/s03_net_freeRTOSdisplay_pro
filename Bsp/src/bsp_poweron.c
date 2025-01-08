@@ -47,7 +47,7 @@ void power_on_key_short_fun(void)
 
 	 if(lcd_t.display_beijing_time_flag == 0 ){
 
-	 run_t.gTimer_disp_time_sencods=0;
+	 run_t.gTimer_disp_time_seconds=0;
 	 run_t.dispTime_hours=0;
      run_t.dispTime_minutes=0;
 	 

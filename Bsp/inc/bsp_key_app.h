@@ -95,21 +95,10 @@ void Single_SendBuzzer_RunCmd(void(*buzzerHandler)(void));
 void Single_SendAi_Usart_RunCmd(void(*sendaiHandler)(uint8_t seddat));
 
 
-
-
-
-
-
-
 void Process_Key_Handler(uint8_t keylabel);
 
 void Beijing_Time_Display_Handler(void(*beijing_time_handler)(void));
-void Beijing_Time_Init(void);
-
-
-
-
-
+//void Beijing_Time_Init(void);
 
 
 

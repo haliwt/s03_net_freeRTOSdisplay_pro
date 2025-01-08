@@ -17,7 +17,7 @@ static void power_on_init_disp_time_numbers(void);
 
 void bsp_init(void)
 {
-  Beijing_Time_Init();
+  //Beijing_Time_Init();
   bsp_wifi_init();
 
 }
@@ -59,7 +59,7 @@ void display_timer_and_beijing_time_handler(void)
      if(lcd_t.display_beijing_time_flag == 0 && gpro_t.power_on_every_times == 1 ){
 
               gpro_t.power_on_every_times++;
-              run_t.gTimer_disp_timer_seconds=0;
+              run_t.gTimer_disp_time_seconds=0; //WT.EDIT 2025.01.08
 
      }
         
@@ -177,9 +177,9 @@ void display_timer_and_beijing_time_handler(void)
 static void disp_normal_timing_handler(void)
 {
 
-   if(run_t.gTimer_disp_time_sencods >59){ //minute
+   if(run_t.gTimer_disp_time_seconds >59){ //minute
 		
-		run_t.gTimer_disp_time_sencods=0;
+		run_t.gTimer_disp_time_seconds=0;
         run_t.dispTime_minutes ++;
        
           

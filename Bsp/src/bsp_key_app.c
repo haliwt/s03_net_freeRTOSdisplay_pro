@@ -272,9 +272,9 @@ void dec_key_fun(void)
 static void Beijing_Time_Display(void)
 {
 	
-	    if(run_t.gTimer_disp_timer_seconds >59){ //minute
+	    if(run_t.gTimer_set_timer_time_seconds >59){ //minute
 
-			run_t.gTimer_disp_timer_seconds=0;
+			run_t.gTimer_set_timer_time_seconds=0;
             run_t.dispTime_minutes ++;
            
             
