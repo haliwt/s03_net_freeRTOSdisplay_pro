@@ -217,6 +217,7 @@ static void vTaskRunPro(void *pvParameters)
                 gpro_t.send_ack_cmd = ack_power_on;
                 gpro_t.gTimer_again_send_power_on_off =0;
                 SendData_PowerOnOff(1);
+                HAL_Delay(10);
                 power_on_key_short_fun();
                  gpro_t.power_on_every_times=1;
                 
@@ -230,7 +231,7 @@ static void vTaskRunPro(void *pvParameters)
                  gpro_t.send_ack_cmd = ack_power_off;
                  gpro_t.gTimer_again_send_power_on_off =0;
                  SendData_PowerOnOff(0);
-               
+                 HAL_Delay(10);
                  run_t.gPower_On = power_off;
                  
 
@@ -297,7 +298,8 @@ static void vTaskRunPro(void *pvParameters)
                   gpro_t.key_add_flag ++;
                   gl_tMsg.long_key_mode_counter =0;
                   
-                   SendData_Buzzer();
+                   SendData_Buzzer_Has_Ack();//SendData_Buzzer();
+                   HAL_Delay(5);
                    add_key_fun();
                 }
               
@@ -308,7 +310,8 @@ static void vTaskRunPro(void *pvParameters)
                 if(KEY_DEC_GetValue()==KEY_UP){
                     gpro_t.key_dec_flag ++;
                     gl_tMsg.long_key_mode_counter =0;
-                   SendData_Buzzer();
+                   SendData_Buzzer_Has_Ack();//SendData_Buzzer();
+                   HAL_Delay(5);
                   // HAL_Delay(10);
                 
                    dec_key_fun();

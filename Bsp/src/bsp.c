@@ -294,7 +294,7 @@ static void disp_set_timer_timing_value_fun(void)
              
        if(run_t.gTimer_digital5678_ms > 3){ //4
            run_t.gTimer_digital5678_ms=0;
-               
+             
 
         }
 
@@ -303,7 +303,9 @@ static void disp_set_timer_timing_value_fun(void)
             
               run_t.timer_time_minutes = 0;
               run_t.gTimer_timing=0;
+             
                if(run_t.timer_time_hours !=0){  
+                     
                       run_t.timer_timing_define_flag = timing_success;
                       run_t.display_set_timer_or_works_mode = timer_time;
                       run_t.gModel =2 ; //WT.EDIT 2024.11.08
@@ -319,6 +321,7 @@ static void disp_set_timer_timing_value_fun(void)
 
                      run_t.display_set_timer_or_works_mode = works_time;
                      run_t.gModel =1 ;  //WT.EDIT 2024.11.08
+                     
                      
                 }
          
@@ -342,9 +345,9 @@ void set_temperature_compare_value_fun(void)
 
     static uint8_t first_on_ptc;
 
-    if(gpro_t.temp_key_set_value ==1 && gpro_t.gTimer_set_temp_times > 1){
+    if(gpro_t.temp_key_set_value ==1 && gpro_t.gTimer_set_temp_times > 1){ //
     
-         run_t.smart_phone_set_temp_value_flag =1;
+          run_t.smart_phone_set_temp_value_flag =1;
           gpro_t.temp_key_set_value =0;
           gpro_t.gTimer_temp_compare_value =0;
 

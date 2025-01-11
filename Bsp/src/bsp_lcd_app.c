@@ -36,7 +36,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	 //digital 1,2 ->display "temperature"  blink  
 	if(run_t.smart_phone_set_temp_value_flag ==1){
 
-        disp_set_timer_value =1;
+       // disp_set_timer_value =1;
 
         decade_temp = run_t.wifi_set_temperature / 10 ;
 		unit_temp =  run_t.wifi_set_temperature % 10; //
@@ -48,7 +48,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 		lcd_t.number2_high = unit_temp;
 
 	     
-	 if(run_t.gTimer_numbers_one_two_blink < 6  ){ //disp number
+	 if(run_t.gTimer_numbers_one_two_blink < 6  ){ //disp number setup temperature number 1,2.
 	     //display address 0xC2
 	     if(run_t.gDry ==1 && run_t.gPlasma ==1  && run_t.gUltransonic==1)
 		 	TM1723_Write_Display_Data(0xC2,((0X01+DRY_Symbol+KILL_Symbol+BUG_Symbol)+lcdNumber1_High[lcd_t.number1_high]) & 0xff);//display digital "temp
@@ -119,7 +119,9 @@ void disp_temp_humidity_wifi_icon_handler(void)
              run_t.gTimer_numbers_one_two_blink =0;
 			 number_blink_times++;
 		     if(number_blink_times > 2){
+          
                  number_blink_times =0;
+                 disp_set_timer_value =1;
 				 run_t.smart_phone_set_temp_value_flag =0;
                  gpro_t.set_temp_value_success = 1;
                  gpro_t.gTimer_temp_compare_value =20; //at once 
@@ -130,7 +132,21 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	 }
 	 else{ //digital "1,2" don't blink LED
 
-        if(disp_set_timer_value==1){
+
+       if(gpro_t.temp_key_set_value ==1){
+
+         decade_temp = run_t.wifi_set_temperature / 10 ;
+		 unit_temp =  run_t.wifi_set_temperature % 10; //
+        
+		lcd_t.number1_low=decade_temp;
+		lcd_t.number1_high =decade_temp;
+
+		lcd_t.number2_low = unit_temp;
+		lcd_t.number2_high = unit_temp;
+
+
+        }
+        else if(disp_set_timer_value==1 ){ //WT.EDIT 2025.01.11
 
             disp_set_timer_value++;
           temp1 =   gpro_t.temp_real_value/ 10;
@@ -146,6 +162,9 @@ void disp_temp_humidity_wifi_icon_handler(void)
         }
 	    //display address 0xC2 ->
 	    Display_Kill_Dry_Ster_Icon();
+
+
+  
 		
 		//display address 0xC3
 		if(run_t.gModel==1){
@@ -158,6 +177,8 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	   
 	   //display address 0xC4
         TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber2_Low[lcd_t.number2_low]+lcdNumber3_High[lcd_t.number3_high])&0xff);
+
+       
 	 }
 	 
 	 /**********************************end temperature*****************************************/
@@ -423,11 +444,6 @@ static void works_timer_disp_numaber(void)
 
       case works_time:
         
-
-   
-
-       
-
          lcd_t.number5_low=(run_t.dispTime_hours ) /10;
          lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;
 

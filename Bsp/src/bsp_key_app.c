@@ -234,7 +234,7 @@ void dec_key_fun(void)
 			
              gpro_t.temp_key_set_value = 1;
              gpro_t.gTimer_set_temp_times = 0;
-              gpro_t.smart_phone_turn_off_ptc_flag =0;
+             gpro_t.smart_phone_turn_off_ptc_flag =0;
 	
 		    break;
 
