@@ -52,6 +52,8 @@ typedef struct _process_state{
    uint8_t send_ack_cmd;
    uint8_t receive_copy_cmd;
    uint8_t worksTimeBeChange_flag;
+   uint8_t long_key_power_counter;
+   uint8_t key_long_power_flag; 
   
 
    uint8_t disp_rx_cmd_done_flag;

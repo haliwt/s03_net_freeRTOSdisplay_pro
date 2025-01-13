@@ -313,10 +313,20 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
               if(pdata[4]==1){ //power on
 
                  gpro_t.receive_copy_cmd = ack_power_on;
+                 do{
+                     
+                     power_on_key_short_fun();
+                     run_t.gPower_On = power_on;
+                 }while(0);
+                
+                 
 
               }
-              else if(pdata[4]==2) //power offf
+              else if(pdata[4]==2){ //power offf
                  gpro_t.receive_copy_cmd = ack_power_off;
+                 run_t.gPower_On = power_off;
+
+              }
 
           }
           else if(pdata[3] == 0x05){ //link wifi command .
@@ -324,6 +334,7 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
               if(pdata[4]==1){
 
                  gpro_t.receive_copy_cmd = ack_wifi_on;
+                  power_key_long_fun();
 
               }
 

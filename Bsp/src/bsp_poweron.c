@@ -99,4 +99,43 @@ void power_key_long_fun(void)
   
 }
 
+/**************************************************************************
+ * 
+ *Function Name:void power_on_off_handler(void)
+ *Function:
+ *Input Ref:
+ *Return Ref:
+ * 
+*****************************************************************************/
+void power_on_off_handler(void)
+{
+    if(run_t.gPower_On == power_off){
+       // run_t.gPower_On = power_on;
+        gpro_t.long_key_power_counter =0; 
+        run_t.power_on_disp_smg_number = 1;
+        gpro_t.send_ack_cmd = ack_power_on;
+        gpro_t.gTimer_again_send_power_on_off =0;
+        SendData_PowerOnOff(1);
+         gpro_t.power_on_every_times=1;
+
+        gpro_t.gTimer_mode_key_long=0;
+        osDelay(3);//HAL_Delay(10);
+      
+
+    }
+    else{
+        gpro_t.long_key_power_counter=0; //WT.2024.11.05
+        gpro_t.key_long_power_flag=0;
+        gpro_t.send_ack_cmd = ack_power_off;
+        gpro_t.gTimer_again_send_power_on_off =0;
+        SendData_PowerOnOff(0);
+        osDelay(3);//HAL_Delay(10);
+        //run_t.gPower_On = power_off;
+
+
+    }
+    
+}
+
+
 
