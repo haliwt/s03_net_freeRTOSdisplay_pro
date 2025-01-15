@@ -82,7 +82,7 @@ void Lcd_PowerOff_Fun(void)
 
 
 }
-void lcd_power_off_donot_fan_Fun(void)
+void lcd_power_off_light_off(void)
 {
 
 	POWER_OFF_LED()  ;

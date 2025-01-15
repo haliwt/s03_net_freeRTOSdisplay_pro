@@ -55,7 +55,7 @@ void power_off_handler(void)
       
 	}
     
-	lcd_power_off_donot_fan_Fun();
+	lcd_power_off_light_off();
    
     power_off_breath_Led();
 	if(run_t.gFan_RunContinue == 1){
@@ -89,7 +89,7 @@ void power_off_handler(void)
 		run_t.gDry =0;
 		run_t.gUltransonic =0;
 
-		run_t.gPower_On=power_off;
+		//run_t.gPower_On=power_off;
 		
 		run_t.wifi_led_fast_blink_flag=0;
 		run_t.timer_timing_define_flag = timing_not_definition;
@@ -101,7 +101,7 @@ void power_off_handler(void)
 
 /************************************************************************
 	*
-	*Function Name: static void Power_Off_Fun(void)
+	*Function Name: static void power_off_breath_Led(void)
 	*
 	*
 	*

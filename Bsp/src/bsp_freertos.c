@@ -434,14 +434,18 @@ static void vTaskStart(void *pvParameters)
      else if(KEY_DEC_GetValue() == KEY_DOWN){
           gpro_t.long_key_power_counter=0;
           gl_tMsg.long_key_mode_counter =0 ;
+           if(run_t.gPower_On == power_on){ //WT.EDIT .2025.01.15
                gpro_t.key_dec_flag = 1;
+            }
      }
      else if(KEY_ADD_GetValue() ==KEY_DOWN){
 
           gpro_t.long_key_power_counter=0;
          
           gl_tMsg.long_key_mode_counter =0 ;
-         gpro_t.key_add_flag = 1;
+         if(run_t.gPower_On == power_on){ //WT.EDIT .2025.01.15
+             gpro_t.key_add_flag = 1;
+         }
 
     }
     vTaskDelay(10);
