@@ -273,7 +273,7 @@ static void vTaskRunPro(void *pvParameters)
                   gl_tMsg.long_key_mode_counter =0;
                   
                    SendData_Buzzer_Has_Ack();//SendData_Buzzer();
-                   HAL_Delay(5);
+                   osDelay(3);//HAL_Delay(5);
                    add_key_fun();
                 }
               
@@ -285,7 +285,7 @@ static void vTaskRunPro(void *pvParameters)
                     gpro_t.key_dec_flag ++;
                     gl_tMsg.long_key_mode_counter =0;
                    SendData_Buzzer_Has_Ack();//SendData_Buzzer();
-                   HAL_Delay(5);
+                   osDelay(3);
                   // HAL_Delay(10);
                 
                    dec_key_fun();

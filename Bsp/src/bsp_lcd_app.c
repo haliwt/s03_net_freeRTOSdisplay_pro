@@ -32,6 +32,24 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	 TIM1723_Write_Cmd(0x40);
 	 TIM1723_Write_Cmd(0x44);
 
+     if(gpro_t.power_on_every_times == 1){
+         
+         run_t.smart_phone_set_temp_value_flag =0;//WT.EDIT 2025.01.15
+         gpro_t.set_temp_value_success = 0;//WT.EDIT 2025.01.15
+         gpro_t.temp_key_set_value =0;//WT.EDIT 2025.01.15
+
+          temp1 =   gpro_t.temp_real_value/ 10;//WT.EDIT 2025.01.15
+          temp2   = gpro_t.temp_real_value% 10;//WT.EDIT 2025.01.15
+
+           lcd_t.number1_low= temp1;
+		   lcd_t.number1_high =temp1;
+
+		   lcd_t.number2_low = temp2;
+	       lcd_t.number2_high = temp2;
+
+
+     }
+
    /***********************setup temperature value ********************************/
 	 //digital 1,2 ->display "temperature"  blink  
 	if(run_t.smart_phone_set_temp_value_flag ==1){

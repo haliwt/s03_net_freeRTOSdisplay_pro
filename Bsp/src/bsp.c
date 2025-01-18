@@ -60,8 +60,16 @@ void display_timer_and_beijing_time_handler(void)
 
               gpro_t.power_on_every_times++;
               run_t.gTimer_disp_time_seconds=0; //WT.EDIT 2025.01.08
+             
 
      }
+     else if(lcd_t.display_beijing_time_flag == 1 && gpro_t.power_on_every_times == 1 ){
+
+                gpro_t.power_on_every_times++;
+
+
+     }
+    
         
      if(run_t.power_on_disp_smg_number ==1){
        run_t.power_on_disp_smg_number++; 

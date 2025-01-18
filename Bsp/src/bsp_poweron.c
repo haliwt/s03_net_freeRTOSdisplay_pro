@@ -24,7 +24,7 @@ void power_on_key_short_fun(void)
 
 	gpro_t.set_temp_value_success =0;
     run_t.smart_phone_set_temp_value_flag=0;
-    run_t.timer_time_hours =40;
+
     
     
     run_t.disp_wind_speed_grade =100;
@@ -115,6 +115,11 @@ void power_on_off_handler(void)
         run_t.power_on_disp_smg_number = 1;
         gpro_t.send_ack_cmd = ack_power_on;
         gpro_t.gTimer_again_send_power_on_off =0;
+        run_t.wifi_set_temperature=40; //WT.EDIT 2025.01.15
+        run_t.display_set_timer_or_works_mode = works_time;//WT.EDIT 2025.01.15
+        run_t.smart_phone_set_temp_value_flag =0;//WT.EDIT 2025.01.15
+        gpro_t.set_temp_value_success=0;//WT.EDIT 2025.01.15
+
         SendData_PowerOnOff(1);
          gpro_t.power_on_every_times=1;
 
@@ -128,6 +133,9 @@ void power_on_off_handler(void)
         gpro_t.key_long_power_flag=0;
         gpro_t.send_ack_cmd = ack_power_off;
         gpro_t.gTimer_again_send_power_on_off =0;
+        run_t.wifi_set_temperature =40;//WT.EDIT 2025.01.15
+        run_t.smart_phone_set_temp_value_flag =0;//WT.EDIT 2025.01.15
+        gpro_t.set_temp_value_success=0;//WT.EDIT 2025.01.15
         SendData_PowerOnOff(0);
         osDelay(3);//HAL_Delay(10);
         //run_t.gPower_On = power_off;
