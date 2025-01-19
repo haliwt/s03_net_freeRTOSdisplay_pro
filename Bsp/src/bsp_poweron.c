@@ -8,7 +8,7 @@ void power_on_ref_init(void)
    if(gpro_t.power_on_every_times==1){
     
       gpro_t.power_on_every_times ++ ;
-      lcd_t.gTimer_fan_10ms=45;
+
       display_lcd_Icon_init();
 
 

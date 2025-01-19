@@ -148,8 +148,8 @@ void display_lcd_Icon_init(void)
 void disp_fan_leaf_init(void)
 {
       static uint8_t colon_flag_toggle,fan_blink_full;
-    if(lcd_t.gTimer_fan_10ms >39 ){
-          lcd_t.gTimer_fan_10ms=0;
+    // if(lcd_t.gTimer_fan_10ms >40){
+         // lcd_t.gTimer_fan_10ms=0;
            fan_blink_full++;
       
          lcd_t.number5_low=(run_t.dispTime_hours ) /10;
@@ -204,7 +204,7 @@ void disp_fan_leaf_init(void)
                TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_FULL);//display "t,c"
                TM1723_Write_Display_Data(0xCF,((T16+T12+T10)& 0x0B));//
            }
-     }
+     //}
       
 
 
