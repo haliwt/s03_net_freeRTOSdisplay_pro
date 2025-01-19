@@ -339,7 +339,7 @@ static void vTaskRunPro(void *pvParameters)
             }
 
           
-        
+       power_on_ref_init();
        disp_temp_humidity_wifi_icon_handler();
 
        display_timer_and_beijing_time_handler();

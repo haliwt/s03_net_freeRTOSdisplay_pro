@@ -1,7 +1,7 @@
 #include "bsp.h"
 
 
-static void Display_Kill_Dry_Ster_Icon(void);
+
 static void disp_fan_speed_level(void);
 
 static void donot_disp_T13_icon_fan_speed_level(void);
@@ -32,24 +32,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	 TIM1723_Write_Cmd(0x40);
 	 TIM1723_Write_Cmd(0x44);
 
-     if(gpro_t.power_on_every_times == 1){
-         
-         run_t.smart_phone_set_temp_value_flag =0;//WT.EDIT 2025.01.15
-         gpro_t.set_temp_value_success = 0;//WT.EDIT 2025.01.15
-         gpro_t.temp_key_set_value =0;//WT.EDIT 2025.01.15
-
-          temp1 =   gpro_t.temp_real_value/ 10;//WT.EDIT 2025.01.15
-          temp2   = gpro_t.temp_real_value% 10;//WT.EDIT 2025.01.15
-
-           lcd_t.number1_low= temp1;
-		   lcd_t.number1_high =temp1;
-
-		   lcd_t.number2_low = temp2;
-	       lcd_t.number2_high = temp2;
-
-
-     }
-
+    
    /***********************setup temperature value ********************************/
 	 //digital 1,2 ->display "temperature"  blink  
 	if(run_t.smart_phone_set_temp_value_flag ==1){
@@ -262,7 +245,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	*Return Ref:
 	*
 ******************************************************************************/
-static void Display_Kill_Dry_Ster_Icon(void)
+ void Display_Kill_Dry_Ster_Icon(void)
 {
 
    //number "1,2" -> temperature
@@ -360,94 +343,6 @@ static void donot_disp_T13_icon_fan_speed_level(void)
          else if(run_t.disp_wind_speed_grade <34){
             TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
          }
-}
-/*************************************************************************************
-    *
-    *Function Name:static void donot_disp_T13_icon_fan_speed_level(void)
-    *Function:
-    *
-    *
-    *
-**************************************************************************************/
-void disp_fan_leaf_run_icon(void)
-{
-
-   static uint8_t colon_flag_toggle;
-   static uint8_t disp_flag_1,disp_1_default=0xff,disp_flag_2,disp_2_default=0xff;
-  if(run_t.fan_warning ==0 &&  run_t.ptc_warning== 0)
-  {
-
-   if(run_t.display_set_timer_or_works_mode != setup_timer){
-   if(lcd_t.gTimer_fan_10ms >39 && lcd_t.gTimer_fan_10ms<80){
-
-       colon_flag_toggle ++;
-  
-        if(disp_1_default != disp_flag_1  || gpro_t.worksTimeBeChange_flag == 1){
-            if(disp_1_default != disp_flag_1){
-               disp_1_default = disp_flag_1;
-            }
-            else if(gpro_t.worksTimeBeChange_flag == 1)gpro_t.worksTimeBeChange_flag=2;
-
-            disp_flag_2++;
-    
-        works_timer_disp_numaber();
-		TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
-        TM1723_Write_Display_Data(0xCA,T15+lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digital '5,6'
-        if(colon_flag_toggle < 7){
-                    
-        TM1723_Write_Display_Data(0xCB,TIME_COLON+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
-        }
-        else{
-        if(colon_flag_toggle > 10 )colon_flag_toggle=0;
-        
-
-        TM1723_Write_Display_Data(0xCB,TIME_NO_COLON+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
-
-
-        }
-        fan_disp_speed_leaf(0);
-
-       }
-    
-    }
-    else if(lcd_t.gTimer_fan_10ms <40){
-        colon_flag_toggle ++;
-
-     if(disp_2_default != disp_flag_2 || gpro_t.worksTimeBeChange_flag==1){
-
-            if(disp_2_default != disp_flag_2 ){
-                disp_2_default = disp_flag_2;
-            }
-            else if(gpro_t.worksTimeBeChange_flag == 1)gpro_t.worksTimeBeChange_flag=2;
-            disp_flag_1++;
-
-     works_timer_disp_numaber();
-
-    
-    TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[lcd_t.number4_low]+lcdNumber5_High[lcd_t.number5_high]) & 0xff);
-
-    TM1723_Write_Display_Data(0xCA,lcdNumber5_Low[lcd_t.number5_low]+lcdNumber6_High[lcd_t.number6_high]);//display digit
-    if(colon_flag_toggle < 7){
-                   
-      TM1723_Write_Display_Data(0xCB,TIME_COLON+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
-     }
-     else{
-        if(colon_flag_toggle > 10 )colon_flag_toggle=0;
-         TM1723_Write_Display_Data(0xCB,TIME_NO_COLON+lcdNumber6_Low[lcd_t.number6_low]+lcdNumber7_High[lcd_t.number7_high]);//d
-     }
-     fan_disp_speed_leaf(1);
-      }
-    }
-    else if(lcd_t.gTimer_fan_10ms > 79){
-        lcd_t.gTimer_fan_10ms=0;
-        gpro_t.worksTimeBeChange_flag=1; //WT.EDIT 2024.11.17
-    }
-
-
-    }
-
-    }
-
 }
 
 

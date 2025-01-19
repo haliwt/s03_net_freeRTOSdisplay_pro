@@ -12,6 +12,7 @@
 #include "bsp_lcd.h"
 #include "bsp_poweroff.h"
 #include "bsp_poweron.h"
+#include "bsp_fan.h"
 #include "bsp_sendack.h"
 #include "bsp_wifi.h"
 #include "bsp_lcd_app.h"
