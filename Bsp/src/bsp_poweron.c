@@ -150,7 +150,7 @@ void power_on_off_handler(void)
       
 
     }
-    else{
+    else{ //power off .
         gpro_t.long_key_power_counter=0; //WT.2024.11.05
         gpro_t.key_long_power_flag=0;
         gpro_t.send_ack_cmd = ack_power_off;
@@ -160,7 +160,7 @@ void power_on_off_handler(void)
         gpro_t.set_temp_value_success=0;//WT.EDIT 2025.01.15
         SendData_PowerOnOff(0);
         osDelay(3);//HAL_Delay(10);
-        //run_t.gPower_On = power_off;
+        /* run_t.gPower_On = power_off; */
 
 
     }

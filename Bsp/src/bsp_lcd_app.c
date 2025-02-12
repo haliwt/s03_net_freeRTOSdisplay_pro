@@ -347,13 +347,9 @@ static void donot_disp_T13_icon_fan_speed_level(void)
 
 
 static void works_timer_disp_numaber(void)
-{
-
+{     
     
-
-
-
-     switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
+    switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
       case works_time:
         

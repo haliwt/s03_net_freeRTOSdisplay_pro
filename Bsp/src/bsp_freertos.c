@@ -155,44 +155,41 @@ static void vTaskRunPro(void *pvParameters)
 		
 	if( xResult == pdPASS )
 	{
-		/* 接收到消息，棢�测那个位被按丄1�7 */
+    	/* 接收到消息，棢�测那个位被按丄1�7 */
 
-    if((ulValue & POWER_KEY_BIT_0) != 0)
-    {
+        if((ulValue & POWER_KEY_BIT_0) != 0)
+        {
 
-        gpro_t.smart_phone_power_on = 1;
-        gpro_t.key_long_power_flag=0;
-        gpro_t.long_key_power_counter=0;
+            gpro_t.smart_phone_power_on = 1;
+            gpro_t.key_long_power_flag=0;
+            gpro_t.long_key_power_counter=0;
 
-    }
-    else if((ulValue & POWER_ON_BIT_5) != 0){
-
-        smart_phone_app_timer_power_on_flag=1;
-
-    }
-    else if((ulValue & POWER_OFF_BIT_4) != 0){
-
-        app_power_off_flag =1;
-
-
-    }
-    else if((ulValue & DECODER_BIT_9) != 0)
-    {
-
-
-        gpro_t.disp_rx_cmd_done_flag = 0;
-
-        check_code =  bcc_check(gl_tMsg.usData,ulid);
-
-        if(check_code == bcc_check_code ){
-
-        receive_data_fromm_mainboard(gl_tMsg.usData);
         }
-    }
+        else if((ulValue & POWER_ON_BIT_5) != 0){
+
+            smart_phone_app_timer_power_on_flag=1;
+
+        }
+        else if((ulValue & POWER_OFF_BIT_4) != 0){
+
+            app_power_off_flag =1;
+
+
+        }
+        else if((ulValue & DECODER_BIT_9) != 0){
+            gpro_t.disp_rx_cmd_done_flag = 0;
+
+            check_code =  bcc_check(gl_tMsg.usData,ulid);
+
+            if(check_code == bcc_check_code ){
+
+            receive_data_fromm_mainboard(gl_tMsg.usData);
+            }
+        }
 
 
     }
-    else{ //超时时间，运行一下程序
+    else{ //超时时间且没有接收到通知，运行以下程序
 
         if( gpro_t.key_power_flag == 1){ //key power key
 
@@ -322,7 +319,7 @@ static void vTaskRunPro(void *pvParameters)
            }
          
 
-            if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gpro_t.key_long_power_flag ==1)){
+           if( gpro_t.gTimer_mode_key_long > 1 && (gl_tMsg.key_long_mode_flag  ==1 ||gpro_t.key_long_power_flag ==1)){
                  gl_tMsg.long_key_mode_counter =0;
                  gpro_t.long_key_power_counter =0;
          
@@ -354,9 +351,7 @@ static void vTaskRunPro(void *pvParameters)
           gpro_t.long_key_power_counter =0;
            gpro_t.key_long_power_flag =0;
            run_t.power_on_disp_smg_number = 0;
-           //run_t.gTimer_set_timer_time_seconds=0;
-         
-          power_off_handler();
+           power_off_handler();
 
        }
        send_cmd_ack_hanlder() ; 
@@ -464,10 +459,10 @@ void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,    		/* 任务函数  */
                  "vTaskRunPro",  		/* 任务各1�71ￄ1�77    */
-                 128,         		/* stack大小，单位word，也就是4字节 */
-                 NULL,        		/* 任务参数  */
-                 1,           		/* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
-                 &xHandleTaskRunPro); /* 任务句柄  */
+                 128,         		    /* stack大小，单位word，也就是4字节 */
+                 NULL,        		    /* 任务参数  */
+                 1,           		    /* 任务优先纄1�71ￄ1�77 数��越小优先级越低，这个跟uCOS相反 */
+                 &xHandleTaskRunPro);   /* 任务句柄  */
 
 	
 	xTaskCreate( vTaskStart,     		/* 任务函数  */

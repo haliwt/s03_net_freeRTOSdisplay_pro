@@ -4,21 +4,40 @@
 #include "main.h"
 #define  MAX_BUFFER_SIZE   8
 
-enum Signal{
-	PANEL_DATA=1,
-	WIFI_INFO,//2
-	WIFI_TIME,//3
-	WIFI_REAL_TEMP,//4
-	WIFI_CMD,//5
-	WIFI_WIND_SPEED,//6
-	WIFI_BEIJING_TIME,//7
-	WIFI_SET_GMT_MINUTE,//8
-	WIFI_SET_GMT_SECOND,//9
-	WIFI_SET_TIMING,//10
-	WIFI_SET_TEMPERATURE,//11
-	
-	
-};
+typedef enum PROTOCOL{
+
+  //cmd:
+  protocol_power = 0x01,
+  protocol_ptc_cmd =0x02,
+  protocol_plasma_cmd=0x03,
+  protocol_ultrasonic_cmd=0x04,
+  protocol_wifi_cmd=0x05,
+  protocol_buzzer_cmd=0x06,
+  protocol_ai_cmd=0x07,
+  protocol_warning_ptc_cmd=0x08,
+  protocol_warning_fan_cmd=0x09,
+
+  protocol_answer_power_cmd=0x0B, //main board ansower POWER ON or OFF.
+
+  protocol_buzzer_answer_cmd=0x16,   //has a answer cmd with mainboard return answer order.
+  protocol_read_temp_value=0x1A,  //read temperature value .
+  protocol_read_humidity_value=0x1B,  //read humidity value 
+  protocol_read_time_value=0x1C,  //read time--hours,minutes,sencod.
+  protocol_read_data_value=0x1D,  //read  year,month,week,data.
+  protocol_read_fan_value=0x1E, //read fan speed value 
+  protocol_read_wiifi_value=0x1F, //read wifi link net state
+
+  protocol_app_transfer_cmd=0x20,
+  protocol_app_power_cmd=0x21,
+  portocol_notice_ptc_cmd= 0x22,
+  protocol_app_ai_cmd=0x27,
+  protocol_set_temp_value=0x2A,
+
+  protocol_answer_cmd=0xFF, // cmd of copy return send as the same command.
+
+ 
+  
+}protocol_t;
 
 
 
