@@ -636,9 +636,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
               
                 xTaskNotifyFromISR(xHandleTaskRunPro,  /* 目标任务 */
-                DECODER_BIT_9,     /* 设置目标任务事件标志位bit0  */
-                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                &xHigherPriorityTaskWoken);
+                                    DECODER_BIT_9,     /* 设置目标任务事件标志位bit0  */
+                                    eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                                    &xHigherPriorityTaskWoken);
 
                 /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
                 portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
