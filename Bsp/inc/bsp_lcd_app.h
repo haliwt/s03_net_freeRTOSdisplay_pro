@@ -13,6 +13,7 @@ void Display_Kill_Dry_Ster_Icon(void);
 
 void disp_time_colon_ion_handler(void);
 
+void power_on_display_temp_handler(void);
 
 
 

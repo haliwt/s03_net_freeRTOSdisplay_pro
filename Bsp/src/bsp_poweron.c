@@ -10,19 +10,11 @@ void power_on_ref_init(void)
       gpro_t.power_on_every_times ++ ;
 
       display_lcd_Icon_init();
+      power_on_display_temp_handler();//WT.EDIT 2025.03.28
 
 
     }
-
-
-
-
 }
-
-
-
-
-
 /**************************************************************************
  * 
  *Function Name:void power_on_key_short_fun(void)

@@ -28,7 +28,7 @@
 
  
 #define WIFI_Symbol     		0x01 //addr 0xC5
-#define WIFI_NO_Symbol 
+#define WIFI_NO_Symbol          0x0
  
 #define LINE_Symbol             0x01 //addr  0xC2
  
@@ -190,6 +190,7 @@ typedef struct _LCD_Ref{
 	 uint8_t number8_high;
 
 	 uint8_t  gTimer_colon_ms;
+	
 
 
 }lcd_ref;

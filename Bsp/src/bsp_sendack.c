@@ -186,6 +186,8 @@ void receive_data_fromm_mainboard(uint8_t *pdata)
 		   lcd_t.number2_low = temp2;
 	       lcd_t.number2_high = temp2;
 
+		   power_on_display_temp_handler(); //WT.EDIT 2025.03.28
+
         }
         else if(pdata[4] == 0x01){ //数据)
 

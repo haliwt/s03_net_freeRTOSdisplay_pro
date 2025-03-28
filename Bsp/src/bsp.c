@@ -29,11 +29,11 @@ void mode_key_long_fun(void)
    if(run_t.ptc_warning ==0){
 
        run_t.gModel=2;
-     //  run_t.setup_timer_timing_item=1;//run_t.gModel =2;
+       gpro_t.gTimer_disp_temp_humi_value=0;
        run_t.display_set_timer_or_works_mode = setup_timer;
       
        run_t.gTimer_key_timing=0;
-
+       gpro_t.gTimer_disp_temp_humi_value=0;
 
    
    }
@@ -240,7 +240,7 @@ static void disp_set_timer_timing_value_fun(void)
 {
   
      static uint8_t tim_bit_1_hours,tim_bit_2_hours;
-
+      gpro_t.gTimer_disp_temp_humi_value=0;
       if(run_t.gTimer_key_timing < 4){
 
             tim_bit_2_hours = run_t.timer_time_hours /10 ;
