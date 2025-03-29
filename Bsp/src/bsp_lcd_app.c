@@ -39,9 +39,9 @@ void disp_temp_humidity_wifi_icon_handler(void)
 
 	 
 	
-	 //TIM1723_Write_Cmd(0x00); //WT.EDIT 2025.03.28
-	// TIM1723_Write_Cmd(0x40);
-	/// TIM1723_Write_Cmd(0x44);
+	TIM1723_Write_Cmd(0x00); //WT.EDIT 2025.03.28
+	TIM1723_Write_Cmd(0x40);
+	TIM1723_Write_Cmd(0x44);
 
     
    /***********************setup temperature value ********************************/
@@ -247,7 +247,7 @@ void disp_temp_humidity_wifi_icon_handler(void)
 	
 	wifi_icon_blink_reg0xc5_handler();
 	
-	// TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+	TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
 
 
 	 
@@ -307,7 +307,7 @@ static void wifi_icon_blink_reg0xc5_handler(void)
 			  run_t.wifi_led_fast_blink_flag=0;
 			  TM1723_Write_Display_Data(0xC5,(WIFI_Symbol+lcdNumber3_Low[lcd_t.number3_low] + lcdNumber4_High[lcd_t.number4_high]) & 0xff); //Wifi
                display_wifi_icon_flag=2;
-			  // TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
+			   TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
 		}
 
 
@@ -350,7 +350,7 @@ static void display_temperture_humidity_value(void)
                   display_lowbit_lunmber4_reg0xc9_handler();
 
                   
-				  osDelay(30);
+				
 	}
 
 
@@ -440,7 +440,7 @@ void power_on_display_temp_handler(void)
 	   }
 
   
-  // TIM1723_Write_Cmd(LUM_VALUE);
+     TIM1723_Write_Cmd(LUM_VALUE);
    
 
 

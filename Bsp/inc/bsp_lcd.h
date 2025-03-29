@@ -77,7 +77,7 @@
 #define WIND_SPEED_FULL          0xE0
 
  
-#define LUM_VALUE      0x94// 0x97
+#define LUM_VALUE      0x92//WT.EDIT 2025.03.29 0x94// 0x97
 
 
 
