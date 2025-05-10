@@ -195,10 +195,11 @@ static void vTaskRunPro(void *pvParameters)
 
             if(KEY_POWER_GetValue()  ==KEY_UP){
                 gpro_t.key_power_flag++;
-              
+                
 
              if(gpro_t.key_long_power_flag ==1){ //WIFI KEY FUNCTION
                 //  power_key_long_fun();
+                 gpro_t.long_key_power_counter=0; //WT.EDIT 2025.05.10
                  gpro_t.send_ack_cmd = ack_wifi_on;
                  gpro_t.gTimer_again_send_power_on_off =0;
                  SendData_Set_Command(0x05,0x01); // link wifi of command .
@@ -208,6 +209,7 @@ static void vTaskRunPro(void *pvParameters)
 
              }
              else{
+			 	gpro_t.long_key_power_counter=0; //WT.EDIT 2025.05.10
                 power_on_off_handler();
              }
          }
@@ -340,8 +342,6 @@ static void vTaskRunPro(void *pvParameters)
        disp_temp_humidity_wifi_icon_handler();
 
        display_timer_and_beijing_time_handler();
-
-  
        disp_fan_leaf_run_icon(); //Display time and fan of leaf integration
 
        set_temperature_compare_value_fun();
@@ -355,7 +355,7 @@ static void vTaskRunPro(void *pvParameters)
 
        }
        send_cmd_ack_hanlder() ; 
-      //USART1_Cmd_Error_Handler();
+     
 
     }
 

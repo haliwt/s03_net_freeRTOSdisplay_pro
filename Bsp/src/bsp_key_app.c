@@ -54,7 +54,7 @@ void Beijing_Time_Init(void)
 
 /**************************************************************************
  * 
- *Function Name:
+ *Function Name:void mode_key_short_fun(void)
  *Function:
  *Input Ref:
  *Return Ref:
@@ -140,20 +140,11 @@ void add_key_fun(void)
     case timer_time: //set  
 
 		
-		run_t.wifi_set_temperature ++;
-        if(run_t.wifi_set_temperature < 20){
-		    run_t.wifi_set_temperature=20;
-		}
-		
+		run_t.wifi_set_temperature= run_t.wifi_set_temperature+1;
+
 		if(run_t.wifi_set_temperature > 40)run_t.wifi_set_temperature= 20;
 
-		if(power_on_fisrt_flag ==0){
-		     power_on_fisrt_flag ++;
-	     	run_t.wifi_set_temperature =40;
-
-
-	      }
-    
+		
 	    decade_temp =  run_t.wifi_set_temperature / 10 ;
 		unit_temp =  run_t.wifi_set_temperature % 10; //
         
@@ -214,14 +205,8 @@ void dec_key_fun(void)
 	   
 			run_t.wifi_set_temperature--;
 			if(run_t.wifi_set_temperature<20) run_t.wifi_set_temperature=40;
-	        if(run_t.wifi_set_temperature >40)run_t.wifi_set_temperature=40;
+	      
 
-			if(power_on_fisrt_flag ==0){
-				power_on_fisrt_flag ++;
-			  run_t.wifi_set_temperature =40;
-
-
-			}
 
 	        decade_temp =  run_t.wifi_set_temperature / 10;
 			unit_temp =  run_t.wifi_set_temperature % 10; //
@@ -268,54 +253,11 @@ void dec_key_fun(void)
  * Return Ref:
  * 
 **********************************************************************************/
-#if 0
-static void Beijing_Time_Display(void)
-{
-	
-	    if(run_t.gTimer_set_timer_time_seconds >59){ //minute
-
-			run_t.gTimer_set_timer_time_seconds=0;
-            run_t.dispTime_minutes ++;
-           
-            
-			if(run_t.dispTime_minutes > 59){
-				run_t.dispTime_minutes=0;
-				run_t.dispTime_hours ++;
-			   
-				if(run_t.dispTime_hours >24){
-					run_t.dispTime_hours=0;
-
-					}
-
-			}
-	    	}
-            
-            if(run_t.gPower_On == power_on) {
-				Setup_Timer_Times_Donot_Display();
-				lcd_t.number5_low=(run_t.dispTime_hours ) /10;
-				lcd_t.number5_high =(run_t.dispTime_hours) /10;
-
-				lcd_t.number6_low = (run_t.dispTime_hours ) %10;;
-				lcd_t.number6_high = (run_t.dispTime_hours ) %10;
-
-				lcd_t.number7_low = (run_t.dispTime_minutes )/10;
-				lcd_t.number7_high = (run_t.dispTime_minutes )/10;
-
-				lcd_t.number8_low = (run_t.dispTime_minutes )%10;
-				lcd_t.number8_high = (run_t.dispTime_minutes )%10;
-			}
-
-}
-#endif 
 void Beijing_Time_Display_Handler(void(*beijing_time_handler)(void))
 {
 	beijing_time_fun = beijing_time_handler;
 
 }
-
-
-
-
 
 /****************************************************************
  * 

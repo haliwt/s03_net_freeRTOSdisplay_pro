@@ -459,12 +459,14 @@ static void disp_fan_speed_level(void)
      if(run_t.disp_wind_speed_grade >66){
 	 	TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+ WIND_SPEED_FULL) & 0xff);
 	  }
-	  else if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
-	     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
+	  else if(run_t.wifi_link_net_success ==1){ //WT.EDIT 2025.04.16 logic is not rigorous.
+		  if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
+		     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
 
-	  }
-	  else if(run_t.disp_wind_speed_grade <34){
-		 TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
+		  }
+		  else if(run_t.disp_wind_speed_grade <34){
+			 TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
+		  }
 	  }
 
 }
@@ -481,14 +483,16 @@ static void donot_disp_T13_icon_fan_speed_level(void)
 {
     if(run_t.disp_wind_speed_grade >66){
            TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+ WIND_SPEED_FULL) & 0xff);
-         }
-         else if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
+     }
+	 else if(run_t.wifi_link_net_success ==1){ //WT.EDIT 2025.04.16 the logic is not rigorous
+         if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
             TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
     
          }
          else if(run_t.disp_wind_speed_grade <34){
             TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
          }
+	 }
 }
 
 
@@ -518,17 +522,7 @@ static void works_timer_disp_numaber(void)
 
     case setup_timer:
         
-//               lcd_t.number5_low=(run_t.timer_time_hours ) /10;
-//               lcd_t.number5_high =lcd_t.number5_low;//(run_t.timer_time_hours) /10;
-//    
-//               lcd_t.number6_low = (run_t.timer_time_hours ) %10;;
-//               lcd_t.number6_high =   lcd_t.number6_low;//(run_t.timer_time_hours ) %10;
-//    
-//               lcd_t.number7_low =0;
-//               lcd_t.number7_high = 0;
-//    
-//               lcd_t.number8_low = 0;
-//               lcd_t.number8_high = 0;
+
 
 
     break;
@@ -557,7 +551,13 @@ static void works_timer_disp_numaber(void)
      }
 
 }
-
+/************************************************************
+*
+*Funtion Name:void fan_disp_speed_leaf(uint8_t disp)
+*
+*
+*
+************************************************************/
 void fan_disp_speed_leaf(uint8_t disp)
 {
 

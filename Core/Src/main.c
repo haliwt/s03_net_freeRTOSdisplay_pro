@@ -8,8 +8,8 @@
   *
   * S04W03 display board for mass version :1.0  DATA:2024.11.16
   *                2.0 DATA.2025.02.19 for mass 
-  *
-  * 
+  *       modidfy data:2025-04-16,edit version:2.1 
+  *       modidfy optimize power key of function .DATA.2025.05.10
   * 
   * 
   *
@@ -158,6 +158,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
+	
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();

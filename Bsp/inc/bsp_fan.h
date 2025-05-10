@@ -15,7 +15,7 @@ typedef enum _fan_speed
 }fan_speed;
 
 
-//void disp_fan_leaf_init(void);
+
 void disp_fan_leaf_init(void);
 
 

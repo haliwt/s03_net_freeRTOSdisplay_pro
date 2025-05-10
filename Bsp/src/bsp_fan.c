@@ -6,10 +6,6 @@
 static void works_timer_disp_numaber(void)
 {
 
-    
-
-
-
      switch(run_t.display_set_timer_or_works_mode){//switch(run_t.setup_timer_timing_item){
 
       case works_time:
@@ -149,9 +145,8 @@ void display_lcd_Icon_init(void)
 void disp_fan_leaf_init(void)
 {
       static uint8_t colon_flag_toggle,fan_blink_full;
-    // if(lcd_t.gTimer_fan_10ms >40){
-         // lcd_t.gTimer_fan_10ms=0;
-           fan_blink_full++;
+
+          fan_blink_full++;
       
          lcd_t.number5_low=(run_t.dispTime_hours ) /10;
          lcd_t.number5_high =lcd_t.number5_low;//(run_t.dispTime_hours) /10;

@@ -19,6 +19,8 @@ void bsp_init(void)
 {
   //Beijing_Time_Init();
   bsp_wifi_init();
+  run_t.disp_wind_speed_grade =100;//WT.EDIT 2025.04.16
+  run_t.wifi_set_temperature=40; //WT.EDIT 2025.04.16
 
 }
 
@@ -272,13 +274,15 @@ static void disp_set_timer_timing_value_fun(void)
                  if(run_t.disp_wind_speed_grade >66){
                     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+ WIND_SPEED_FULL) & 0xff);
                   }
-                  else if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
-                     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
-    
-                  }
-                  else if(run_t.disp_wind_speed_grade <34){
-                     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
-                  }
+				  else if(run_t.disp_wind_speed_grade ==1){ //WT.EDIT 2025.04.16
+	                  if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
+	                     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
+	    
+	                  }
+	                  else if(run_t.disp_wind_speed_grade <34){
+	                     TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
+	                  }
+				  }
 
                   TM1723_Write_Display_Data(0xCF,(T16+T11)&0x05);//
        }
@@ -290,13 +294,14 @@ static void disp_set_timer_timing_value_fun(void)
                  if(run_t.disp_wind_speed_grade >66){
                     TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+ WIND_SPEED_FULL) & 0xE1);
                  }
-                 else if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
-                     TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xE1);
-                 }
-                  else if(run_t.disp_wind_speed_grade <34){
-                     TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xE1);
-                 }
-
+				 else if(run_t.disp_wind_speed_grade ==1){ //WT.EDIT 2025.04.16
+	                 if(run_t.disp_wind_speed_grade >33 && run_t.disp_wind_speed_grade <67){
+	                     TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_TWO) & 0xE1);
+	                 }
+	                  else if(run_t.disp_wind_speed_grade <34){
+	                     TM1723_Write_Display_Data(0xCE,(lcdNumber8_Low[lcd_t.number8_low]+WIND_SPEED_ONE) & 0xE1);
+	                 }
+				 }
                  TM1723_Write_Display_Data(0xCF,((T16+T12+T10)&0x0B));//
        }
              
